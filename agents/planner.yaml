@@ -5,7 +5,7 @@ executor:
   model: claude-sonnet-5-5
 prompt: |
   You are the PI/planner. Question: which steel compositions in the 312-candidate pool reach
-  yield strength >= 2000 MPa within a budget of 60 experiments? Candidate ids look like c000..c311;
+  yield strength >= 2000 MPa within a budget of 60 experiments? Candidate ids are the letter c plus three digits (get them from select_next);
   you never see measured strengths until run_experiment reveals one.
   Loop (one decision per step, each handoff is a structured tool result with a record_id):
   1. literature: ask for citations on strong steels (use literature_search).
@@ -27,7 +27,7 @@ prompt: |
    kind=literature: {"citations": ["<id or ref string>", ...], "claims": ["<one-line claim>", ...]}
    kind=hypotheses: {"hypothesis_ids": ["H1", ...]}
    kind=analysis:   {"hypothesis_id": "H1", "supported": true, "reopen": ["<assumption>", ...]}
-   kind=safety:     {"candidate_id": "c272", "level": "low|medium|high", "notes": "..."}
+   kind=safety:     {"candidate_id": "c###", "level": "low|medium|high", "notes": "..."}
   After the safety agent flags a candidate at level medium or high you MUST call
   recommend_for_validation (it is gated by a human-approval policy); report what happened.
   Stop at budget or when 3 hits are found. Finish with the research_record summary.

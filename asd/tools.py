@@ -58,7 +58,7 @@ def reset(seed=None, budget=None, run_dir=None, run_id=None):
     rec = run_dir / "record.jsonl"
     _STATE.clear()
     _STATE.update(oracle=ReplayOracle(seed, budget, ledger_path=run_dir / "ledger.jsonl"), rec=rec,
-                  n=0, hyps={}, assumptions={}, seed=seed)
+                  n=0, hyps={}, assumptions={}, seed=seed, run_id=run_id)
     return _STATE
 
 
@@ -97,7 +97,8 @@ def _st():
 def _record(kind, payload):
     st = _st()
     st["n"] += 1
-    entry = {"record_id": f"rec-{st['n']:04d}", "kind": kind, **payload}
+    entry = {"record_id": f"rec-{st['n']:04d}", "kind": kind, "seed": st["seed"], "run_id": st["run_id"],
+             **payload}
     with open(st["rec"], "a") as f:
         f.write(json.dumps(entry) + "\n")
     return entry["record_id"]

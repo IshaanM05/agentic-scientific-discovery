@@ -186,3 +186,13 @@ def test_env_config_isolated_dirs(tmp_path, monkeypatch):
     import json
     m = [json.loads((tmp_path / f"s{s}" / "meta.json").read_text()) for s in (3, 4)]
     assert m[0]["seed"] == 3 and m[1]["seed"] == 4 and m[0]["run_id"] != m[1]["run_id"]
+
+
+def test_no_concrete_candidate_id_in_research_prompts():
+    import re
+    from pathlib import Path
+    root = Path(__file__).resolve().parent.parent
+    files = [root / "agents" / "planner.yaml", root / "agents" / "hello.yaml"] + list((root / "asd").glob("*.py"))
+    for f in files:
+        txt = f.read_text(encoding="utf-8")
+        assert not re.search(r"\bc\d+\b", txt), f"{f.name} contains a concrete candidate id"
