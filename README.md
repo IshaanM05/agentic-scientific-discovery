@@ -14,6 +14,44 @@ Complete and frozen for submission: an Omnigent-orchestrated agent team (planner
 | Judge | `runs/*/judge.jsonl`, `results/judge_calibration.json` | n = 12; near-arithmetic check, not skill |
 | Replay dashboard | `dashboard/app.py` | offline, `streamlit run dashboard/app.py` |
 
+## Architecture
+```mermaid
+flowchart TD
+  H([Human]) -->|question, approvals| P[planner / PI]
+  P --> LIT[literature] & GEN[generator] & CRI[critic] & ELO[elo_ranker] & INS[insight] & ANA[analysis] & JUD[judge] & SAF[safety]
+  GEN --> CRI --> ELO
+  subgraph TOOLS[Python function tools: asd/tools.py]
+    LS[literature_search]
+    DT[design_tests]
+    SN[select_next]
+    RE[oracle / run_experiment]
+    RS[record_step - jsonschema validated]
+    RR[research_record]
+  end
+  LIT --> LS
+  INS --> DT
+  P --> SN --> RE
+  ANA --> RS
+  JUD --> RS
+  SAF --> RS
+  subgraph POL[Policies: asd/policies.py]
+    EB{{experiment_budget: DENY}}
+    SG{{safety_gate: DENY}}
+    HA{{human_approval: ASK}}
+    CB{{cost_budget}}
+  end
+  RE -.-> EB
+  SAF -.-> SG
+  P -.recommend_for_validation.-> HA
+  HA -->|y/n| H
+  P -.-> CB
+  RE --> LED[(runs/RUN/ledger.jsonl)]
+  RS --> REC[(runs/RUN/record.jsonl)]
+  RR --> REC
+  LED -->|result changes next decision, ADAPT| P
+```
+Solid arrows are data or calls; dotted arrows are policy checks that run before the tool executes.
+
 ## Question
 Can an agent team choose which experiments to run next so that it finds high-value candidates in fewer experiments than standard baselines, under a hard experiment budget and human approval for risky actions?
 Test bed: `steel_strength` (312 steels, MIT, figshare 10.6084/m9.figshare.7250453; hit = yield strength >= 2000 MPa, 15 hits), replayed as an oracle that reveals one yield value per experiment.
@@ -58,6 +96,11 @@ In an interactive run the approval policy holds the tool call until a human answ
 Evidence for the 22.2 s hold: `runs/t011-repl30/APPROVAL_EVIDENCE.md`. Earlier evidence: `runs/t011-repl/APPROVAL_EVIDENCE.md` (the browser's resolve arrived first, 1.6 s) and `runs/t011-ask` (non-interactive `-p` run: the first ASK was declined automatically, Omnigent server log line 170; human decision recorded as `rec-0004`).
 
 ## How to run from a clean clone (Windows, omnigent 0.16.0)
+One command reproduces everything offline (no LLM calls: install, tests, baselines, judge and arena calibration, E1 stats from cache if present, plot, summary):
+```
+powershell -ExecutionPolicy Bypass -File scripts/reproduce.ps1      # or: bash scripts/reproduce.sh
+```
+Step by step:
 ```
 uv tool install --python 3.12 omnigent --with jsonschema --with pyyaml    # PyPI; the git+https form fails on Windows (MAX_PATH)
 pip install -r requirements.txt                                            # Python >= 3.12
@@ -117,5 +160,24 @@ Offline replay of committed runs and results (no LLM or network calls): `streaml
 ## Next experiment
 Repeat the matched comparison on a materials dataset published after the model's training cutoff (or held privately), with the blinded prior, temperature-0 or multi-sample probes, more seeds for the named arm, and the planner's adaptive loop evaluated against a scripted agent order.
 
-## Validation needed before real use
+## Responsible use
+- **Agent-generated hypotheses.** Every hypothesis, analysis conclusion, judge verdict and recommendation in this repo is produced by LLM agents and is labelled agent-generated. None is a verified scientific finding. Predicted values are model output, not measurements.
+- **Replayed data, not lab safety.** Experiments here are reveals from a fixed public table (no reagents, no hardware). The `safety_gate` is a keyword list over tool arguments, not a hazard analysis, and nothing here certifies that a process is safe to run in a lab.
+- **Human approval before any real-world validation.** `human_approval` ASKs before `recommend_for_validation`; headless runs decline automatically. Do not act on a recommendation (synthesis, processing, testing) without domain-expert review and your institution's safety sign-off.
+- **Dual use.** Candidate-ranking and route-proposal agents could in principle be pointed at hazardous materials or processes. The safety agent and gate reduce, but do not remove, that risk; keep a human in the loop and do not extend the hazard list by omission. Prior knowledge from an LLM can also be wrong or memorised (see Limitations).
+
+### Validation needed before real use
 Re-run on a dataset the model cannot have seen (post-cutoff or private); temperature-0 or multi-sample probes; larger probe set; more seeds for named arms; a real or higher-fidelity oracle; domain-expert review of recommendations and safety constraints; independent replication of the approval-hold test.
+
+## References
+Systems we built on or compare to (details in `knowledge/papers/`):
+- SciAgents: Ghafarollahi and Buehler (MIT), arXiv:2409.05556. Multi-agent hypothesis generation from an ontological knowledge graph; runs no experiments. Compared in Positioning and the arena. Only the first third of the paper was read.
+- Coscientist: Boiko et al., Nature 2023, nature.com/articles/s41586-023-06792-0. GPT-4 agent with search, code execution and robotic lab control. Citation incomplete (title and page details not in our notes).
+- A-Lab (Berkeley): robotic solid-state synthesis; claimed about 41-43 new materials in 17 days, disputed by independent analysis, with a Nature Author Correction in Jan 2026. Citation incomplete (no paper reference in our notes; sources: Chemistry World, C&EN).
+- The AI Scientist v1/v2 (Sakana): arXiv:2408.06292, v2 arXiv:2504.08066.
+- Google AI Co-Scientist: arXiv:2502.18864. Generate-debate-evolve with a tournament; the inspiration for the Elo arena.
+- LGBO (LLM-guided Bayesian optimization): arXiv:2605.17976 (html v1). LLM preferences shift the GP surrogate mean; basis of our prior + GP arm. Authors not recorded in our notes.
+- Language-guided priors and AWCD: doi:10.1021/acs.jcim.6c00976 (2026). An LLM turns expert prose into a BO prior mean; AWCD switches the prior off when data contradict it; basis of our trust meter. Authors and title not recorded in our notes (incomplete).
+- Matbench steels dataset: figshare doi 10.6084/m9.figshare.7250453 (312 steels, MIT license per the figshare API; upstream Citrine dataset citrination.com/datasets/153092, whose license is unverified); the Matbench benchmark paper is not cited here (incomplete).
+- Omnigent: Databricks, github.com/omnigent-ai/omnigent (Apache 2.0, alpha), PyPI `omnigent` 0.16.0, docs omnigent.ai.
+- OpenAlex: used for a shallow title check of hypothesis novelty (arena). Citation incomplete (no reference in our notes).
