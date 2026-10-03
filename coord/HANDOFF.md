@@ -23,3 +23,4 @@ updated: 2026-10-03 16:00 ET (cycle 6, A done) by lead. Get ET via python with U
 - Never read/print .env.
 ## Spend so far
 agent ~$15 of $16 limit (lead ~2, scout ~5, builder ~8, rough self-reports) | model calls on Pro subscription, no throttling so far.
+- Cycle 7 (E plan): E1 counterfactual + E2 live end-to-end (incl. E3 safety block) in parallel; then E4 packaging; E5 optional. dev pushed at 5ea28db; main untouched.
