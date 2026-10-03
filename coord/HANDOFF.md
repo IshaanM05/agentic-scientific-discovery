@@ -7,7 +7,8 @@ updated: 2026-10-03 16:00 ET (cycle 6, A done) by lead. Get ET via python with U
 - Approval: -p runs decline ASK automatically (fail-closed, runs/t011-ask). Interactive REPL run (runs/t011-repl) held the call ~1.6 s until a client answered; the browser's resolve won, so the hold-until-human is NOT proven. Approved wording: "In an interactive run the approval policy held the tool call until a human answered (runs/t011-repl, about 1.6 s); non-interactive -p runs decline automatically (fail-closed)."
 ## Cycle 6
 - A DONE, merged at fb903a7 (30 tests). 20-seed blind llm_bo 8.75 hits@60 vs OFAT 6.40 (19/0/1, +2.35, CI [1.75,3.00]) vs BO 6.85 (15/3/2, +1.90); flag set -> no acceleration claim. docs/headline.png, README, docs/DEMO_SCRIPT.md v2. Approval: 22.2 s human hold (runs/t011-repl30).
-- Next: B judge (T006) -> C arena (T004, SciAgents addendum) -> D dashboard (T007). Drop D then C if throttled or < 5 h to freeze. Update demo script after each merge.
+- B DONE, merged 4f019c3 (33 tests): judge n=12, acc 1.00, Brier 0.060, bins 0/2/10; near-arithmetic (judge sees ledger value), do not cite as skill.
+- Next: C arena (T004, SciAgents addendum) -> D dashboard (T007). Drop D then C if throttled or < 5 h to freeze. Update demo script after each merge.
 ## Plan (ET; freeze 06:00 Oct 4, deadline 09:00)
 - Remaining features: demo polish only. Then 2-min demo, README, 3 videos, submission checklist (docs/HACKATHON_BRIEF.md + CHALLENGE_BRIEF.md). Merge to main only when the human says so.
 ## Gotchas
