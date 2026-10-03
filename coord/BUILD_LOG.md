@@ -53,3 +53,6 @@ Merge note: tests pass; no throttling.
 
 2026-10-04 builder/d-dashboard: T007 dashboard. dashboard/app.py (5 tabs, offline replay, read-only), dashboard/data.py loaders, tests/test_dashboard.py smoke (parses every run). streamlit added to requirements. AppTest run on 4 runs: no exceptions. No LLM calls.
 Merge note: 37 tests pass; no throttling.
+
+2026-10-04 builder/e1-counterfactual: E1 rule pre-registered (committed before any call). cfnamed view (Ni<->Mn labels) in asd/llm_prior.py, test added, scripts/e1_counterfactual.py.
+Run THROTTLED (session limit) with 4/20 cfnamed seeds done (runs/e1/cfnamed s0-3); priors cached in runs/t009/cache. No results/README/plot yet. Rerun script after reset (resumes from cache).
