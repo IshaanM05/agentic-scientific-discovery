@@ -7,7 +7,7 @@
 - Urgent blockers (Omnigent install/auth, license, spend) go to the lead at once via SendMessage. Everything else via files.
 - Ticket format: `- [ ] T### title | why+source | accept: ... | effort Xh | expected effect`.
 - Merge flow: Builder writes a merge note in BUILD_LOG (branch, what, measured result). Scout replies APPROVE / CHANGES / REJECT in SCOUT_NOTES. Only APPROVE merges.
-- Spend limits: ask the human at $10 agent spend and at $18 total. Reserve $8-10 for eval runs.
+- Spend limits: ask the human at $16 agent spend (raised from $10 by the human, 2026-10-03) and at $18 total. Reserve $8-10 for eval runs.
 - Compaction: when a log passes 150 lines, the lead (or a Haiku subagent) moves older entries to coord/archive/ and leaves a 10-line digest at the top.
 - Shared blackboard: agents work in git worktrees; coord/ reads and writes go to the main checkout by absolute path `C:\Users\Ishaan\Desktop\agentic-scientific-discovery\coord\`. If your sandbox blocks that path, commit coord/ edits on your own branch and say so in your report. Lead commits coord/ on dev/agentic-loop. Code and knowledge/ notes go on your own branch.
 - Worktrees spawn from main: the first command in a new worktree is `git checkout -B <your-branch> dev/agentic-loop`; verify with `git log --oneline -1`.

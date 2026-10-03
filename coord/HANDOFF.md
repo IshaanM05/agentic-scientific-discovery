@@ -15,10 +15,10 @@ updated: 2026-10-03 19:07 ET (cycle 3 end) by lead
 ## Next 3 actions
 1. Builder: T010 then T011 then T003 on builder/t010-run-config (from dev/agentic-loop).
 2. Scout: review T010/T011; design T009 probe; audit claims (T012).
-3. Lead: get human OK past $10 agent spend before next cycle.
+3. Lead: human raised agent limit to $16; merge after Scout APPROVE.
 ## Gotchas
 - Worktrees spawn from main: `git checkout -B <branch> dev/agentic-loop` first.
 - Omnigent: PyPI install (git URL fails on Windows); PYTHONUTF8=1; `omnigent server --background`; `--server local`; tools: inherit does not work, declare tools per sub-agent; handoff type unused at runtime; cost_budget needs expensive_models: [].
 - Never read/print .env.
 ## Spend so far
-agent ~$6.7 (lead ~1.1, scout ~2.7, builder ~2.9) | model calls on subscription | eval $0. Ask human at $10 agent, $18 total.
+agent ~$6.7 (lead ~1.1, scout ~2.7, builder ~2.9) | model calls on subscription | eval $0. Ask human at $16 agent (raised from $10), $18 total.
