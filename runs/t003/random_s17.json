@@ -1,0 +1,1 @@
+{"arm": "random", "seed": 17, "budget": 60, "n_init": 5, "spent": 60, "hits_by_step": [5, 16, 37, 43, 58], "n_hits": 5, "to_k": {"1": 5, "3": 37, "5": 58}}
