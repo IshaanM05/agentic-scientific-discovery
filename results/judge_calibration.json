@@ -1,0 +1,22 @@
+{
+ "n": 12,
+ "accuracy": 1.0,
+ "brier": 0.06,
+ "reliability": {
+  "low": {
+   "count": 0,
+   "mean_stated": 0.25,
+   "observed_accuracy": null
+  },
+  "medium": {
+   "count": 2,
+   "mean_stated": 0.5,
+   "observed_accuracy": 1.0
+  },
+  "high": {
+   "count": 10,
+   "mean_stated": 0.85,
+   "observed_accuracy": 1.0
+  }
+ }
+}

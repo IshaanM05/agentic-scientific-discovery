@@ -25,7 +25,7 @@ def test_yaml_loads_with_omnigent(name):
     paths = [t.path for t in spec.local_tools]
     assert paths and all(p is not None for p in paths), "tool import failed (callable silently None)"
     if name == "planner":
-        assert {s.name for s in spec.sub_agents} == {"literature", "insight", "analysis", "safety"}
+        assert {s.name for s in spec.sub_agents} == {"literature", "insight", "analysis", "safety", "judge"}
 
 
 def hyp(ids, pred=2100.0, assumption="Ni-Co raises yield"):

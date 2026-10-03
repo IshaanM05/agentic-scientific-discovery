@@ -80,5 +80,13 @@ LIT_OUT_IN = _obj(["citations", "claims"], {
 HANDOFF_HYPS = _obj(["hypothesis_ids"], {"hypothesis_ids": {"type": "array", "minItems": 1, "items": _STR}})
 HANDOFF_ANALYSIS = _obj(["hypothesis_id", "supported", "reopen"], {
     "hypothesis_id": _STR, "supported": {"type": "boolean"}, "reopen": {"type": "array", "items": _STR}})
+JUDGE_VERDICT = _obj(["conclusion_id", "checks", "confidence", "reason"], {
+    "conclusion_id": _STR,
+    "checks": {"type": "object", "required": ["supported_by_ledger", "citations_present", "labelled_agent_generated"],
+               "properties": {k: {"type": "boolean"} for k in
+                              ("supported_by_ledger", "citations_present", "labelled_agent_generated")},
+               "additionalProperties": False},
+    "confidence": {"enum": ["low", "medium", "high"]},
+    "reason": {"type": "string", "minLength": 3, "maxLength": 400}})
 RISK =_obj(["candidate_id", "level", "notes"], {"candidate_id": _STR,
                                                    "level": {"enum": ["low", "medium", "high"]}, "notes": _STR})
