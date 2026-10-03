@@ -137,6 +137,16 @@ def test_no_tool_leaks_unrevealed_yield(run):
     assert "error" in T.analyze_result("H9", cid)
 
 
+def test_state_survives_new_process(run):
+    cid = T.select_next(1)["picks"][0]["candidate_id"]
+    hyp([cid], pred=2400.0)
+    T.run_experiment(cid, "H1")
+    T.reset(seed=0, budget=60, run_dir=run)  # simulates another process: memory empty, files kept
+    a = T.analyze_result("H1", cid)
+    assert a["hypothesis_id"] == "H1" and T._st()["oracle"].spent == 1
+    assert T.research_record(50)["entries"][-1]["record_id"] == a["record_id"]
+
+
 def test_builtin_cost_policy_resolves():
     pytest.importorskip("omnigent")
     from omnigent.policies.builtins.cost import cost_budget

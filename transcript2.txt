@@ -1,0 +1,21 @@
+﻿omnigent: Starting up…
+omnigent: Starting the local server…
+omnigent: Preparing your agent…
+omnigent: Connecting…
+omnigent: Launching your agent…
+Omnigent session: http://127.0.0.1:6767/c/fce194af59a44208a92de4b0a6ef7de6
+Literature sub-agent is still running. I'm waiting for its completion notice before the next step.
+
+Waiting for the literature sub-agent's retry to finish.
+
+I stopped at step 1. The loop is blocked, and no experiments have been run (0 of 60 used, 0 of 5 for this loop).
+
+- **What happened:** I sent the literature sub-agent the task twice. The second message gave exact instructions for `literature_search` and `record_step`. Both times it finished with "produced no output". The research record is still empty, so nothing was handed off.
+- **Why I didn't continue:** The insight agent's hypotheses need citations from the literature step. Calling `literature_search` myself would break the delegation rule. I also didn't want to invent citations. Running experiments without hypotheses would break the loop's order, so I didn't do that ei
+
+**What I need from you:** pick one of these.
+1. Check why the literature agent returns nothing. It may have a tool-permission or `record_step` schema problem. Then I'll retry.
+2. Allow me to call `literature_search` directly for this run.
+3. Tell me to skip the literature step and go on with hypotheses labeled as uncited. I'd flag that in the final record.
+
+I haven't run a safety check or called `recommend_for_validation`, since there's no candidate yet. Any recommendation would still need human approval and wet-lab validation.

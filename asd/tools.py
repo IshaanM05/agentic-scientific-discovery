@@ -30,8 +30,36 @@ def reset(seed=None, budget=None, run_dir=None):
     return _STATE
 
 
+def _sync(st):
+    """Rebuild session state from the on-disk record + ledger. Omnigent runs each agent session's tool
+    calls possibly in a different process, so the files, not memory, are the source of truth."""
+    o = st["oracle"]
+    led = Path(o.ledger_path) if o.ledger_path else None
+    if led and led.exists():
+        lp, o.ledger_path = o.ledger_path, None
+        for line in led.read_text().splitlines():
+            cid = json.loads(line)["id"]
+            if cid not in o._revealed:
+                o.run(cid)
+        o.ledger_path = lp
+    hyps, assumptions, n = {}, {}, 0
+    if st["rec"].exists():
+        for line in st["rec"].read_text().splitlines():
+            e = json.loads(line)
+            n += 1
+            if e["kind"] == "hypothesis":
+                hyps[e["id"]] = e
+                assumptions.setdefault(e["assumption"], "active")
+            elif e["kind"] == "analysis":
+                for a in e.get("reopened_assumptions", []):
+                    assumptions[a] = "reopened"
+    st.update(n=n, hyps=hyps, assumptions=assumptions)
+
+
 def _st():
-    return _STATE or reset()
+    st = _STATE or reset()
+    _sync(st)
+    return st
 
 
 def _record(kind, payload):
@@ -43,28 +71,49 @@ def _record(kind, payload):
     return entry["record_id"]
 
 
-def literature_search(query: str, max_results: int = 5) -> dict:
-    """Literature agent: search OpenAlex for papers (cached on disk). Returns citations with ids."""
+def _fetch_openalex(query, n):
     import urllib.parse
     import urllib.request
+    url = "https://api.openalex.org/works?per-page=%d&search=%s&select=id,title,publication_year,doi" % (
+        n, urllib.parse.quote(query))
+    with urllib.request.urlopen(url, timeout=15) as r:
+        return [{"id": w["id"], "title": w.get("title"), "year": w.get("publication_year"),
+                 "doi": w.get("doi"), "source": "OpenAlex"} for w in json.loads(r.read())["results"]]
+
+
+def _fetch_europepmc(query, n):
+    import urllib.parse
+    import urllib.request
+    url = ("https://www.ebi.ac.uk/europepmc/webservices/rest/search?format=json&resultType=lite"
+           "&pageSize=%d&query=%s" % (n, urllib.parse.quote(query)))
+    with urllib.request.urlopen(url, timeout=15) as r:
+        return [{"id": f"{w.get('source')}:{w.get('id')}", "title": w.get("title"),
+                 "year": w.get("pubYear"), "doi": w.get("doi"), "source": "EuropePMC"}
+                for w in json.loads(r.read())["resultList"]["result"]]
+
+
+def literature_search(query: str, max_results: int = 5) -> dict:
+    """Literature agent: search OpenAlex, falling back to Europe PMC (cached on disk). Returns
+    citations with ids. Never invents citations: on failure returns an error and no citations."""
     cache = Path(os.environ.get("ASD_CACHE", ".cache/lit"))
     cache.mkdir(parents=True, exist_ok=True)
-    key = cache / (hashlib.sha256(query.encode()).hexdigest()[:16] + ".json")
+    key = cache / (hashlib.sha256(f"{query}|{max_results}".encode()).hexdigest()[:16] + ".json")
     if key.exists():
-        res = json.loads(key.read_text())
+        cites = json.loads(key.read_text())
     else:
-        url = "https://api.openalex.org/works?per-page=%d&search=%s&select=id,title,publication_year,doi" % (
-            max_results, urllib.parse.quote(query))
-        try:
-            with urllib.request.urlopen(url, timeout=15) as r:
-                res = json.loads(r.read())["results"]
-            key.write_text(json.dumps(res))
-        except Exception as e:  # offline: say so honestly, no invented citations
-            res = []
-            return {"citations": [], "error": f"literature lookup failed: {type(e).__name__}",
-                    "record_id": _record("literature", {"query": query, "citations": [], "offline": True})}
-    cites = [{"id": w["id"], "title": w.get("title"), "year": w.get("publication_year"),
-              "doi": w.get("doi")} for w in res]
+        errs = []
+        cites = []
+        for fetch in (_fetch_openalex, _fetch_europepmc):
+            try:
+                cites = fetch(query, max_results)
+                if cites:
+                    break
+            except Exception as e:
+                errs.append(f"{fetch.__name__}: {type(e).__name__} {e}")
+        if not cites:
+            return {"citations": [], "error": "; ".join(errs) or "no results",
+                    "record_id": _record("literature", {"query": query, "citations": [], "errors": errs})}
+        key.write_text(json.dumps(cites))
     rid = _record("literature", {"query": query, "citations": cites})
     return S.check({"citations": cites, "record_id": rid}, S.LIT_OUT)
 
