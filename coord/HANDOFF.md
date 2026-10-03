@@ -9,7 +9,8 @@ updated: 2026-10-03 16:00 ET (cycle 6, A done) by lead. Get ET via python with U
 - A DONE, merged at fb903a7 (30 tests). 20-seed blind llm_bo 8.75 hits@60 vs OFAT 6.40 (19/0/1, +2.35, CI [1.75,3.00]) vs BO 6.85 (15/3/2, +1.90); flag set -> no acceleration claim. docs/headline.png, README, docs/DEMO_SCRIPT.md v2. Approval: 22.2 s human hold (runs/t011-repl30).
 - B DONE, merged 4f019c3 (33 tests): judge n=12, acc 1.00, Brier 0.060, bins 0/2/10; near-arithmetic (judge sees ledger value), do not cite as skill.
 - C DONE (36 tests): arena 5 hyps, 4/5 within 25%, Spearman 0.56 p=0.21 (chance); wide ranges score free, not skill.
-- Next: D dashboard (T004, SciAgents addendum) -> D dashboard (T007). Drop D then C if throttled or < 5 h to freeze. Update demo script after each merge.
+- D DONE (37 tests): offline Streamlit replay, `streamlit run dashboard/app.py`; ADAPT labelled inferred. All A-D merged at 816dee4.
+- Next: clean-clone check; optional T013 ablation only if human wants; then human records demo/videos and submits. main untouched until human OK.
 ## Plan (ET; freeze 06:00 Oct 4, deadline 09:00)
 - Remaining features: demo polish only. Then 2-min demo, README, 3 videos, submission checklist (docs/HACKATHON_BRIEF.md + CHALLENGE_BRIEF.md). Merge to main only when the human says so.
 ## Gotchas
