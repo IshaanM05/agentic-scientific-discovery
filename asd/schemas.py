@@ -90,3 +90,27 @@ JUDGE_VERDICT = _obj(["conclusion_id", "checks", "confidence", "reason"], {
     "reason": {"type": "string", "minLength": 3, "maxLength": 400}})
 RISK =_obj(["candidate_id", "level", "notes"], {"candidate_id": _STR,
                                                    "level": {"enum": ["low", "medium", "high"]}, "notes": _STR})
+
+# --- hypothesis arena (T004) ---
+_COND = _obj(["feature", "op", "value"], {
+    "feature": {"enum": ["c", "mn", "si", "cr", "ni", "mo", "v", "n", "nb", "co", "w", "al", "ti"]},
+    "op": {"enum": [">=", "<="]}, "value": _NUM})
+_PRED_VAL = {"oneOf": [_NUM, {"type": "array", "minItems": 2, "maxItems": 2, "items": _NUM}]}
+QUANT_PRED = _obj(["statistic", "region", "value"], {
+    "statistic": {"const": "mean_yield_MPa"},
+    "region": {"type": "array", "minItems": 1, "maxItems": 4, "items": _COND}, "value": _PRED_VAL})
+_NOVELTY = _obj(["verdict", "citations", "note"], {
+    "verdict": {"enum": ["already reported", "partly reported", "no match found"]},
+    "citations": {"type": "array", "items": _STR},
+    "note": {"const": "shallow keyword check, not proof of novelty"}})
+_MS = {"type": "string", "minLength": 5}
+ARENA_HYP = _obj(["id", "hypothesis", "quantitative_prediction", "mechanism", "kill_condition",
+                  "expected_comparison", "novelty", "label"], {
+    "id": _STR, "hypothesis": _MS, "quantitative_prediction": QUANT_PRED, "mechanism": _MS,
+    "kill_condition": _MS, "expected_comparison": _MS, "novelty": _NOVELTY, "label": {"const": "agent-generated"}})
+ARENA_CRITIQUE = _obj(["hypothesis_id", "attack", "refuting_test"], {
+    "hypothesis_id": _STR, "attack": _MS,
+    "refuting_test": _obj(["name", "description", "expected_learning", "feasibility", "cost"], {
+        "name": _STR, "description": _MS, "expected_learning": {"type": "number", "minimum": 0, "maximum": 1},
+        "feasibility": {"type": "number", "minimum": 0, "maximum": 1}, "cost": {"type": "number", "minimum": 1}})})
+ARENA_MATCH = _obj(["a", "b", "winner"], {"a": _STR, "b": _STR, "winner": _STR})

@@ -52,7 +52,7 @@ tools:
   literature:
     type: agent
     description: Finds and cites papers relevant to the question.
-    prompt: You are the literature agent. Use literature_search only. Return citation ids and a one-line claim per citation. Never invent citations.
+    prompt: You are the literature agent. Use literature_search only. Return citation ids and a one-line claim per citation. Never invent citations. Novelty step: for each arena hypothesis run one OpenAlex search and give a verdict (already reported | partly reported | no match found), stated as a shallow keyword check, not proof of novelty.
     executor: {harness: claude-sdk, model: claude-haiku-4-5-20251001}
     tools:
       literature_search: {type: function, callable: asd.tools.literature_search, description: "Search OpenAlex, returns citations with ids"}
@@ -89,7 +89,7 @@ tools:
     max_sessions: 1
   judge:
     type: agent
-    description: Scores each analysis conclusion against the run record with a short rubric; never sees oracle outcomes.
+    description: Scores each analysis conclusion against the run record with a short rubric; sees only revealed ledger values, never unrevealed outcomes.
     prompt: >-
       You are the judge agent. For each analysis conclusion, check (1) supported_by_ledger: the claimed support or
       refutation matches the ledger value versus the hypothesis prediction (supported means within 25 percent),
@@ -100,6 +100,38 @@ tools:
     tools:
       research_record: {type: function, callable: asd.tools.research_record, description: "Shared research record (last N entries)"}
       record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output (kind literature|hypotheses|analysis|safety|judge_verdict) to the research record"}
+    max_sessions: 1
+  generator:
+    type: agent
+    description: Arena generator, proposes 4-6 falsifiable hypotheses with numeric predictions on feature regions.
+    prompt: >-
+      You are the arena generator. Propose 4-6 diverse hypotheses as JSON objects with id, hypothesis,
+      quantitative_prediction (mean_yield_MPa over a composition feature region, value a number or [low, high]),
+      mechanism, kill_condition, expected_comparison, novelty, label "agent-generated". You get feature names
+      and ranges only; no candidate ids, no measured strengths.
+    executor: {harness: claude-sdk, model: claude-sonnet-5-5}
+    tools:
+      record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output to the research record"}
+    max_sessions: 1
+  critic:
+    type: agent
+    description: Attacks each arena hypothesis adversarially and names one refuting test (a candidate test spec for design_tests).
+    prompt: >-
+      You are the arena critic. For each hypothesis give an adversarial attack and ONE refuting test as
+      {name, description, expected_learning, feasibility, cost}; the PI passes these to design_tests.
+    executor: {harness: claude-sdk, model: claude-haiku-4-5-20251001}
+    tools:
+      record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output to the research record"}
+    max_sessions: 1
+  elo_ranker:
+    type: agent
+    description: One round of pairwise Elo comparisons over arena hypotheses.
+    prompt: >-
+      You are the Elo ranker. For each listed pair pick the hypothesis more likely correct, testable and
+      informative given its critique. Reply with {a, b, winner} per pair.
+    executor: {harness: claude-sdk, model: claude-haiku-4-5-20251001}
+    tools:
+      record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output to the research record"}
     max_sessions: 1
 policies:
   cost_budget:

@@ -1,0 +1,15 @@
+{"id": "H2", "elo": 1060.2}
+{"id": "H3", "elo": 1029.2}
+{"id": "H4", "elo": 998.1}
+{"id": "H1", "elo": 972.3}
+{"id": "H5", "elo": 940.3}
+{"match": {"a": "H1", "b": "H2", "winner": "H2"}}
+{"match": {"a": "H1", "b": "H3", "winner": "H3"}}
+{"match": {"a": "H1", "b": "H4", "winner": "H4"}}
+{"match": {"a": "H1", "b": "H5", "winner": "H1"}}
+{"match": {"a": "H2", "b": "H3", "winner": "H2"}}
+{"match": {"a": "H2", "b": "H4", "winner": "H2"}}
+{"match": {"a": "H2", "b": "H5", "winner": "H2"}}
+{"match": {"a": "H3", "b": "H4", "winner": "H3"}}
+{"match": {"a": "H3", "b": "H5", "winner": "H3"}}
+{"match": {"a": "H4", "b": "H5", "winner": "H4"}}
