@@ -84,3 +84,7 @@ Scout spend this cycle est ~$1.2.
 - Judge sub-agent: Haiku, tools explicit, no candidate ids in prompt; JUDGE_VERDICT schema strict (enum, additionalProperties false).
 - Caveat (disclosed in README): "outcome" = supported flag vs |value-pred|/pred<=0.25 using the same value the judge is shown, so it is arithmetic, not scientific judgement. The ledger match in calibrate only filters. Do not cite 1.00 / 0.060 as evidence of judge skill.
 - README Judge subsection has all required caveats and no strong claim. Minor: "never sees oracle outcomes" in the YAML is true only in the sense of no outcome label; it does see the ledger value.
+
+## Review C (builder/c-arena @ 40c652d): APPROVE
+- 36 tests pass; calibration recomputed exactly (5/5 testable, 4/5 within 25%, Spearman 0.564, perm p 0.207). Schema keys complete, novelty note const, bad-hypothesis tests present. Models: generator Sonnet, critic/ranker Haiku; critic names a refuting test; no ids or dataset name in prompts; judge text says "sees only revealed ledger values". Oracle read only in scripts/calibrate_arena.py. README caveats complete, SciAgents scoped. Deviations (4 region conditions, cost key alias) acceptable.
+- Caveat: "realized accuracy" = relative error of the predicted mean, 0 inside a predicted range, so wide ranges score free and it measures numeric prediction, not hypothesis quality. p=0.21 is not significant; do not cite as skill.
