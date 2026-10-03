@@ -3,5 +3,5 @@
 |---|---|---|---|---|---|---|---|
 | experiments to first k hits | - | - | - | - | - | - | - |
 Ablations (ours minus X): arena - | BO - | negative memory - | judge -
-Tests passing: - | Demo from clean clone: - | Docs complete: -
-Spend: agent $0 | eval $0
+Tests passing: 4 (T001 branch) | Demo from clean clone: - | Docs complete: -
+Spend: agent ~$0.9 (builder T001 ~$0.4) | eval $0
