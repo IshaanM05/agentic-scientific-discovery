@@ -1,0 +1,1 @@
+{"colorGroups": [{"query": "path:papers", "color": {"a": 1, "rgb": 5431378}}, {"query": "path:concepts", "color": {"a": 1, "rgb": 14701138}}, {"query": "path:decisions", "color": {"a": 1, "rgb": 14120960}}], "showOrphans": true}

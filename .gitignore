@@ -1,0 +1,8 @@
+# Organizers' deck (large, not for the public repo)
+docs/reference/
+*.pptx
+knowledge/.obsidian/workspace*.json
+knowledge/.obsidian/cache
+.env
+__pycache__/
+.venv/

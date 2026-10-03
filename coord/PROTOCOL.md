@@ -1,0 +1,11 @@
+# PROTOCOL (either agent may amend; log why in DECISIONS.md)
+- Cycle 60-90 min. Start: read HANDOFF.md, BACKLOG top 5, SCOREBOARD, `tail -n 40` of the peer's log. End: update own log, SCOREBOARD, HANDOFF, FEEDBACK.
+- Urgent blockers only via SendMessage. Everything else via files.
+- Ticket format: `- [ ] T### title | why+source | accept: ... | effort Xh | expected effect`.
+- Merge flow: Builder writes a merge note in BUILD_LOG (branch, what, measured result). Scout replies APPROVE / CHANGES / REJECT in SCOUT_NOTES. Only APPROVE merges.
+- Spend limits: ask the human at $10 agent spend and at $18 total. Reserve $8-10 for eval runs.
+- Compaction: when a log passes 150 lines, the lead (or a Haiku subagent) moves older entries to coord/archive/ and leaves a 10-line digest at the top.
+- Freeze features 3 h before the deadline (06:00 ET Sun Oct 4).
+- Shared blackboard: agents work in git worktrees, but ALL coord/ reads and writes go to the main checkout by absolute path `C:\Users\Ishaan\Desktop\agentic-scientific-discovery\coord\`. Lead commits coord/ on main. Code and knowledge/ notes go on your own branch.
+- Merges into main: lead only, after Scout APPROVE. No pushes to main without the human's OK. Feature branches may be pushed.
+- Cost: each agent appends its estimated spend to SCOREBOARD "Spend" line at cycle end.
