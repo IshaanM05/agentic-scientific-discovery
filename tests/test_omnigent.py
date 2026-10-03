@@ -189,10 +189,19 @@ def test_env_config_isolated_dirs(tmp_path, monkeypatch):
 
 
 def test_no_concrete_candidate_id_in_research_prompts():
+    """No agent YAML or asd module may name a concrete candidate id (a seed-dependent hit could prime the model).
+    Named exceptions: policy_demo.yaml (budget-2 mechanics demo, never scored) and single_llm.yaml's initial-design
+    id c000 only (every arm starts from the same first-5 ids, c000 is not seed-specific knowledge)."""
     import re
     from pathlib import Path
     root = Path(__file__).resolve().parent.parent
-    files = [root / "agents" / "planner.yaml", root / "agents" / "hello.yaml"] + list((root / "asd").glob("*.py"))
+    files = sorted((root / "agents").glob("*.yaml")) + list((root / "asd").glob("*.py"))
+    assert len(files) >= 5
+    allow_files = {"policy_demo.yaml"}
+    allow_ids = {"single_llm.yaml": {"c000"}}
     for f in files:
+        if f.name in allow_files:
+            continue
         txt = f.read_text(encoding="utf-8")
-        assert not re.search(r"\bc\d+\b", txt), f"{f.name} contains a concrete candidate id"
+        found = set(re.findall(r"\bc\d+\b", txt)) - allow_ids.get(f.name, set())
+        assert not found, f"{f.name} contains concrete candidate id(s) {found}"

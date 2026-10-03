@@ -29,3 +29,6 @@ T003 offline arms (asd/baselines.py, scripts/run_baselines.py): same pool/seed p
  ofat   k1 15.6(18.0) 20/20 | k3 26.9(30.0) 20/20 | k5 41.0(43) 20/20 | 6.4 hits
  bo(GP-EI) k1 17.9(19.0) 20/20 | k3 25.4(25.5) 20/20 | k5 42.1(48.5) 19/20 | 6.85 hits
 Single-LLM (agents/single_llm.yaml, Sonnet, only get_features+run_experiment, no selector/sub-agents; runs/t003/llm_s0, seed 0, n=1): k1=6, k3=9, k5=15, 14 hits/60. n=1, high-recall risk: NOT comparable to a >=5-seed mean and NOT evidence of a method speedup; T009 memorisation control must run first. Random k1 is easy (4.8% hit rate) so BO/OFAT do not beat it at k=1.
+2026-10-04 builder/t011-t009-t005: T011 finished (ASK record).
+Added runs/t011-ask (meta/ledger/record + exported transcript, runner id redacted, no tokens/env found). rec-0004 = human_approval (source chat message, decision approve, transcript item c97c2d77...). Facts from the human: no Approve/Deny card; first ASK rejected instantly; typed "approve" in chat; second call ran. => recorded, NOT enforced as a hard block (CanUseToolShadowedWarning). Not a hard gate.
+Test widened: all agents/*.yaml + asd/*.py have no concrete candidate id; exceptions: policy_demo.yaml (budget-2 mechanics demo), single_llm.yaml c000 only (initial-design id, same for all arms). 29 tests pass.

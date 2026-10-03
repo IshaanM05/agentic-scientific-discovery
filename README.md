@@ -38,3 +38,9 @@ may run each agent session's tools in a different process. Run config (ASD_SEED,
 - `tools: {x: inherit}` does NOT give sub-agents the parent's function tools in a live run: declare tools explicitly inside each sub-agent.
 - cost_budget hard stop needs `expensive_models: []`.
 - A policy ASK in a headless `-p` run parks the call and the run exits (an `approval` event is posted); approve in the web UI session.
+
+## Human approval (policy ASK): recorded, not enforced
+Measured on Windows with the claude-sdk harness (runs/t011-ask, session 8e65f71d..., transcript `runs/t011-ask/transcript.jsonl`):
+no Approve/Deny card appeared; the first `recommend_for_validation` call (policy ASK) was rejected instantly; the human typed "approve"
+in chat and the second call ran (rec-0003). The decision is stored as record entry `rec-0004` (kind `human_approval`, source "chat message").
+So approval is **recorded, NOT enforced as a hard block**, and we do not call it a hard gate. The budget DENY policy is the enforced one.
