@@ -265,7 +265,9 @@ def recommend_for_validation(candidate_id: str, rationale: str) -> dict:
 
 HANDOFF_SCHEMAS = {
     "literature": S.LIT_OUT_IN, "hypotheses": S.HANDOFF_HYPS, "analysis": S.HANDOFF_ANALYSIS,
-    "safety": S.RISK, "judge_verdict": S.JUDGE_VERDICT,
+    "safety": S.RISK, "judge_verdict": S.JUDGE_VERDICT, "novelty": S.HANDOFF_NOVELTY,
+    "arena_hypotheses": S.HANDOFF_ARENA_HYPS, "arena_critique": S.HANDOFF_ARENA_CRITS,
+    "arena_ranking": S.HANDOFF_ARENA_RANK,
 }
 
 
@@ -280,8 +282,32 @@ def record_step(agent: str, kind: str, payload_json: str) -> dict:
         S.check(payload, HANDOFF_SCHEMAS[kind])
     except Exception as e:
         return {"accepted": False, "error": f"schema validation failed: {str(e).splitlines()[0][:200]}"}
-    return {"accepted": True, "record_id": _record("handoff", {"agent": agent, "handoff_kind": kind,
-                                                               "payload": payload})}
+    extra = {}
+    if kind == "arena_ranking":  # one Elo round (K=32, base 1000) over the submitted matches
+        elo = {}
+        for m in payload:
+            for i in (m["a"], m["b"]):
+                elo.setdefault(i, 1000.0)
+            ea = 1 / (1 + 10 ** ((elo[m["b"]] - elo[m["a"]]) / 400))
+            d = 32 * ((1.0 if m["winner"] == m["a"] else 0.0) - ea)
+            elo[m["a"]] += d
+            elo[m["b"]] -= d
+        extra = {"elo": {k: round(v, 1) for k, v in elo.items()}}
+    rid = _record("handoff", {"agent": agent, "handoff_kind": kind, "payload": payload, **extra})
+    return {"accepted": True, "record_id": rid, **extra}
+
+
+def feature_ranges() -> dict:
+    """Pool feature names and (min, max) ranges only: no candidate ids, no strengths."""
+    from .arena import feature_ranges as fr
+    return fr()
+
+
+def propose_processing_route(candidate_id: str, route: str) -> dict:
+    """Propose a physical processing route for a candidate. Gated by the safety_gate policy (DENY on
+    flagged-hazard routes). Recorded as a hypothesis-grade proposal, never executed."""
+    return {"record_id": _record("route_proposal", {"candidate_id": candidate_id, "route": route,
+                                                    "status": "proposal only; not executed"})}
 
 
 def research_record(last_n: int = 20) -> dict:
