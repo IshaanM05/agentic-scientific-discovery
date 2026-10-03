@@ -39,13 +39,9 @@ may run each agent session's tools in a different process. Run config (ASD_SEED,
 - cost_budget hard stop needs `expensive_models: []`.
 - A policy ASK in a headless `-p` run parks the call and the run exits (an `approval` event is posted); approve in the web UI session.
 
-## Human approval (policy ASK): recorded, not enforced as a hard gate
-Approval requests are recorded; in our runs they were not enforced as a hard human gate (non-interactive runs decline ASKs automatically; the web run
-resolved without a visible card). An interactive REPL run without -p should prompt y/n but is untested.
-Evidence (runs/t011-ask, transcript `runs/t011-ask/transcript.jsonl`): (1) the first ASK was declined automatically by the non-interactive `-p` CLI client,
-which has no approval handler and fails closed (Omnigent server log ~/.omnigent/logs/server/server-20261004-005242-586707.log line 170;
-omnigent_client/_sessions_chat.py:1510). (2) The second call was resolved by the web-UI connection 1 ms after the approval event; the human saw no card and
-clicked nothing, having typed "approve" in chat just before. We have NOT shown a policy that waits for a human click. The human decision is record entry `rec-0004`.
+## Human approval (policy ASK)
+In an interactive run the approval policy held the tool call until a human answered (runs/t011-repl, about 1.6 s); non-interactive -p runs decline automatically (fail-closed).
+Evidence: `runs/t011-repl/APPROVAL_EVIDENCE.md` (interactive REPL run; the browser's resolve arrived first, so a hold lasting until a human answers is not yet proven) and `runs/t011-ask` (non-interactive `-p` run: the first ASK was declined automatically, Omnigent server log line 170; the second call was resolved by the web-UI connection 1 ms after the approval event with no visible card, after the human typed "approve" in chat; human decision recorded as `rec-0004`).
 The budget DENY policy is the enforced one.
 
 ## T009 memorisation control + T005 LLM-prior acquisition (steel_strength, B=60, seeds 0-4, n=5)
