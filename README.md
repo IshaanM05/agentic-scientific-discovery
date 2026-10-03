@@ -2,7 +2,7 @@
 Hack-Nation 7th Global AI Hackathon - Challenge 3: Agentic Scientific Discovery (multi-agent AI lab)
 
 ## Status (Oct 4)
-Complete and frozen for submission: an Omnigent-orchestrated agent team (planner + literature, insight, analysis, safety, judge, hypothesis generator, critic, Elo ranker) runs the full loop question -> evidence -> hypothesis -> experiment -> result -> updated decision on a replayed materials dataset, under an enforced experiment budget and a human-approval policy. 37 offline tests pass from a fresh clone. Headline: with blinded features (all element names hidden), an LLM-prior-guided search found 8.75 hits in 60 experiments vs 6.40 (OFAT) and 6.85 (BO) over 20 seeds (paired CI vs BO [+0.90, +2.95]). A pre-registered Ni/Mn label-swap test met its rule by the letter (8.10 hits, CI vs BO [+0.20, +2.30]), but the swap was a weak manipulation, so recall of this public benchmark cannot be excluded and we do not claim that LLM knowledge accelerates discovery (see Result, Counterfactual test (E1)).
+Complete and frozen for submission: an Omnigent-orchestrated agent team (planner + literature, insight, analysis, safety, judge, hypothesis generator, critic, Elo ranker) runs the full loop question -> evidence -> hypothesis -> experiment -> result -> updated decision on a replayed materials dataset, under an enforced experiment budget and a human-approval policy. 40 offline tests pass from a fresh clone. Headline: with blinded features (all element names hidden), an LLM-prior-guided search found 8.75 hits in 60 experiments vs 6.40 (OFAT) and 6.85 (BO) over 20 seeds (paired CI vs BO [+0.90, +2.95]). A pre-registered Ni/Mn label-swap test met its rule by the letter (8.10 hits, CI vs BO [+0.20, +2.30]), but the swap was a weak manipulation, so recall of this public benchmark cannot be excluded and we do not claim that LLM knowledge accelerates discovery (see Result, Counterfactual test (E1)).
 
 | Component | Where | Evidence |
 |---|---|---|
@@ -34,11 +34,11 @@ flowchart TD
   ANA --> RS
   JUD --> RS
   SAF --> RS
-  subgraph POL[Policies: asd/policies.py]
+  subgraph POL[Policies: asd/policies.py + Omnigent builtin]
     EB{{experiment_budget: DENY}}
     SG{{safety_gate: DENY}}
     HA{{human_approval: ASK}}
-    CB{{cost_budget}}
+    CB{{"cost_budget (omnigent builtin)"}}
   end
   RE -.-> EB
   SAF -.-> SG
