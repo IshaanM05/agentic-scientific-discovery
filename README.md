@@ -2,7 +2,7 @@
 Hack-Nation 7th Global AI Hackathon - Challenge 3: Agentic Scientific Discovery (multi-agent AI lab)
 
 ## Status (Oct 4)
-Complete and frozen for submission: an Omnigent-orchestrated agent team (planner + literature, insight, analysis, safety, judge, hypothesis generator, critic, Elo ranker) runs the full loop question -> evidence -> hypothesis -> experiment -> result -> updated decision on a replayed materials dataset, under an enforced experiment budget and a human-approval policy. 37 offline tests pass from a fresh clone. Headline: with blinded features, an LLM-prior-guided search found 8.75 hits in 60 experiments vs 6.40 (OFAT) and 6.85 (BO) over 20 seeds, but a pre-registered memorisation check is flagged, so we make **no acceleration claim** (see Result).
+Complete and frozen for submission: an Omnigent-orchestrated agent team (planner + literature, insight, analysis, safety, judge, hypothesis generator, critic, Elo ranker) runs the full loop question -> evidence -> hypothesis -> experiment -> result -> updated decision on a replayed materials dataset, under an enforced experiment budget and a human-approval policy. 37 offline tests pass from a fresh clone. Headline: with blinded features (all element names hidden), an LLM-prior-guided search found 8.75 hits in 60 experiments vs 6.40 (OFAT) and 6.85 (BO) over 20 seeds (paired CI vs BO [+0.90, +2.95]). A pre-registered Ni/Mn label-swap test met its rule by the letter (8.10 hits, CI vs BO [+0.20, +2.30]), but the swap was a weak manipulation, so recall of this public benchmark cannot be excluded and we do not claim that LLM knowledge accelerates discovery (see Result, Counterfactual test (E1)).
 
 | Component | Where | Evidence |
 |---|---|---|
@@ -28,6 +28,22 @@ Extended blind run (seeds 0-19, `scripts/t009_blind20.py`): blind llm_bo mean hi
 
 ![headline](docs/headline.png)
 `docs/headline.png`: hits vs experiments used and experiments to the k-th hit (k=1,3,5), with IQR bands. random n=500 seeds, OFAT/BO/blind llm_bo n=20 seeds; the named-feature arm is n=5 with the memorisation flag set.
+
+### Counterfactual test (E1)
+Pre-registered in commit 92ca1e3 before any call (`knowledge/concepts/memorization-control.md`). The named prompt printed the Ni column as "Mn" and the Mn column as "Ni" (maraging Ni ~18 wt% reads as high-Mn); data, oracle and hit threshold unchanged (test: `tests/test_llm_prior.py`). Seeds 0-19, B=60, `scripts/e1_counterfactual.py`, `results/e1_counterfactual.json`.
+
+| arm (mean hits@60) | cfnamed | blind | OFAT | BO |
+|---|---|---|---|---|
+| value | 8.10 | 8.75 | 6.40 | 6.85 |
+
+Counterfactual vs OFAT: W/T/L 14/4/2, mean diff +1.70, bootstrap 95% CI [+0.80, +2.55]. Vs BO (the better baseline): 11/3/6, +1.25, CI [+0.20, +2.30]. Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.
+
+Decision rule (verbatim): "If counterfactual-named prior+GP beats the better of OFAT and BO on mean hits@60 with a paired bootstrap 95% CI excluding 0 over 20 seeds, recall of the true table cannot explain the gain, and we report an acceleration of hits-within-budget versus these baselines on this benchmark. Because the prior was given wrong element identities, this gain is NOT attributed to correct chemical knowledge. If it does not, we report that the named-prior gain depends on correct labels, consistent with recall or with a domain prior, and make no acceleration claim."
+Outcome and interpretation (Scout review): As a counterfactual-naming control we swapped only the Ni and Mn labels (2 of 13), data untouched. The LLM+BO arm still beat the best baseline (BO) by +1.25 hits at 60 experiments (CI [+0.20, +2.30]; 11 wins, 3 ties, 6 losses over 20 seeds), so the pre-registered rule is met. This is a weak manipulation, though. On the 5 seeds with cached named priors, the swap lowered hits by about 1.4 and the prior ranking changed noticeably (Spearman 0.77, top-20 overlap about 9 of 20), but the priors stayed correlated, so recall from the unchanged columns cannot be excluded. The stronger evidence is the blinded arm, with all labels hidden, permuted and scaled: 8.75 hits vs BO 6.85 (+1.90, CI [+0.90, +2.95]), which shows the gain does not depend on element names.
+
+Trust meter (`docs/trust_meter.png`): mean Spearman(prior, revealed y) is 0.48 at the last step for the counterfactual arm vs 0.35 for blind (0.56 vs 0.43 averaged over steps). It does not fall below blind, so the meter did NOT detect the misleading prior; the swapped-label prior still ranked candidates well on revealed data.
+
+![trust meter](docs/trust_meter.png)
 
 **Deviation: temperature.** The protocol specified temperature 0. The LLM calls went through the logged-in `claude` CLI, which cannot set temperature, so all probe and prior calls use default sampling with one cached sample per (prompt, model, seed). This adds sampling noise to the probe (P1 vs P2) and to every LLM arm. Other disclosed deviations: static per-candidate prior (not re-queried), no literature arm in the evaluation.
 

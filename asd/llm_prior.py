@@ -21,10 +21,18 @@ BATCH = 52
 MODEL = "claude-sonnet-5-5"
 
 
+def cf_names(a="ni", b="mn"):
+    """E1 counterfactual: labels of columns a and b swapped (labels only; data untouched)."""
+    n = dict(NAMES)
+    n[a], n[b] = NAMES[b], NAMES[a]
+    return n
+
+
 def _view_rows(o, seed, view, ids):
     raw = np.array([[o.features(c)[f] for f in FEATURES] for c in ids], float)
-    if view == "named":
-        return [", ".join(f"{NAMES[f]}={raw[k, j]:g}" for j, f in enumerate(FEATURES)) for k in range(len(ids))]
+    if view in ("named", "cfnamed"):
+        nm = cf_names() if view == "cfnamed" else NAMES
+        return [", ".join(f"{nm[f]}={raw[k, j]:g}" for j, f in enumerate(FEATURES)) for k in range(len(ids))]
     perm = list(range(13))
     random.Random(1000 + seed).shuffle(perm)
     lo, hi = raw.min(0), raw.max(0)
@@ -37,7 +45,7 @@ def get_prior(seed, view, init_vals, stats=None):
     o = ReplayOracle(seed, 60)
     ids = o.ids()
     desc = dict(zip(ids, _view_rows(o, seed, view, ids)))
-    if view == "named":
+    if view in ("named", "cfnamed"):
         head = ("Steel candidates are described by composition in wt% (balance Fe). Estimate the yield strength in MPa of each "
                 "candidate. We want candidates with yield >= 2000 MPa. Known measurements:\n")
         tail = 'Reply JSON only: {"<id>": <MPa>, ...} with one number for every id listed.'
@@ -131,4 +139,4 @@ def run(arm, seed, view, budget=60, ledger_path=None):
     return {"arm": arm, "view": view, "seed": seed, "budget": budget, "n_init": N_INIT, "spent": o.spent,
             "n_hits": len(h), "hits_by_step": h, "hits_at": {str(k): sum(x <= k for x in h) for k in (20, 40, 60)},
             "first_hit": h[0] if h else budget + 1, "first_pick_hit": first_pick,
-            "prior_missing": stats["missing"], "trust_final": trust[-1], "trust_trace_every10": trust[::10]}
+            "prior_missing": stats["missing"], "trust_final": trust[-1], "trust_trace_every10": trust[::10], "trust_trace": trust}

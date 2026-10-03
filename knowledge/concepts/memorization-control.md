@@ -30,4 +30,11 @@ Let G_named = mean hits@60(named) - mean hits@60(best non-LLM baseline from T003
 Five seeds is a small sample. State n=5, show per-seed values, and do not quote p-values below what a 5-seed sign test can give (p = 1/32 one-sided at best).
 ## Known leak to fix first
 `agents/planner.yaml:30` uses `c272` as the example safety candidate_id. At seed 0, c272 is a 2411 MPa hit. The prompt names a hit id, so it must become `c###` before any T003/T009 run.
+## E1 counterfactual (pre-registered 2026-10-04, before any call)
+- **View.** The NAMED prompt shown to the LLM swaps the labels of two element columns: the true Ni column is printed as "Mn" and the true Mn column as "Ni". True data, pool, oracle and hit threshold are unchanged. Pair Ni<->Mn because they are the discriminating pair for the top steels: maraging grades have Ni ~18 wt% and Mn ~0.1, so the swapped view reads as ~18 wt% Mn / ~0.1 Ni (a Hadfield-like, chemically wrong story). A model applying correct metallurgy is misled; one that recalls the table by composition pattern is less affected.
+- **Arms** (seeds 0-19, B=60, same code and initial design as T003): counterfactual-named prior+GP (llm_bo, view `cfnamed`); blind prior+GP (control, existing seeds 0-19); OFAT; BO. Prior model Sonnet 5.5, cached.
+- **Decision rule.** "If counterfactual-named prior+GP beats the better of OFAT and BO on mean hits@60 with a paired bootstrap 95% CI excluding 0 over 20 seeds, recall of the true table cannot explain the gain, and we report an acceleration of hits-within-budget versus these baselines on this benchmark. Because the prior was given wrong element identities, this gain is NOT attributed to correct chemical knowledge. If it does not, we report that the named-prior gain depends on correct labels, consistent with recall or with a domain prior, and make no acceleration claim."
+- **Trust meter.** Per step, Spearman(prior score, revealed y) over revealed candidates; report whether the counterfactual arm's curve falls below the blind arm's (detects the misleading prior).
+- Bootstrap: 10000 resamples of paired differences, seed 0, percentile 95% CI.
+
 **Links:** [[steel-strength]] · [[baselines-and-evaluation]] · [[llm-guided-bo]] · [[awcd-language-priors]]
