@@ -171,6 +171,7 @@ def test_run_id_guard_and_required_env(tmp_path, monkeypatch):
     with pytest.raises(T.RunConfigError):        # ledger of unknown owner
         T.reset(seed=1, budget=5, run_dir=d2)
     monkeypatch.delenv("ASD_RUN_DIR", raising=False)
+    monkeypatch.delenv("LC_ASD_RUN_DIR", raising=False)
     with pytest.raises(T.RunConfigError):        # no silent shared default
         T.reset()
 

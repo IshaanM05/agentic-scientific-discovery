@@ -22,6 +22,12 @@ class RunConfigError(Exception):
     pass
 
 
+def _env(name, default=None):
+    """Read ASD_<name>, or LC_ASD_<name>: Omnigent's host daemon strips unknown env vars before the
+    runner, but forwards the LC_ prefix (host/connect.py _RUNNER_ENV_ALLOWLIST_PREFIXES)."""
+    return os.environ.get("ASD_" + name, os.environ.get("LC_ASD_" + name, default))
+
+
 def _guard(run_dir, seed, budget, run_id):
     """Run-id guard: a run dir is bound to one (run_id, seed, budget) via meta.json. A tool refuses a
     dir whose ledger/record belong to another run (stops spent budget leaking across runs)."""
@@ -40,13 +46,13 @@ def _guard(run_dir, seed, budget, run_id):
 def reset(seed=None, budget=None, run_dir=None, run_id=None):
     """Session config comes from args or ASD_SEED/ASD_BUDGET/ASD_RUN_DIR/ASD_RUN_ID. With no explicit
     args, ASD_RUN_DIR is REQUIRED (no silent fallback to a shared dir)."""
-    if run_dir is None and "ASD_RUN_DIR" not in os.environ:
+    if run_dir is None and _env("RUN_DIR") is None:
         raise RunConfigError("ASD_RUN_DIR not set in the tool process (env passthrough failed); refusing "
                              "to fall back to a shared run dir")
-    seed = int(os.environ.get("ASD_SEED", 0)) if seed is None else seed
-    budget = int(os.environ.get("ASD_BUDGET", 60)) if budget is None else budget
-    run_id = run_id or os.environ.get("ASD_RUN_ID", "")
-    run_dir = Path(run_dir or os.environ["ASD_RUN_DIR"])
+    seed = int(_env("SEED", 0)) if seed is None else seed
+    budget = int(_env("BUDGET", 60)) if budget is None else budget
+    run_id = run_id or _env("RUN_ID", "")
+    run_dir = Path(run_dir or _env("RUN_DIR"))
     run_dir.mkdir(parents=True, exist_ok=True)
     _guard(run_dir, seed, budget, run_id)
     rec = run_dir / "record.jsonl"
