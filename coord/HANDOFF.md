@@ -28,3 +28,4 @@ agent ~$15 of $16 limit (lead ~2, scout ~5, builder ~8, rough self-reports) | mo
 - E1 partial on builder/e1-counterfactual: pre-reg 92ca1e3 (before any call), code+test 1c98c61; 4/20 cfnamed seeds done; resume: python scripts/e1_counterfactual.py (cached), then plot + README; needs Scout review.
 - E1 MERGED 52ec008 (38 tests): cfnamed 8.10, blind 8.75, OFAT 6.40, BO 6.85; rule met by letter but weak manipulation (prior Spearman 0.77 named vs cf) -> no LLM-knowledge acceleration claim; blind arm is the main anti-recall evidence.
 - E2/E3 MERGED 506b817 (40 tests): runs/e2-live all sub-agents live, 4 exp 0 hits, no ADAPT (demo uses t011), safety_gate DENY tested; README hard-gates section. Next: E4 packaging.
+- E4 MERGED: diagram, LICENSE, responsible use, reproduce.ps1/.sh (both pass from fresh clone), references, SUBMISSION_CHECKLIST.md. 40 tests. Remaining: E5 optional; human: main OK, Replit, videos, form, Discord.
