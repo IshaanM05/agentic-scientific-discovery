@@ -50,3 +50,6 @@ Merge note: tests pass; no throttling.
 Seed 0, named domain (regions need feature names). 3 CLI calls (~$0.04 recorded on last call; cached runs/arena/cache); 5 hypotheses, 10 pairs. Calibration: 5/5 testable, 4/5 within 25pct, Spearman 0.564, perm p 0.207 (5000 perms). n=5: no claim.
 Fixes: schema region maxItems 4 (generator used 4), critic key alias cost_experiments->cost normalised.
 Merge note: tests pass; no throttling.
+
+2026-10-04 builder/d-dashboard: T007 dashboard. dashboard/app.py (5 tabs, offline replay, read-only), dashboard/data.py loaders, tests/test_dashboard.py smoke (parses every run). streamlit added to requirements. AppTest run on 4 runs: no exceptions. No LLM calls.
+Merge note: 37 tests pass; no throttling.
