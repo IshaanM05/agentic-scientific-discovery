@@ -59,3 +59,7 @@ Merge note: 37 tests pass; no throttling.
 - Parallel: Omnigent spawn.py documents multiple sys_session_send calls in one response dispatch concurrently (distinct titles); prompt uses it once for two analysis sessions. Not yet observed live.
 - E3: asd.policies.safety_gate (plain evaluator, DENY on hazard terms) + propose_processing_route tool; pytest via omnigent shim and scripts/demo_policies.py show DENY. 39 tests pass.
 - Live run e2-live (seed 7, budget 8): session limit hit at launch ("resets 4:50am IST"); no record, no export, DEMO_SCRIPT and README section NOT done. No retries.
+
+## 2026-10-04 Builder E2 live run (runs/e2-live, seed 7, budget 8)
+- Ran once after reset. Live sub-agent sessions: literature, generator, critic, elo_ranker, insight, analysis x4, judge x4, safety. Parallel: 2 run_experiment then analysis-A/B in one response (works). 4 experiments, 0 hits.
+- Gaps: no ADAPT line; critic test not executed; planner ended before recommend_for_validation/propose_processing_route (ASK and safety_gate not live). Details runs/e2-live/SUMMARY.md. DEMO_SCRIPT v3 and README "Hard gates vs soft checks" written.

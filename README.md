@@ -72,6 +72,16 @@ Generator (Sonnet 5.5) proposes 5 schema-validated hypotheses (seed 0, named ste
 
 Offline calibration (`scripts/calibrate_arena.py`, never visible to agents): each hypothesis predicts the mean yield of a composition region; the pool gives the true mean. 5/5 testable, 4/5 within 25 percent of the predicted value or range (regions of 7 to 66 steels). Spearman(Elo, realized accuracy) = 0.56; against 5000 random rankings one-sided p = 0.21, so not distinguishable from chance. Caveats: a measured mean inside a predicted range counts as zero error, so wide ranges score for free and "4/5 within 25 percent" overstates predictive precision; n = 5, one seed; calibrated against measured outcomes on a public benchmark, not expert review; the LLM may have memorised matbench_steels; the critic's refuting tests were not executed. Data: `runs/arena/`, `results/arena_calibration.json`.
 
+## Hard gates vs soft checks
+Enforced (the tool call does not run, or waits, regardless of what the model says):
+- Experiment budget: `experiment_budget` policy DENYs `run_experiment` past the limit (`asd/policies.py`, `scripts/demo_policies.py`).
+- Safety gate: `safety_gate` policy DENYs `propose_processing_route` / `recommend_for_validation` whose arguments name a flagged hazard (e.g. "molten salt without PPE"); tested through the Omnigent shim in `tests/test_omnigent.py`. It is a keyword list, not a hazard analysis; a hazard it does not list is not blocked. Not exercised in the live run `runs/e2-live` (the planner ended before calling the tool).
+- Interactive approval hold: `human_approval` ASKs before `recommend_for_validation`; held 22.2 s until a human clicked Approve (runs/t011-repl30).
+- `-p` (headless) fail-closed: an ASK is declined automatically.
+Advisory only (recorded, never blocks): the judge verdict, the arena critic and Elo ranking, the literature novelty check (shallow keyword search), the "agent-generated" labels, and the planner's own prompt order (in `runs/e2-live` it skipped the ADAPT line and the final recommend/route calls).
+
+Parallel sub-agents: Omnigent documents that several `sys_session_send` calls in one response dispatch concurrently (`omnigent/tools/builtins/spawn.py`). In `runs/e2-live` the planner issued two analysis sessions in one response (analysis-A, analysis-B, 3 s apart); see `runs/e2-live/SUMMARY.md`. The planner prompt requests this once; we did not benchmark speedup.
+
 ## Judge
 A Haiku 4.5 judge scores each analysis conclusion with a 3-check rubric (supported by the ledger value, citations present, labelled agent-generated) and a low/medium/high confidence (`asd/judge.py`, `scripts/judge_runs.py`, verdicts in `runs/<run>/judge.jsonl`). Calibrated against measured outcomes on a public benchmark, not expert review: n=12 conclusions (runs t011, live1, live2), accuracy 1.00, Brier 0.060 (low=0.25, medium=0.5, high=0.85), bins low 0, medium 2, high 10 (`results/judge_calibration.json`). Caveats: n is tiny; the judge is shown the ledger value, so the outcome check is close to arithmetic and the result says little about scientific judgement; no low-confidence verdicts, so the reliability table is not informative; the benchmark may be memorised by LLMs.
 
