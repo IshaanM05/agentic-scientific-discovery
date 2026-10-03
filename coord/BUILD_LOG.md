@@ -66,3 +66,8 @@ Run THROTTLED (session limit) with 4/20 cfnamed seeds done (runs/e1/cfnamed s0-3
 ## 2026-10-04 Builder E2 live run (runs/e2-live, seed 7, budget 8)
 - Ran once after reset. Live sub-agent sessions: literature, generator, critic, elo_ranker, insight, analysis x4, judge x4, safety. Parallel: 2 run_experiment then analysis-A/B in one response (works). 4 experiments, 0 hits.
 - Gaps: no ADAPT line; critic test not executed; planner ended before recommend_for_validation/propose_processing_route (ASK and safety_gate not live). Details runs/e2-live/SUMMARY.md. DEMO_SCRIPT v3 and README "Hard gates vs soft checks" written.
+
+## 2026-10-04 Builder E4 packaging (branch builder/e4-packaging)
+- Added README Architecture (mermaid), Responsible use (merged Validation section), References; LICENSE (MIT); SUBMISSION_CHECKLIST.md; scripts/reproduce.ps1 + .sh (offline, E1 from cache).
+- Measured: reproduce.sh run offline ends REPRODUCE OK; E1 cache complete (20/20 each); results files unchanged. No LLM calls.
+- Incomplete citations flagged: Coscientist, A-Lab, AWCD, Matbench paper, OpenAlex. Pending-human: videos, live URL, form, public-repo check.
