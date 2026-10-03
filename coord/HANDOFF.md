@@ -10,7 +10,8 @@ updated: 2026-10-03 16:00 ET (cycle 6, A done) by lead. Get ET via python with U
 - B DONE, merged 4f019c3 (33 tests): judge n=12, acc 1.00, Brier 0.060, bins 0/2/10; near-arithmetic (judge sees ledger value), do not cite as skill.
 - C DONE (36 tests): arena 5 hyps, 4/5 within 25%, Spearman 0.56 p=0.21 (chance); wide ranges score free, not skill.
 - D DONE (37 tests): offline Streamlit replay, `streamlit run dashboard/app.py`; ADAPT labelled inferred. All A-D merged at 816dee4.
-- Next: clean-clone check; optional T013 ablation only if human wants; then human records demo/videos and submits. main untouched until human OK.
+- Clean-clone check PASSED after deps fix (fresh venv: 37 tests, plot ok, dashboard 200).
+- Next: optional T013 ablation only if human wants; then human records demo/videos and submits. main untouched until human OK.
 ## Plan (ET; freeze 06:00 Oct 4, deadline 09:00)
 - Remaining features: demo polish only. Then 2-min demo, README, 3 videos, submission checklist (docs/HACKATHON_BRIEF.md + CHALLENGE_BRIEF.md). Merge to main only when the human says so.
 ## Gotchas
