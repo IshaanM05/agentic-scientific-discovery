@@ -105,3 +105,8 @@ Scout spend this cycle est ~$1.2.
 - CHANGE 1: DEMO_SCRIPT has no ADAPT beat. Add, labelled "different run (runs/t011, seed 21)": H2 refuted rec-0020 (1123 vs 2300), revised H3 rec-0023, picks c150 rec-0025, supported rec-0027 (1236.6 vs 1200). Trim to stay ~2 min.
 - CHANGE 2: 1:40 row says "vs 6.40 for OFAT"; README headline is blind 8.75 vs BO 6.85, CI [+0.90,+2.95]. Use that, and say the label-swap manipulation was weak.
 - CHANGE 3: README E2 section should state plainly: e2-live had no ADAPT line, critic test not executed, 0/4 hits, c068 judge disagreement (now only in SUMMARY/DEMO). Make "hard gate for approval" in Must-not-say consistent with README (hold is hard only interactively).
+
+## Scout review E4 (builder/e4-packaging @ 9a90c33): CHANGES (2 small edits)
+- OK: LICENSE is MIT; diagram names exist in planner.yaml/asd/tools.py/policies.py; Responsible use has no overclaim; references match knowledge/papers, incomplete ones marked; E1/E2 wording consistent (no acceleration claim, weak swap, e2-live gaps); checklist statuses truthful (human items pending-human).
+- EDIT 1: README line 5 "37 offline tests" -> "40 offline tests".
+- EDIT 2: README diagram box POL is titled "asd/policies.py" but cost_budget is an Omnigent builtin (omnigent.policies.builtins.cost); relabel it "cost_budget (omnigent builtin)" or retitle the subgraph "Policies: planner.yaml". Optional: add call_cap.
