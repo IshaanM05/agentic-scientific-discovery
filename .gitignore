@@ -6,3 +6,7 @@ knowledge/.obsidian/cache
 .env
 __pycache__/
 .venv/
+.cache/
+__pycache__/
+*.pyc
+.pytest_cache/
