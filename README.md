@@ -39,8 +39,11 @@ may run each agent session's tools in a different process. Run config (ASD_SEED,
 - cost_budget hard stop needs `expensive_models: []`.
 - A policy ASK in a headless `-p` run parks the call and the run exits (an `approval` event is posted); approve in the web UI session.
 
-## Human approval (policy ASK): recorded, not enforced
-Measured on Windows with the claude-sdk harness (runs/t011-ask, session 8e65f71d..., transcript `runs/t011-ask/transcript.jsonl`):
-no Approve/Deny card appeared; the first `recommend_for_validation` call (policy ASK) was rejected instantly; the human typed "approve"
-in chat and the second call ran (rec-0003). The decision is stored as record entry `rec-0004` (kind `human_approval`, source "chat message").
-So approval is **recorded, NOT enforced as a hard block**, and we do not call it a hard gate. The budget DENY policy is the enforced one.
+## Human approval (policy ASK): recorded, not enforced as a hard gate
+Approval requests are recorded; in our runs they were not enforced as a hard human gate (non-interactive runs decline ASKs automatically; the web run
+resolved without a visible card). An interactive REPL run without -p should prompt y/n but is untested.
+Evidence (runs/t011-ask, transcript `runs/t011-ask/transcript.jsonl`): (1) the first ASK was declined automatically by the non-interactive `-p` CLI client,
+which has no approval handler and fails closed (Omnigent server log ~/.omnigent/logs/server/server-20261004-005242-586707.log line 170;
+omnigent_client/_sessions_chat.py:1510). (2) The second call was resolved by the web-UI connection 1 ms after the approval event; the human saw no card and
+clicked nothing, having typed "approve" in chat just before. We have NOT shown a policy that waits for a human click. The human decision is record entry `rec-0004`.
+The budget DENY policy is the enforced one.

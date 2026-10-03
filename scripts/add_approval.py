@@ -1,18 +1,27 @@
-"""One-off: append the explicit human_approval entry to runs/t011-ask/record.jsonl (T011)."""
+"""One-off T011 helper (already applied): approval record entries + README/BUILD_LOG wording."""
 import json
 
-rec = {
-    "record_id": "rec-0004", "kind": "human_approval", "seed": 31, "run_id": "t011-ask",
-    "source": "chat message", "decision": "approve",
-    "gates": "recommend_for_validation (policy ASK)",
-    "transcript": "runs/t011-ask/transcript.jsonl",
-    "transcript_item": "c97c2d77e2cd4ae38357207967ac5171",
-    "transcript_item_note": "user message 'approve' (created_at 1791055396); the next recommend_for_validation call "
-                            "(item 0e44aeaceede424db165d26cf10f053d, created_at 1791055407) produced rec-0003",
-    "enforcement": "recorded, NOT enforced as a hard block: no Approve/Deny card appeared, the first ASK was rejected "
-                   "instantly, the second call ran after the human typed approve in chat",
-    "note": "entry added post hoc by the Builder from the human's confirmation; rec-0004 is written after rec-0003 "
-            "but the decision preceded it",
-}
-with open("runs/t011-ask/record.jsonl", "a", encoding="utf-8") as f:
-    f.write("\n" + json.dumps(rec) + "\n")
+README = '''## Human approval (policy ASK): recorded, not enforced as a hard gate
+Approval requests are recorded; in our runs they were not enforced as a hard human gate (non-interactive runs decline ASKs automatically; the web run
+resolved without a visible card). An interactive REPL run without -p should prompt y/n but is untested.
+Evidence (runs/t011-ask, transcript `runs/t011-ask/transcript.jsonl`): (1) the first ASK was declined automatically by the non-interactive `-p` CLI client,
+which has no approval handler and fails closed (Omnigent server log ~/.omnigent/logs/server/server-20261004-005242-586707.log line 170;
+omnigent_client/_sessions_chat.py:1510). (2) The second call was resolved by the web-UI connection 1 ms after the approval event; the human saw no card and
+clicked nothing, having typed "approve" in chat just before. We have NOT shown a policy that waits for a human click. The human decision is record entry `rec-0004`.
+The budget DENY policy is the enforced one.
+'''
+rec = {"record_id": "rec-0005", "kind": "approval_evidence", "run_id": "t011-ask", "seed": 31,
+       "evidence": ["first ASK declined automatically by the non-interactive -p CLI client (no approval handler, fails closed): "
+                    "~/.omnigent/logs/server/server-20261004-005242-586707.log line 170; omnigent_client/_sessions_chat.py:1510",
+                    "second call resolved by the web-UI connection 1 ms after the approval event; no card seen, nothing clicked; "
+                    "human had typed 'approve' in chat just before"],
+       "conclusion": "not shown to be a policy that waits for a human click; recorded, not a hard gate"}
+LOG = ("2026-10-04 T011 correction (coordinator facts): first ASK declined automatically by non-interactive -p client "
+       "(fails closed; server log line 170, _sessions_chat.py:1510); second resolved by web-UI connection 1 ms after approval "
+       "event, no card, no click. Not a hard gate; rec-0005 added. Interactive REPL untested.\n")
+
+s = open("README.md", encoding="utf8").read()
+s = s[:s.index("## Human approval (policy ASK)")] + README
+open("README.md", "w", encoding="utf8").write(s)
+open("runs/t011-ask/record.jsonl", "a", encoding="utf8").write(json.dumps(rec) + "\n")
+open("coord/BUILD_LOG.md", "a", encoding="utf8").write(LOG)
