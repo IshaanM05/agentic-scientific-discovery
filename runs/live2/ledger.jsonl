@@ -1,0 +1,5 @@
+{"step": 1, "id": "c272", "value": 2411.5, "is_hit": true, "budget_used": 1}
+{"step": 2, "id": "c000", "value": 1350.4, "is_hit": false, "budget_used": 2}
+{"step": 3, "id": "c152", "value": 1328.3, "is_hit": false, "budget_used": 3}
+{"step": 4, "id": "c068", "value": 1250.5, "is_hit": false, "budget_used": 4}
+{"step": 5, "id": "c066", "value": 1681.2, "is_hit": false, "budget_used": 5}

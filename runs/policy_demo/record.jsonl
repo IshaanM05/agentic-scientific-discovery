@@ -1,0 +1,2 @@
+{"record_id": "rec-0001", "kind": "experiment", "id": "c000", "value": 1350.4, "is_hit": false, "cost": 1, "budget_used": 1, "hypothesis_id": ""}
+{"record_id": "rec-0002", "kind": "experiment", "id": "c001", "value": 1348.6, "is_hit": false, "cost": 1, "budget_used": 2, "hypothesis_id": ""}
