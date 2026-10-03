@@ -72,6 +72,9 @@ Generator (Sonnet 5.5) proposes 5 schema-validated hypotheses (seed 0, named ste
 
 Offline calibration (`scripts/calibrate_arena.py`, never visible to agents): each hypothesis predicts the mean yield of a composition region; the pool gives the true mean. 5/5 testable, 4/5 within 25 percent of the predicted value or range (regions of 7 to 66 steels). Spearman(Elo, realized accuracy) = 0.56; against 5000 random rankings one-sided p = 0.21, so not distinguishable from chance. Caveats: a measured mean inside a predicted range counts as zero error, so wide ranges score for free and "4/5 within 25 percent" overstates predictive precision; n = 5, one seed; calibrated against measured outcomes on a public benchmark, not expert review; the LLM may have memorised matbench_steels; the critic's refuting tests were not executed. Data: `runs/arena/`, `results/arena_calibration.json`.
 
+### Live end-to-end run (E2): what it did and did not show
+`runs/e2-live` (seed 7, budget 8, headless; map in `runs/e2-live/SUMMARY.md`): every sub-agent ran as a live Omnigent session (literature, generator, critic, Elo ranker, insight, analysis x4, judge x4, safety). It ran 4 experiments with 0 hits. It did NOT contain an ADAPT step (the ADAPT example is `runs/t011`), did NOT execute the critic's refuting test (offered in design_tests only), and ended before the approval or safety-gate tools were called. The judge disagreed with the analysis on c068 (rec-0028).
+
 ## Hard gates vs soft checks
 Enforced (the tool call does not run, or waits, regardless of what the model says):
 - Experiment budget: `experiment_budget` policy DENYs `run_experiment` past the limit (`asd/policies.py`, `scripts/demo_policies.py`).
