@@ -99,3 +99,9 @@ Scout spend this cycle est ~$1.2.
 - Manipulation size (offline, cached priors, seeds 0-4 named vs cfnamed): Spearman 0.44/0.87/0.86/0.80/0.86 (mean 0.77); top-20 overlap 4/9/7/14/10 of 20. Hits named 8,10,7,9,7 (8.2) vs cfnamed 6,7,8,9,4 (6.8); final trust 0.64,0.55,0.50,0.51,0.53 vs 0.30,0.31,0.54,0.51,0.24.
 - So the swap is not null (priors change, hits drop ~1.4 on 5 seeds, n small) yet priors stay ~0.77 correlated: recall of untouched columns survives. "Recall cannot explain the gain" is NOT established; say gain survives a partial recall perturbation. Blinded arm is the stronger anti-recall evidence.
 - README: avoid "recall cannot explain"; use the proposed paragraph in the report.
+
+## Scout review E2/E3 (builder/e2-live @ c18151c): CHANGES (small, wording only)
+- OK: 39 tests pass; 23 session sends, ids map to record.jsonl; no secrets (runner_token redacted, no keys); parallel worded as dispatch; honest gaps (no ADAPT, critic test unrun, ASK/safety not reached, c068 judge disagreement) in SUMMARY and DEMO_SCRIPT; safety_gate DENY test via shim valid; hard/soft lists accurate.
+- CHANGE 1: DEMO_SCRIPT has no ADAPT beat. Add, labelled "different run (runs/t011, seed 21)": H2 refuted rec-0020 (1123 vs 2300), revised H3 rec-0023, picks c150 rec-0025, supported rec-0027 (1236.6 vs 1200). Trim to stay ~2 min.
+- CHANGE 2: 1:40 row says "vs 6.40 for OFAT"; README headline is blind 8.75 vs BO 6.85, CI [+0.90,+2.95]. Use that, and say the label-swap manipulation was weak.
+- CHANGE 3: README E2 section should state plainly: e2-live had no ADAPT line, critic test not executed, 0/4 hits, c068 judge disagreement (now only in SUMMARY/DEMO). Make "hard gate for approval" in Must-not-say consistent with README (hold is hard only interactively).
