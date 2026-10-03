@@ -25,7 +25,7 @@ with tabs[0]:
         if k == "handoff":
             head += f" | {e.get('agent')} -> planner ({e.get('handoff_kind')})"
         if k == "test_choice" and e.get("adapt"):
-            head += " | ADAPT (follows a surprising/reopened analysis)"
+            head += " | ADAPT (inferred: follows a surprising/reopened analysis)"
         with st.expander(head):
             if k == "literature":
                 st.caption("Retrieved from OpenAlex (external); query written by an agent")
