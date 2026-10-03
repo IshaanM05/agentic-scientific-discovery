@@ -1,0 +1,51 @@
+{
+ "n_hypotheses": 5,
+ "n_testable": 5,
+ "items": [
+  {
+   "id": "H1",
+   "testable": true,
+   "n_rows": 66,
+   "true_mean": 1499.6,
+   "rel_error": 0.182,
+   "elo": 972.3
+  },
+  {
+   "id": "H2",
+   "testable": true,
+   "n_rows": 33,
+   "true_mean": 1943.9,
+   "rel_error": 0.0,
+   "elo": 1060.2
+  },
+  {
+   "id": "H3",
+   "testable": true,
+   "n_rows": 23,
+   "true_mean": 1663.0,
+   "rel_error": 0.0,
+   "elo": 1029.2
+  },
+  {
+   "id": "H4",
+   "testable": true,
+   "n_rows": 7,
+   "true_mean": 1375.1,
+   "rel_error": 1.35,
+   "elo": 998.1
+  },
+  {
+   "id": "H5",
+   "testable": true,
+   "n_rows": 21,
+   "true_mean": 1356.6,
+   "rel_error": 0.078,
+   "elo": 940.3
+  }
+ ],
+ "caveat": "n is tiny; calibrated against measured outcomes on a public benchmark, not expert review; LLM may have memorised matbench_steels",
+ "spearman": 0.564,
+ "perm_p_one_sided": 0.207,
+ "n_permutations": 5000,
+ "within_25pct": 4
+}

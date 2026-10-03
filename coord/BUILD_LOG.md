@@ -45,3 +45,8 @@ Merge note: tests `python -m pytest -q` 30 passed. Spend ~$1.3 builder this cycl
 2026-10-04 builder/b-judge: T006 judge. Haiku 4.5 judge agent in agents/planner.yaml (tools: research_record, record_step), schema JUDGE_VERDICT, record_step kind judge_verdict. scripts/judge_runs.py -> runs/{t011,live1,live2}/judge.jsonl (12 CLI calls, cached runs/judge_cache); scripts/calibrate_judge.py -> results/judge_calibration.json.
 Result: n=12, accuracy 1.0, Brier 0.060, bins low 0 / medium 2 / high 10. Caveat: judge sees ledger value so outcome is near-trivial; tiny n. Safety-gate half of T006 untouched (existing safety agent). No live planner run with judge.
 Merge note: tests pass; no throttling.
+
+2026-10-04 builder/c-arena: T004 arena. asd/arena.py, scripts/run_arena.py, scripts/calibrate_arena.py, schemas ARENA_*, planner.yaml agents generator/critic/elo_ranker + literature novelty step; judge prompt now says it sees only revealed ledger values.
+Seed 0, named domain (regions need feature names). 3 CLI calls (~$0.04 recorded on last call; cached runs/arena/cache); 5 hypotheses, 10 pairs. Calibration: 5/5 testable, 4/5 within 25pct, Spearman 0.564, perm p 0.207 (5000 perms). n=5: no claim.
+Fixes: schema region maxItems 4 (generator used 4), critic key alias cost_experiments->cost normalised.
+Merge note: tests pass; no throttling.
