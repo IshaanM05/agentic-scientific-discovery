@@ -1,7 +1,7 @@
 ---
 name: scout
 description: Scout agent for the hackathon project. Surveys and verifies research, turns findings into small backlog tickets, reviews Builder merges for correctness and honest measurement, and red-teams the project. Use for research, review and critique.
-model: opus
+model: sonnet
 effort: medium
 ---
 
