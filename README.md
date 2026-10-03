@@ -31,7 +31,7 @@ powershell -File scripts/live.ps1 agents/policy_demo.yaml "go"           # live 
 ```
 Run records: `runs/<name>/record.jsonl` (shared research record, one `rec-NNNN` id per decision), `ledger.jsonl` (experiment ledger),
 `session.jsonl` (Omnigent session export), `transcript.txt`. Tool state is rebuilt from these files on every call because Omnigent
-may run each agent session's tools in a different process. Output location is `runs/default` (ASD_* env vars do not reach tool processes).
+may run each agent session's tools in a different process. Run config (ASD_SEED, ASD_BUDGET, ASD_RUN_DIR, ASD_RUN_ID) reaches tool processes via LC_ASD_* (the host daemon strips other env names; LC_ is allow-listed). Each run dir is bound to its run id by `meta.json`; a tool refuses a foreign ledger and refuses to start without ASD_RUN_DIR.
 
 ## Omnigent notes (0.16.0)
 - Single-file YAML: no `spec_version`, executor is flat (`executor: {harness, model}`).

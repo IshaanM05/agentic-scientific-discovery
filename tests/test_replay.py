@@ -67,3 +67,11 @@ def test_random_mean_matches_analytic():
                     tot += i
                     break
         assert abs(tot / 2000 - k * 313 / 16) / (k * 313 / 16) < 0.10
+
+
+def test_baselines_matched_and_budgeted():
+    from asd.baselines import ARMS, run_arm
+    for arm in ARMS:
+        r = run_arm(arm, 0, budget=20)
+        assert r["spent"] == 20 and r["n_init"] == 5
+        assert r == run_arm(arm, 0, budget=20)  # deterministic

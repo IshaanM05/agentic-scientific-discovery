@@ -1,0 +1,29 @@
+﻿powershell : omnigent: Starting up…
+At line:2 char:1
++ powershell -File scripts/live.ps1 agents/planner.yaml "Run the interl ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (omnigent: Starting up…:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+omnigent: Starting the local server…
+omnigent: Preparing your agent…
+omnigent: Connecting…
+omnigent: Launching your agent…
+Omnigent session: http://127.0.0.1:6767/c/4653132170fe4884aadfb70f7e7f4f3d
+Start with literature delegation.The literature agent is still running, so I'm waiting for it to finish.The literature agent hasn't finished yet. I'll wait for the runtime's completion notice before the next step.
+
+Literature is done (record rec-0008). I've sent the insight agent its task and am waiting for it to finish.
+
+Insight needs candidate ids, so I'm sending it the ones select_next returned.I've sent the candidate ids back to the insight agent. I'll wait for it to register the hypotheses.
+
+Experiment 1 is done: c000 measured 1309.1 MPa, well below the 2000 MPa that H1 predicted. I've sent the result to the analysis agent and am waiting for it to finish.
+
+Experiment 2 is done: c299 measured 1123.1 MPa, a miss against the 2300 MPa that H2 predicted. I've sent that result to the analysis agent and am waiting for its reply.The analysis agent hasn't replied yet. I'll continue when its completion notice arrives.
+
+ADAPT: both hypotheses were refuted and the literature rule failed twice, so I'm asking insight to revise. I'm also asking select_next for candidates outside the families I've already tested.The surrogate's picks changed after the two measurements. I've sent the revision request to insight and am waiting for its hypotheses.
+
+Experiment 3 is done: c150 measured 1236.6 MPa, close to H3's prediction of about 1200 MPa but still not a hit. I've sent it to the analysis agent and am waiting for the reply.
+
+Experiment 4 is done: c094 measured 1463.0 MPa, the highest of the four but still not a hit. I've sent it to the analysis agent and am waiting for the reply.
+
+The four experiments are used up. Best candidate is c094 at 1463 MPa, so I'm sending it to safety.I've sent c094 to the safety agent and am waiting for its risk level.

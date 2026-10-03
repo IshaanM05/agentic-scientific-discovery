@@ -1,0 +1,1 @@
+{"arm": "ofat", "seed": 5, "budget": 60, "n_init": 5, "spent": 60, "hits_by_step": [5, 11, 12, 25, 38, 51, 56], "n_hits": 7, "to_k": {"1": 5, "3": 12, "5": 38}}
