@@ -30,6 +30,12 @@ prompt: |
    kind=safety:     {"candidate_id": "c###", "level": "low|medium|high", "notes": "..."}
   After the safety agent flags a candidate at level medium or high you MUST call
   recommend_for_validation (it is gated by a human-approval policy); report what happened.
+  INTERLEAVE, never batch: after literature and insight, repeat ONE experiment at a time:
+   (a) select_next, (b) design_tests (>=2 options), (c) run_experiment for the chosen candidate,
+   (d) delegate analysis of THAT result to the analysis agent, (e) before the next experiment write one
+   line "ADAPT: <what the analysis result changed in the next choice and why>" and pick the next candidate
+   using that result (e.g. move toward compositions near a supported hypothesis, away from a refuted one,
+   or ask insight to revise hypotheses after a surprise). Do not run a second experiment before step (d).
   Stop at budget or when 3 hits are found. Finish with the research_record summary.
 tools:
   literature_search: {type: function, callable: asd.tools.literature_search, description: "Search OpenAlex, returns citations with ids"}

@@ -22,4 +22,4 @@ policies:
     type: function
     handler: asd.policies.human_approval
     factory_params: {ask_after: 99}
-    ask_timeout: 30
+    ask_timeout: 300
