@@ -2,6 +2,7 @@ name: hello
 description: Minimal agent that calls one asd/ function as a Python tool.
 executor:
   harness: claude-sdk
+  model: claude-haiku-4-5-20251001
 prompt: |
   Call the tool toy_oracle_run with x=0.5 and seed=0, then reply with exactly the returned JSON.
 tools:

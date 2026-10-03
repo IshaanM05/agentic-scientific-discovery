@@ -32,7 +32,7 @@ def decide(oracle, belief, budget):
     best = belief.best()
     if oracle.spent >= budget:
         d = {"action": "stop", "reason": "budget exhausted"}
-    elif best is not None and oracle.is_hit(best):
+    elif best is not None and oracle.is_true_hit(max(belief.experiments(), key=lambda e: e[2])[1]):
         d = {"action": "stop", "reason": "hit found"}
     elif best is not None and best > 0.5:
         d = {"action": "exploit", "reason": "promising region"}

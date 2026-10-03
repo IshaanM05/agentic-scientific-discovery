@@ -103,6 +103,40 @@ def test_policy_gates_through_omnigent_shim():
     assert g(ev("recommend_for_validation"))["result"] == "ASK"
 
 
+def test_every_yaml_callable_resolves_and_is_callable():
+    import importlib
+
+    import yaml
+    for name in ("hello", "planner"):
+        spec = yaml.safe_load((ROOT / "agents" / f"{name}.yaml").read_text())
+        for tool, d in spec["tools"].items():
+            if d.get("type") == "function":
+                mod, fn = d["callable"].rsplit(".", 1)
+                assert callable(getattr(importlib.import_module(mod), fn)), tool
+        for pol, d in (spec.get("policies") or {}).items():
+            mod, fn = d["handler"].rsplit(".", 1)
+            assert callable(getattr(importlib.import_module(mod), fn)), pol
+
+
+def test_record_step_rejects_bad_payload_and_accepts_good(run):
+    bad = T.record_step("literature", "literature", json.dumps({"citations": [], "claims": ["x"]}))
+    assert bad["accepted"] is False and "schema" in bad["error"]
+    assert T.record_step("x", "nonsense", "{}")["accepted"] is False
+    assert T.record_step("x", "analysis", "not json")["accepted"] is False
+    assert not (run / "record.jsonl").exists()
+    ok = T.record_step("literature", "literature", json.dumps({"citations": ["W1"], "claims": ["c"]}))
+    assert ok["accepted"] and ok["record_id"].startswith("rec-")
+
+
+def test_no_tool_leaks_unrevealed_yield(run):
+    o = T._st()["oracle"]
+    cid = o.ids()[0]
+    secret = str(o._rows[cid]["yield strength"])
+    outs = json.dumps([T.get_features([cid]), T.select_next(3), T.research_record()])
+    assert secret not in outs and "yield strength" not in outs and "tensile" not in outs
+    assert "error" in T.analyze_result("H9", cid)
+
+
 def test_builtin_cost_policy_resolves():
     pytest.importorskip("omnigent")
     from omnigent.policies.builtins.cost import cost_budget

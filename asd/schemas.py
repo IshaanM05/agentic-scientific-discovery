@@ -52,7 +52,7 @@ def _obj(req, props):
 
 
 _STR, _NUM = {"type": "string"}, {"type": "number"}
-LIT_OUT = _obj(["citations", "record_id"], {"citations": {"type": "array"}, "record_id": _STR})
+LIT_OUT = _obj(["citations", "record_id"], {"citations": {"type": "array", "minItems": 1}, "record_id": _STR})
 HYP_REC = _obj(["id", "text", "candidate_ids", "predicted_value", "assumption", "citations", "label"], {
     "id": _STR, "text": {"type": "string", "minLength": 5},
     "candidate_ids": {"type": "array", "items": _STR, "minItems": 1},
@@ -74,5 +74,11 @@ ANALYSIS_R = _obj(["hypothesis_id", "value", "predicted", "rel_error", "supporte
     "hypothesis_id": _STR, "value": _NUM, "predicted": _NUM, "rel_error": _NUM,
     "supported": {"type": "boolean"}, "surprising": {"type": "boolean"},
     "reopened_assumptions": {"type": "array", "items": _STR}, "record_id": _STR})
-RISK = _obj(["candidate_id", "level", "notes"], {"candidate_id": _STR,
+LIT_OUT_IN = _obj(["citations", "claims"], {
+    "citations": {"type": "array", "minItems": 1, "items": _STR},
+    "claims": {"type": "array", "minItems": 1, "items": _STR}})
+HANDOFF_HYPS = _obj(["hypothesis_ids"], {"hypothesis_ids": {"type": "array", "minItems": 1, "items": _STR}})
+HANDOFF_ANALYSIS = _obj(["hypothesis_id", "supported", "reopen"], {
+    "hypothesis_id": _STR, "supported": {"type": "boolean"}, "reopen": {"type": "array", "items": _STR}})
+RISK =_obj(["candidate_id", "level", "notes"], {"candidate_id": _STR,
                                                    "level": {"enum": ["low", "medium", "high"]}, "notes": _STR})

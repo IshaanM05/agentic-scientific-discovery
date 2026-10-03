@@ -148,7 +148,9 @@ def analyze_result(hypothesis_id: str, candidate_id: str) -> dict:
     """Analysis agent: compare the revealed value with the hypothesis prediction. A surprise
     (relative error > 25%) reopens the hypothesis's underlying assumption."""
     st = _st()
-    h = st["hyps"][hypothesis_id]
+    h = st["hyps"].get(hypothesis_id)
+    if h is None:
+        return {"error": f"unknown hypothesis {hypothesis_id!r}; call propose_hypothesis first"}
     if candidate_id not in st["oracle"]._revealed:
         return {"error": "candidate not yet run; call run_experiment first"}
     r = st["oracle"].run(candidate_id)  # already revealed -> free
@@ -177,6 +179,27 @@ def recommend_for_validation(candidate_id: str, rationale: str) -> dict:
     (Omnigent ASK policy). Output is a hypothesis-grade recommendation, not a result."""
     return {"record_id": _record("recommendation", {"candidate_id": candidate_id, "rationale": rationale,
                                                    "status": "needs wet-lab validation"})}
+
+
+HANDOFF_SCHEMAS = {
+    "literature": S.LIT_OUT_IN, "hypotheses": S.HANDOFF_HYPS, "analysis": S.HANDOFF_ANALYSIS,
+    "safety": S.RISK,
+}
+
+
+def record_step(agent: str, kind: str, payload_json: str) -> dict:
+    """Validated handoff: a sub-agent submits its structured output as a JSON string. It is checked
+    against the schema for `kind` (literature|hypotheses|analysis|safety) and appended to the
+    shared research record. Invalid payloads are rejected, not recorded."""
+    if kind not in HANDOFF_SCHEMAS:
+        return {"accepted": False, "error": f"unknown kind {kind!r}; use {sorted(HANDOFF_SCHEMAS)}"}
+    try:
+        payload = json.loads(payload_json)
+        S.check(payload, HANDOFF_SCHEMAS[kind])
+    except Exception as e:
+        return {"accepted": False, "error": f"schema validation failed: {str(e).splitlines()[0][:200]}"}
+    return {"accepted": True, "record_id": _record("handoff", {"agent": agent, "handoff_kind": kind,
+                                                               "payload": payload})}
 
 
 def research_record(last_n: int = 20) -> dict:
