@@ -265,7 +265,7 @@ def recommend_for_validation(candidate_id: str, rationale: str) -> dict:
 
 HANDOFF_SCHEMAS = {
     "literature": S.LIT_OUT_IN, "hypotheses": S.HANDOFF_HYPS, "analysis": S.HANDOFF_ANALYSIS,
-    "safety": S.RISK,
+    "safety": S.RISK, "judge_verdict": S.JUDGE_VERDICT,
 }
 
 

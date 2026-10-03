@@ -87,6 +87,20 @@ tools:
       flag_risk: {type: function, callable: asd.tools.flag_risk, description: "Safety risk flag for a candidate"}
       record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output (kind literature|hypotheses|analysis|safety) to the research record"}
     max_sessions: 1
+  judge:
+    type: agent
+    description: Scores each analysis conclusion against the run record with a short rubric; never sees oracle outcomes.
+    prompt: >-
+      You are the judge agent. For each analysis conclusion, check (1) supported_by_ledger: the claimed support or
+      refutation matches the ledger value versus the hypothesis prediction (supported means within 25 percent),
+      (2) citations_present: the hypothesis lists citations, (3) labelled_agent_generated: the hypothesis is labelled
+      agent-generated. Reply with JSON {conclusion_id, checks{supported_by_ledger, citations_present,
+      labelled_agent_generated}, confidence low|medium|high, reason} and submit it with record_step kind judge_verdict.
+    executor: {harness: claude-sdk, model: claude-haiku-4-5-20251001}
+    tools:
+      research_record: {type: function, callable: asd.tools.research_record, description: "Shared research record (last N entries)"}
+      record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output (kind literature|hypotheses|analysis|safety|judge_verdict) to the research record"}
+    max_sessions: 1
 policies:
   cost_budget:
     type: function
