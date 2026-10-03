@@ -1,0 +1,1 @@
+{"arm": "llm_bo", "view": "blind", "seed": 0, "budget": 60, "n_init": 5, "spent": 60, "n_hits": 8, "hits_by_step": [38, 40, 51, 52, 54, 55, 56, 60], "hits_at": {"20": 0, "40": 2, "60": 8}, "first_hit": 38, "first_pick_hit": false, "prior_missing": 0, "trust_final": -0.342, "trust_trace_every10": [1.0, 0.2, 0.095, -0.001, -0.255, -0.338]}

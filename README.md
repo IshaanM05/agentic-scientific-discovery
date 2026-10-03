@@ -47,3 +47,15 @@ which has no approval handler and fails closed (Omnigent server log ~/.omnigent/
 omnigent_client/_sessions_chat.py:1510). (2) The second call was resolved by the web-UI connection 1 ms after the approval event; the human saw no card and
 clicked nothing, having typed "approve" in chat just before. We have NOT shown a policy that waits for a human click. The human decision is record entry `rec-0004`.
 The budget DENY policy is the enforced one.
+
+## T009 memorisation control + T005 LLM-prior acquisition (steel_strength, B=60, seeds 0-4, n=5)
+Probe (runs/t009/probe.json, 20 fixed rows, Sonnet 5.5 via cached CLI calls, default sampling): MAE MPa P1 generic 254.9 (near-exact 2/20),
+P2 guided 188.7 (near-exact 3/20), P3 blinded 1573 (0/20), LOO kNN-5 104.3 (near-exact 6/20), train mean 719. Spearman P1 0.73, P2 0.71, kNN 0.73.
+**Recall flag: SET** (near-exact(P2) 3 >= 3, and MAE(P2) 188.7 < 0.8 x MAE(P1) 254.9 = 203.9; MAE(P2) is NOT < 0.5 x kNN).
+Arms (same pool, seeds, init design, budget as T003; LLM = static per-candidate prior from Sonnet 5.5, 5 revealed init rows in context; see asd/llm_prior.py):
+hits@60 per seed 0-4: random(500-seed mean) 2.95 | OFAT [6,7,7,7,6] 6.6 | BO [8,3,5,8,5] 5.8 | named llm_bo [8,10,7,9,7] 8.2 | blind llm_bo [8,10,8,6,10] 8.4 |
+named llm_greedy [15,13,11,14,13] 13.2 | blind llm_greedy [0,15,6,14,6] 8.2. Mean experiments to 1/3/5 hits: random500 18.2/46.8/59.0, OFAT 18.0/29.2/40.6,
+BO 27.6/35.6/55.2, named llm_bo 6.0/9.6/30.6, blind llm_bo 15.4/21.6/28.8. G_named = 1.6 (4/5 paired wins vs best baseline OFAT, 1 tie), G_blind = 1.8 (4/5 wins).
+**Verdict by the pre-registered rule: recall flag set => NO acceleration claim.** The measured advantage is "consistent with memorisation of a public benchmark
+or named-domain prior". Caveat for the reader: the blinded arm (no names, permuted, scaled features) kept the llm_bo advantage (G_blind >= 0.5 G_named) but its
+greedy variant is erratic (0 hits in one seed), so we cannot separate recall from legitimate metallurgy priors with n=5. Not shown: that the agent "learns faster".

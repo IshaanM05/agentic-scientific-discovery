@@ -1,0 +1,209 @@
+{
+ "random500": {
+  "20": 1.024,
+  "40": 2.012,
+  "60": 2.946
+ },
+ "random500_to_k": {
+  "1": 18.234,
+  "3": 46.848,
+  "5": 58.986
+ },
+ "base/random": {
+  "hits60": [
+   0,
+   5,
+   3,
+   3,
+   4
+  ],
+  "hits60_mean": 3,
+  "hits20_mean": 1.8,
+  "hits40_mean": 2.2,
+  "to_k_mean": {
+   "1": 18.8,
+   "3": 40.6,
+   "5": 57
+  },
+  "first_pick_hit": "-"
+ },
+ "base/ofat": {
+  "hits60": [
+   6,
+   7,
+   7,
+   7,
+   6
+  ],
+  "hits60_mean": 6.6,
+  "hits20_mean": 1,
+  "hits40_mean": 4.4,
+  "to_k_mean": {
+   "1": 18,
+   "3": 29.2,
+   "5": 40.6
+  },
+  "first_pick_hit": "-"
+ },
+ "base/bo": {
+  "hits60": [
+   8,
+   3,
+   5,
+   8,
+   5
+  ],
+  "hits60_mean": 5.8,
+  "hits20_mean": 0.4,
+  "hits40_mean": 2.6,
+  "to_k_mean": {
+   "1": 27.6,
+   "3": 35.6,
+   "5": 55.2
+  },
+  "first_pick_hit": "-"
+ },
+ "named/llm_bo": {
+  "hits60": [
+   8,
+   10,
+   7,
+   9,
+   7
+  ],
+  "hits60_mean": 8.2,
+  "hits20_mean": 5.2,
+  "hits40_mean": 6.6,
+  "to_k_mean": {
+   "1": 6,
+   "3": 9.6,
+   "5": 30.6
+  },
+  "first_pick_hit": 5
+ },
+ "blind/llm_bo": {
+  "hits60": [
+   8,
+   10,
+   8,
+   6,
+   10
+  ],
+  "hits60_mean": 8.4,
+  "hits20_mean": 3.8,
+  "hits40_mean": 5.8,
+  "to_k_mean": {
+   "1": 15.4,
+   "3": 21.6,
+   "5": 28.8
+  },
+  "first_pick_hit": 2
+ },
+ "named/llm_greedy": {
+  "hits60": [
+   15,
+   13,
+   11,
+   14,
+   13
+  ],
+  "hits60_mean": 13.2,
+  "hits20_mean": 8,
+  "hits40_mean": 11.8,
+  "to_k_mean": {
+   "1": 6,
+   "3": 9,
+   "5": 12.2
+  },
+  "first_pick_hit": 5
+ },
+ "blind/llm_greedy": {
+  "hits60": [
+   0,
+   15,
+   6,
+   14,
+   6
+  ],
+  "hits60_mean": 8.2,
+  "hits20_mean": 3.4,
+  "hits40_mean": 6.8,
+  "to_k_mean": {
+   "1": 20.8,
+   "3": 25.8,
+   "5": 33
+  },
+  "first_pick_hit": 1
+ },
+ "best_baseline": "ofat",
+ "G_named": 1.5999999999999996,
+ "wins_named_vs_best": [
+  4,
+  1
+ ],
+ "G_blind": 1.8000000000000007,
+ "wins_blind_vs_best": [
+  4,
+  0
+ ],
+ "trust_final": {
+  "named/llm_bo": [
+   0.637,
+   0.548,
+   0.5,
+   0.51,
+   0.532
+  ],
+  "blind/llm_bo": [
+   -0.342,
+   0.593,
+   0.442,
+   0.632,
+   0.309
+  ],
+  "named/llm_greedy": [
+   0.454,
+   0.485,
+   0.012,
+   0.305,
+   0.219
+  ],
+  "blind/llm_greedy": [
+   -0.103,
+   0.6,
+   0.137,
+   0.417,
+   0.127
+  ]
+ },
+ "prior_missing": {
+  "named/llm_bo": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "blind/llm_bo": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "named/llm_greedy": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "blind/llm_greedy": [
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ }
+}
