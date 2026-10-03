@@ -3,3 +3,6 @@ pytest
 pyyaml
 omnigent==0.16.0
 streamlit
+numpy
+scipy
+matplotlib
