@@ -1,12 +1,16 @@
 # PROTOCOL (either agent may amend; log why in DECISIONS.md)
+- Authority: docs/CHALLENGE_BRIEF.md overrides earlier notes. Omnigent (github.com/omnigent-ai/omnigent) MUST orchestrate the live workflow: planner + specialist sub-agents (literature, insight/hypotheses, analysis, safety) with structured handoffs, Python function tools (asd/ loop, oracle, selector), and Omnigent policies for cost budget and human approval/safety. A plain Python loop alone does not count.
+- Test bed: steel_strength (ADR-001), hit = yield >= 2000 MPa, budget 60. Measured claim = baseline vs proposed under matched conditions, >= 5 seeds.
+- Rigor: label every agent-generated hypothesis; attach citations and a run-record id; keep a shared research record so every decision is reconstructible.
+- Time plan (ET): to 16:30 Oct 3 domain + meaningful test (T002); 16:30-03:00 Omnigent workflow (T000, then T003-T006 as agents/tools); 03:00-06:00 strengthen experiment + analysis; 06:00 FREEZE; 06:00-09:00 two-minute demo, README, videos, submission.
 - Cycle 60-90 min. Start: read HANDOFF.md, BACKLOG top 5, SCOREBOARD, `tail -n 40` of the peer's log. End: update own log, SCOREBOARD, HANDOFF, FEEDBACK.
-- Urgent blockers only via SendMessage. Everything else via files.
+- Urgent blockers (Omnigent install/auth, license, spend) go to the lead at once via SendMessage. Everything else via files.
 - Ticket format: `- [ ] T### title | why+source | accept: ... | effort Xh | expected effect`.
 - Merge flow: Builder writes a merge note in BUILD_LOG (branch, what, measured result). Scout replies APPROVE / CHANGES / REJECT in SCOUT_NOTES. Only APPROVE merges.
 - Spend limits: ask the human at $10 agent spend and at $18 total. Reserve $8-10 for eval runs.
 - Compaction: when a log passes 150 lines, the lead (or a Haiku subagent) moves older entries to coord/archive/ and leaves a 10-line digest at the top.
-- Freeze features 3 h before the deadline (06:00 ET Sun Oct 4).
-- Shared blackboard: agents work in git worktrees, but ALL coord/ reads and writes go to the main checkout by absolute path `C:\Users\Ishaan\Desktop\agentic-scientific-discovery\coord\`. Lead commits coord/ on dev/agentic-loop. Code and knowledge/ notes go on your own branch.
+- Shared blackboard: agents work in git worktrees; coord/ reads and writes go to the main checkout by absolute path `C:\Users\Ishaan\Desktop\agentic-scientific-discovery\coord\`. If your sandbox blocks that path, commit coord/ edits on your own branch and say so in your report. Lead commits coord/ on dev/agentic-loop. Code and knowledge/ notes go on your own branch.
+- Worktrees spawn from main: the first command in a new worktree is `git checkout -B <your-branch> dev/agentic-loop`; verify with `git log --oneline -1`.
 - Integration branch is dev/agentic-loop. Never touch main. Merges into dev/agentic-loop: lead only, after Scout APPROVE. Merge dev/agentic-loop into main only when the human says so, at submission time. Feature branches may be pushed.
 - Git attribution: never mention Claude in commit messages, PR bodies or collaborators (no Co-Authored-By, no "Generated with" lines).
 - Cost: each agent appends its estimated spend to SCOREBOARD "Spend" line at cycle end.
