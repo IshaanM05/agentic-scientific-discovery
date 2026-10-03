@@ -53,3 +53,9 @@ Merge note: tests pass; no throttling.
 
 2026-10-04 builder/d-dashboard: T007 dashboard. dashboard/app.py (5 tabs, offline replay, read-only), dashboard/data.py loaders, tests/test_dashboard.py smoke (parses every run). streamlit added to requirements. AppTest run on 4 runs: no exceptions. No LLM calls.
 Merge note: 37 tests pass; no throttling.
+
+## 2026-10-04 Builder E2/E3 (branch builder/e2-live, dfab406): PARTIAL, live run THROTTLED
+- Found: judge/generator/critic/elo_ranker were declared sub-agents but the planner prompt never delegated to them. Rewired planner.yaml ORDER (literature -> arena -> novelty -> design_tests incl. critic refuting test -> run -> parallel analysis -> judge -> ADAPT -> safety -> next). New record_step kinds: novelty, arena_hypotheses, arena_critique, arena_ranking (Elo computed in record_step).
+- Parallel: Omnigent spawn.py documents multiple sys_session_send calls in one response dispatch concurrently (distinct titles); prompt uses it once for two analysis sessions. Not yet observed live.
+- E3: asd.policies.safety_gate (plain evaluator, DENY on hazard terms) + propose_processing_route tool; pytest via omnigent shim and scripts/demo_policies.py show DENY. 39 tests pass.
+- Live run e2-live (seed 7, budget 8): session limit hit at launch ("resets 4:50am IST"); no record, no export, DEMO_SCRIPT and README section NOT done. No retries.
