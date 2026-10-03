@@ -39,3 +39,5 @@ Probe (20 rows): MAE P1 254.9 / P2 188.7 / P3 1573 / kNN5 104.3; near-exact 2/3/
 hits@60 seeds0-4: OFAT 6.6, BO 5.8, random500 2.95, named llm_bo 8.2 [8,10,7,9,7], blind llm_bo 8.4 [8,10,8,6,10], named greedy 13.2, blind greedy 8.2 [0,15,6,14,6]. G_named 1.6 (4 wins/1 tie of 5), G_blind 1.8.
 Deviation from protocol: LLM prior is static (sees only the 5 init rows' y), not re-asked after each reveal; literature agent not used in either arm; first-pick-hit named 5/5 vs blind 2/5 (llm_bo).
 Merge note: tests `python -m pytest -q` 30 passed. Spend ~$1.3 builder this cycle (CLI-reported).
+
+2026-10-04 builder/a-final: A2 blind llm_bo seeds 5-19 (90 CLI calls, ~$3.6 sub): mean 8.75 vs OFAT 6.40 (19/0/1, +2.35, CI [1.75,3.00], p<0.001), vs BO 6.85 (15/3/2, +1.90, CI [0.90,2.95], p=0.002). Flag set: no acceleration claim. A3 docs/headline.png, A4 README, live.ps1 -Interactive. Merge of lead/t011-fixes@82cfb50 blocked by permission classifier; owed to lead.
