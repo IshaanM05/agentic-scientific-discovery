@@ -40,7 +40,7 @@ may run each agent session's tools in a different process. Run config (ASD_SEED,
 - A policy ASK in a headless `-p` run parks the call and the run exits (an `approval` event is posted); approve in the web UI session.
 
 ## Human approval (policy ASK)
-In an interactive run the approval policy held the tool call until a human answered (runs/t011-repl, about 1.6 s); non-interactive -p runs decline automatically (fail-closed).
+In an interactive run the approval policy holds the tool call until a human answers: in runs/t011-repl30 the call was held 22.2 s, with no automatic resolve, until the human clicked Approve. Non-interactive -p runs decline automatically (fail-closed).
 Evidence: `runs/t011-repl/APPROVAL_EVIDENCE.md` (interactive REPL run; the browser's resolve arrived first, so a hold lasting until a human answers is not yet proven) and `runs/t011-ask` (non-interactive `-p` run: the first ASK was declined automatically, Omnigent server log line 170; the second call was resolved by the web-UI connection 1 ms after the approval event with no visible card, after the human typed "approve" in chat; human decision recorded as `rec-0004`).
 The budget DENY policy is the enforced one.
 
