@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LabLoop · autonomous perovskite discovery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F4F1; --sheet:#FBFCFA; --ink:#1C2A39; --ink-2:#4A5866; --ink-3:#717D88;
+  --rule:#D6DCD6; --rule-2:#E6EAE5;
+  --b0:#ECEFEA; --b1:#BFE0D6; --b2:#6FB7B1; --b3:#2F7F95; --b4:#283079;
+  --ok:#2E7A58; --bad:#A8344A; --qual:#9C6C12; --disc:#283079; --focus:#2F7F95;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141B22; --sheet:#1A232C; --ink:#E6ECEF; --ink-2:#AAB6C0; --ink-3:#8794A0;
+    --rule:#2C3842; --rule-2:#24303A;
+    --b0:#1F2A33; --b1:#1F4A4F; --b2:#2C7E86; --b3:#55B4C2; --b4:#C3CCFF;
+    --ok:#5DBB8D; --bad:#E07386; --qual:#E1AE4E; --disc:#C3CCFF; --focus:#55B4C2;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141B22; --sheet:#1A232C; --ink:#E6ECEF; --ink-2:#AAB6C0; --ink-3:#8794A0;
+  --rule:#2C3842; --rule-2:#24303A;
+  --b0:#1F2A33; --b1:#1F4A4F; --b2:#2C7E86; --b3:#55B4C2; --b4:#C3CCFF;
+  --ok:#5DBB8D; --bad:#E07386; --qual:#E1AE4E; --disc:#C3CCFF; --focus:#55B4C2;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 var(--sans);font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:3px}
+code{font-size:.92em}
+.wrap{max-width:1480px;margin:0 auto;padding:22px 28px 48px}
+
+header.top{display:grid;grid-template-columns:auto 1fr auto;gap:32px;align-items:end;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.brand{font-weight:700;font-size:28px;letter-spacing:-.025em;line-height:1}
+.brand small{display:block;font-weight:500;font-size:13px;color:var(--ink-3);letter-spacing:0;margin-top:7px}
+.goal{font-family:var(--serif);font-size:17px;line-height:1.45;max-width:64ch;color:var(--ink-2);margin:0}
+.goal b{color:var(--ink);font-family:var(--sans);font-size:14.5px;font-weight:600}
+.backend{font-size:12.5px;color:var(--ink-3);text-align:right;line-height:1.55}
+
+.transport{display:flex;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.tbtn{border:1px solid var(--rule);background:var(--sheet);border-radius:6px;height:36px;min-width:36px;padding:0 12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.tbtn:hover{border-color:var(--ink-3)}
+.tbtn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:600;min-width:96px}
+.rounds{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;padding:1px}
+.rchip{flex:1 0 52px;height:36px;border-radius:6px;border:1px solid var(--rule);background:transparent;cursor:pointer;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;color:var(--ink-3)}
+.rchip small{font-size:10.5px;font-weight:500}
+.rchip.done{color:var(--ink-2);background:var(--rule-2)}
+.rchip.now{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.hint{font-size:12px;color:var(--ink-3);white-space:nowrap}
+
+.main{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(0,1fr);gap:32px;padding-top:22px}
+@media (max-width:1100px){.main{grid-template-columns:1fr}}
+h2{font-size:15.5px;font-weight:650;margin:0 0 4px;letter-spacing:-.005em}
+.sub{font-size:13px;color:var(--ink-3);margin:0 0 12px;max-width:72ch}
+
+.atlas-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);cursor:pointer;user-select:none;border:1px solid var(--rule);padding:7px 11px;border-radius:6px;background:var(--sheet);white-space:nowrap}
+.toggle input{accent-color:var(--bad);margin:0}
+#atlas{width:100%;height:auto;display:block}
+#atlas .cellbg{fill:var(--sheet);stroke:var(--rule-2)}
+#atlas .ax{font-size:11px;fill:var(--ink-3)}
+#atlas .axt{font-size:12px;fill:var(--ink-2);font-weight:600}
+#atlas .dot{transition:fill .7s ease}
+#atlas .t-ring{fill:none;stroke:var(--ink);stroke-width:1.3}
+#atlas .t-ring.cur{stroke-width:2.2}
+#atlas .t-fail{stroke:var(--bad);stroke-width:1.6}
+#atlas .t-hit{fill:var(--disc);stroke:var(--sheet);stroke-width:.8}
+#atlas .t-true{fill:none;stroke:var(--bad);stroke-width:1.5;stroke-dasharray:2 1.6}
+#atlas .new{animation:land 1s ease-out}
+@keyframes land{0%{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(3)}100%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){#atlas .new{animation:none} #atlas .dot{transition:none}}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:12.5px;color:var(--ink-2);margin-top:8px}
+.ramp{display:inline-flex;align-items:center;gap:6px}
+.ramp i{display:inline-block;width:110px;height:8px;border-radius:2px;background:linear-gradient(90deg,var(--b0),var(--b1),var(--b2),var(--b3),var(--b4));border:1px solid var(--rule)}
+.lg{display:inline-flex;align-items:center;gap:6px}
+.lg[hidden]{display:none}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--paper);padding:8px 10px;border-radius:6px;font-size:12.5px;line-height:1.45;max-width:300px;z-index:20;opacity:0;transition:opacity .12s}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);margin-top:18px;border-top:1px solid var(--rule)}
+.kpi{padding:12px 14px 4px 0}
+.kpi + .kpi{padding-left:16px;border-left:1px solid var(--rule-2)}
+.kpi .v{font-size:30px;font-weight:650;letter-spacing:-.025em;line-height:1.1}
+.kpi .v small{font-size:15px;color:var(--ink-3);font-weight:500;letter-spacing:0}
+.kpi .l{font-size:12.5px;color:var(--ink-3)}
+.bar{height:5px;background:var(--rule-2);border-radius:3px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ink);transition:width .6s}
+
+.decision{border-left:3px solid var(--ink);padding:2px 0 2px 16px;margin-bottom:16px}
+.mode{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.pill{display:inline-block;padding:1px 9px;border-radius:10px;background:var(--ink);color:var(--paper);margin-right:8px;font-weight:600}
+.rationale{font-family:var(--serif);font-size:18px;line-height:1.5;margin:6px 0 0;max-width:62ch}
+.exps{border-top:1px solid var(--rule)}
+.exp{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:2px 14px;padding:10px 4px 10px 0;border-bottom:1px solid var(--rule-2);cursor:pointer;width:100%;text-align:left;background:none;border-left:0;border-right:0;border-top:0}
+.exp:hover{background:var(--sheet)}
+.exp .id{font-size:12.5px;color:var(--ink-3);padding-top:2px}
+.exp .f{font-weight:600;font-size:15px;overflow-wrap:anywhere}
+.exp .why{font-size:13px;color:var(--ink-2);grid-column:2/4}
+.exp .meas{text-align:right;font-size:13.5px;white-space:nowrap}
+.exp .meas .pd{color:var(--ink-3);font-size:12px}
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:0 7px;border-radius:10px;margin-left:6px;vertical-align:2px;border:1px solid currentColor;line-height:17px}
+.c-hit{color:var(--disc)} .c-fail{color:var(--bad)} .c-sur{color:var(--qual)} .c-rep{color:var(--ink-3)}
+.events{margin:16px 0 0;padding:0;list-style:none}
+.events li{font-size:13.5px;padding:7px 0 7px 22px;position:relative;border-bottom:1px dotted var(--rule)}
+.events li::before{content:"";position:absolute;left:4px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--ink-3)}
+.events li.e-supported::before{background:var(--ok)}
+.events li.e-falsified::before,.events li.e-rejected::before{background:var(--bad)}
+.events li.e-qualified::before{background:var(--qual)}
+.events li.e-discovery::before{background:var(--disc);border-radius:1px;transform:rotate(45deg)}
+.events li.e-proposed::before{background:transparent;border:2px solid var(--disc);width:5px;height:5px}
+.events li.e-proposed,.events li.e-revision{font-weight:600}
+.events li.e-revision::before{background:var(--ink);border-radius:1px}
+.events li.e-surprise::before{background:var(--qual);border-radius:1px}
+.empty{font-family:var(--serif);color:var(--ink-3);font-style:italic}
+
+dialog{border:1px solid var(--rule);border-radius:10px;background:var(--sheet);color:var(--ink);max-width:580px;width:calc(100% - 32px);padding:22px 24px}
+dialog::backdrop{background:rgba(20,27,34,.4)}
+dialog h3{margin:0 0 2px;font-size:19px}
+dialog table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:12px}
+dialog td{padding:6px 0;border-bottom:1px solid var(--rule-2);vertical-align:top}
+dialog td:first-child{color:var(--ink-3);width:36%;padding-right:12px}
+
+.lower{margin-top:36px;border-top:1px solid var(--rule)}
+.tabs{display:flex;gap:2px;margin-top:-1px;overflow-x:auto}
+.tab{background:none;border:0;border-top:2px solid transparent;padding:12px 16px 10px;cursor:pointer;color:var(--ink-3);font-weight:600;font-size:14px;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-top-color:var(--ink)}
+.pane{padding-top:16px}
+.pane[hidden]{display:none}
+.scroll{overflow-x:auto}
+table.h{width:100%;border-collapse:collapse;font-size:13.5px;min-width:860px}
+table.h th{text-align:left;font-weight:600;font-size:12.5px;color:var(--ink-3);padding:6px 12px 8px 0;border-bottom:1px solid var(--rule)}
+table.h td{padding:11px 12px 11px 0;border-bottom:1px solid var(--rule-2);vertical-align:top}
+table.h td.nw{white-space:nowrap}
+.status{font-weight:600}
+.s-supported{color:var(--ok)} .s-falsified{color:var(--bad)} .s-qualified{color:var(--qual)} .s-testing,.s-proposed{color:var(--ink-3)}
+.stmt{font-family:var(--serif);font-size:15.5px;line-height:1.4}
+.pr{color:var(--ink-2);font-size:12.5px;margin-top:4px}
+.kill{color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.origin{font-size:12px;color:var(--ink-3)}
+.origin b{color:var(--disc);font-weight:600}
+.elobar{height:4px;background:var(--rule-2);border-radius:2px;margin-top:6px;width:80px}
+.elobar i{display:block;height:100%;background:var(--ink-2);border-radius:2px}
+tr.newh td:first-child b{color:var(--disc)}
+
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:7px;padding:2px;background:var(--sheet);margin-bottom:10px}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-3)}
+.seg button[aria-checked="true"]{background:var(--ink);color:var(--paper)}
+.bench{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:36px}
+@media (max-width:1000px){.bench{grid-template-columns:1fr}}
+#benchchart{width:100%;height:auto}
+#benchchart .gl{stroke:var(--rule-2)} #benchchart .ax{font-size:11px;fill:var(--ink-3)}
+#benchchart .lbl{font-size:12px;font-weight:600}
+.callout{font-family:var(--serif);font-size:18px;line-height:1.5;margin:0 0 16px;max-width:54ch}
+.callout b{font-family:var(--sans);font-size:16px}
+table.b{min-width:0}
+table.b td:not(:first-child),table.b th:not(:first-child){text-align:right}
+.note{font-size:12.5px;color:var(--ink-3);max-width:72ch;margin-top:12px;line-height:1.55}
+
+#gantt{width:100%;height:auto;min-width:760px}
+#gantt .lane{fill:var(--sheet);stroke:var(--rule-2)}
+#gantt .ax{font-size:11px;fill:var(--ink-3)}
+#gantt text.ln{font-size:12px;fill:var(--ink-2);font-weight:600}
+.gkey{display:flex;gap:16px;font-size:12.5px;color:var(--ink-2);margin-top:8px;flex-wrap:wrap}
+.gkey i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-2px;margin-right:5px}
+
+.arch{width:100%;height:auto;max-width:1120px;display:block}
+.disc-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 32px}
+.disc{padding:14px 0;border-bottom:1px solid var(--rule-2)}
+.disc .f{font-weight:700;font-size:17px}
+.disc .m{font-size:13px;color:var(--ink-2)}
+.disc .v{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.lit{columns:2 380px;column-gap:36px;margin:0;padding:0;list-style:none}
+.lit li{break-inside:avoid;padding:10px 0;border-bottom:1px solid var(--rule-2)}
+.lit .c{font-family:var(--serif);font-size:15px}
+.lit .s{font-size:12.5px;color:var(--ink-3)}
+footer{margin-top:40px;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:14px;max-width:110ch}
+@media (max-width:700px){
+  .wrap{padding:14px 14px 40px}
+  header.top{grid-template-columns:1fr;gap:10px}
+  .backend{text-align:left}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .kpi:nth-child(3){padding-left:0;border-left:0}
+  .hint{display:none}
+  .atlas-head{flex-direction:column;gap:4px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">LabLoop<small>an AI scientist that decides the next experiment</small></div>
+    <p class="goal" id="goal"></p>
+    <div class="backend" id="backend"></div>
+  </header>
+
+  <div class="transport" role="toolbar" aria-label="Replay controls">
+    <button class="tbtn" id="prev" aria-label="Previous round">‹</button>
+    <button class="tbtn primary" id="play">Play</button>
+    <button class="tbtn" id="next" aria-label="Next round">›</button>
+    <div class="rounds" id="rounds"></div>
+    <span class="hint">← → to step, space to play</span>
+  </div>
+
+  <div class="main">
+    <section aria-labelledby="atlas-title">
+      <div class="atlas-head">
+        <div>
+          <h2 id="atlas-title">Composition atlas: 2,772 candidate films</h2>
+          <p class="sub">Each square is one Sn/Br ratio; its 24 dots are cation and chloride variants. Darker dots are films the lab now believes are likely to meet spec.</p>
+        </div>
+        <label class="toggle"><input type="checkbox" id="reveal"> Reveal hidden truth</label>
+      </div>
+      <svg id="atlas" role="img" aria-label="Map of candidate compositions coloured by belief"></svg>
+      <div class="legend">
+        <span class="ramp">P(meets spec) 0 <i></i> 1</span>
+        <span class="lg"><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>made</span>
+        <span class="lg"><svg width="14" height="14" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="var(--bad)" stroke-width="1.6"/></svg>film failed</span>
+        <span class="lg"><svg width="14" height="14" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" transform="rotate(45 7 7)" fill="var(--disc)"/></svg>met spec</span>
+        <span class="lg" id="lg-true" hidden><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="var(--bad)" stroke-dasharray="2 1.6" stroke-width="1.5"/></svg>true hit, never shown to agents</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="v" id="k-spent">0</div><div class="l">budget units used</div><div class="bar"><i id="k-bar" style="width:0"></i></div></div>
+        <div class="kpi"><div class="v" id="k-films">0</div><div class="l">films made</div></div>
+        <div class="kpi"><div class="v" id="k-disc">0</div><div class="l">confirmed discoveries</div></div>
+        <div class="kpi"><div class="v" id="k-hyp">0</div><div class="l">hypotheses resolved</div></div>
+      </div>
+    </section>
+
+    <section aria-live="polite" aria-labelledby="round-title">
+      <h2 id="round-title">Round 1</h2>
+      <p class="sub" id="round-sub"></p>
+      <div class="decision">
+        <div class="mode" id="mode"></div>
+        <p class="rationale" id="rationale"></p>
+      </div>
+      <div class="exps" id="exps"></div>
+      <ul class="events" id="events"></ul>
+    </section>
+  </div>
+
+  <section class="lower">
+    <div class="tabs" role="tablist" aria-label="Campaign details">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p-hyp" data-pane="p-hyp">Hypothesis arena</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-bench" data-pane="p-bench">Benchmark</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-disc" data-pane="p-disc">Discoveries</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-time" data-pane="p-time">Lab timeline</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-lit" data-pane="p-lit">Literature</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-arch" data-pane="p-arch">How it works</button>
+    </div>
+    <div class="pane" id="p-hyp" role="tabpanel">
+      <p class="sub">Every hypothesis states a measurable prediction and the result that would kill it. Open ones are ranked by pairwise Elo matches judged on goal relevance, information value and novelty; hypotheses whose region cannot meet spec are parked.</p>
+      <div class="scroll"><table class="h" id="hyptable"></table></div>
+    </div>
+    <div class="pane" id="p-bench" role="tabpanel" hidden>
+      <div class="seg" role="radiogroup" aria-label="Benchmark landscape">
+        <button role="radio" aria-checked="true" data-b="unseen">20 unseen hidden worlds</button>
+        <button role="radio" aria-checked="false" data-b="demo">Demo landscape</button>
+      </div>
+      <p class="sub" id="benchsub"></p>
+      <div class="bench">
+        <div><svg id="benchchart" role="img" aria-label="Distinct true hits found versus budget spent, by strategy"></svg></div>
+        <div>
+          <p class="callout" id="callout"></p>
+          <div class="scroll"><table class="h b" id="benchtable"></table></div>
+          <p class="note" id="benchnote"></p>
+        </div>
+      </div>
+    </div>
+    <div class="pane" id="p-disc" role="tabpanel" hidden>
+      <p class="sub">A film counts as a discovery only after the Judge sees it meet spec in two independent syntheses.</p>
+      <div class="disc-list" id="disclist"></div>
+    </div>
+    <div class="pane" id="p-time" role="tabpanel" hidden>
+      <p class="sub">Each film takes a day or more. While both synthesis stations are busy, the analysis agents keep refitting models, re-ranking hypotheses and re-reading literature.</p>
+      <div class="scroll"><svg id="gantt" role="img" aria-label="Timeline of lab stations and agent work"></svg></div>
+      <div class="gkey"><span><i style="background:var(--b3)"></i>hypothesis test</span><span><i style="background:var(--b4)"></i>exploit</span><span><i style="background:var(--b2)"></i>explore</span><span><i style="background:var(--ink-3)"></i>replicate</span><span><i style="background:var(--bad)"></i>failed film</span><span><i style="background:var(--ink-2);border-radius:50%"></i>agent work</span></div>
+    </div>
+    <div class="pane" id="p-lit" role="tabpanel" hidden>
+      <p class="sub">What the Literature agent hands the arena before any film is made. None of it mentions Cs protecting Sn or chloride passivating Sn-Pb films.</p>
+      <ul class="lit" id="litlist"></ul>
+    </div>
+    <div class="pane" id="p-arch" role="tabpanel" hidden>
+      <svg class="arch" id="arch" viewBox="0 0 1120 350" role="img" aria-label="Agent architecture"></svg>
+      <p class="note">The language model proposes and critiques; a Gaussian-process acquisition function decides which films earn a slot; the Judge decides what counts as known; the notebook keeps every result, including failures. Swap the lab adapter for a robot API and nothing else changes.</p>
+    </div>
+  </section>
+  <footer id="foot"></footer>
+</div>
+<div class="tip" id="tip" aria-hidden="true"></div>
+<dialog id="proto" aria-labelledby="proto-title"><div id="protobody"></div><form method="dialog" style="margin-top:16px;text-align:right"><button class="tbtn">Close</button></form></dialog>
+
+<script id="trace" type="application/json">__TRACE__</script>
+<script id="bench" type="application/json">__BENCH__</script>
+<script id="space" type="application/json">__SPACE__</script>
+<script>
+(() => {
+const T = JSON.parse(document.getElementById('trace').textContent);
+const BB = JSON.parse(document.getElementById('bench').textContent);
+let B = BB.unseen || BB.demo;
+const S = JSON.parse(document.getElementById('space').textContent);
+const $ = id => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rounds = T.rounds;
+let cur = 0, timer = null;
+
+$('goal').innerHTML = `<b>Goal</b>&nbsp; ${esc(T.goal)}`;
+$('backend').innerHTML = `Reasoning: ${esc(T.backend)}<br>Lab: perovskite replay lab, seed ${T.config.seed}<br>Budget: ${T.config.budget} units, ${T.config.batch} films per round`;
+$('foot').innerHTML = `A replay of a real run of the open-source <code>labloop</code> package. Ground truth is hidden from every agent; the benchmark repeats the full campaign over ${B.seeds} seeds against baselines on the same lab and budget. The lab's physics is approximate and literature-inspired, standing in for a self-driving lab, and is not a claim about real devices.`;
+$('litlist').innerHTML = S.literature.map(c => `<li><div class="c">${esc(c.claim)}</div><div class="s">${esc(c.id)} · ${esc(c.source)}</div></li>`).join('');
+
+/* ---------------- atlas ---------------- */
+const CW = 56, CH = 40, GAP = 6, PADL = 44, PADT = 6, DOT = 8.4;
+const svg = $('atlas');
+const W = PADL + 11 * (CW + GAP), H = PADT + 11 * (CH + GAP) + 40;
+svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+const g = el('g', {}, svg);
+for (let sx = 0; sx < 11; sx++) for (let by = 0; by < 11; by++)
+  el('rect', {x: PADL + sx * (CW + GAP), y: PADT + (10 - by) * (CH + GAP), width: CW, height: CH, rx: 3, class: 'cellbg'}, g);
+for (let k = 0; k <= 10; k += 2) {
+  el('text', {x: PADL + k * (CW + GAP) + CW / 2, y: PADT + 11 * (CH + GAP) + 10, 'text-anchor': 'middle', class: 'ax'}, g).textContent = (k / 10).toFixed(1);
+  el('text', {x: PADL - 8, y: PADT + (10 - k) * (CH + GAP) + CH / 2 + 4, 'text-anchor': 'end', class: 'ax'}, g).textContent = (k / 10).toFixed(1);
+}
+el('text', {x: PADL + 5.5 * (CW + GAP), y: PADT + 11 * (CH + GAP) + 30, 'text-anchor': 'middle', class: 'axt'}, g).textContent = 'Sn fraction on the B-site (the rest is Pb)';
+const ym = PADT + 5.5 * (CH + GAP);
+el('text', {x: 12, y: ym, 'text-anchor': 'middle', class: 'axt', transform: `rotate(-90 12 ${ym})`}, g).textContent = 'Br fraction on the X-site';
+const pos = S.points.map(([a, sn, br, cl]) => {
+  const col = a % 6, row = Math.floor(a / 6) + cl * 2;
+  return [PADL + sn * (CW + GAP) + 3.2 + col * DOT + DOT / 2 - 1, PADT + (10 - br) * (CH + GAP) + 3.6 + row * DOT + DOT / 2];
+});
+const dots = pos.map(([x, y], i) => el('circle', {cx: x.toFixed(1), cy: y.toFixed(1), r: 2.9, class: 'dot', 'data-i': i}, g));
+const marks = el('g', {}, svg);
+const truth = el('g', {}, svg);
+truth.style.display = 'none';
+S.true_hits.forEach(i => el('circle', {cx: pos[i][0], cy: pos[i][1], r: 5.4, class: 't-true'}, truth));
+$('reveal').addEventListener('change', e => { truth.style.display = e.target.checked ? '' : 'none'; $('lg-true').hidden = !e.target.checked; });
+
+let stops;
+const readStops = () => { const cs = getComputedStyle(document.documentElement); stops = ['--b0','--b1','--b2','--b3','--b4'].map(v => hex(cs.getPropertyValue(v).trim())); };
+function hex(h) { h = h.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); }
+function ramp(p) {
+  const t = Math.min(1, Math.max(0, p)) ** 0.55 * 4, k = Math.min(3, Math.floor(t)), f = t - k;
+  return `rgb(${stops[k].map((v, i) => Math.round(v + (stops[k + 1][i] - v) * f)).join(',')})`;
+}
+readStops();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readStops(); show(cur); });
+
+const tip = $('tip');
+let measured = {};
+svg.addEventListener('mousemove', e => {
+  const t = e.target.closest('[data-i]');
+  if (!t) { tip.style.opacity = 0; return; }
+  const i = +t.dataset.i;
+  let html = `<b>${esc(S.formulas[i])}</b><br>P(meets spec) now: ${(beliefAfter(cur)[i] / 100).toFixed(2)}`;
+  (measured[i] || []).forEach(m => { html += `<br>${m.id}: ${m.ok ? `${m.eg.toFixed(3)} eV, T80 ${m.t80} h` : 'film failed'}`; });
+  tip.innerHTML = html;
+  tip.style.left = Math.min(window.innerWidth - 310, e.clientX + 14) + 'px';
+  tip.style.top = (e.clientY + 16) + 'px';
+  tip.style.opacity = 1;
+});
+svg.addEventListener('mouseleave', () => tip.style.opacity = 0);
+function beliefAfter(r) { for (let k = r; k >= 0; k--) if (rounds[k].p_map) return rounds[k].p_map; return S.prior_p; }
+
+/* ---------------- rounds ---------------- */
+const rbox = $('rounds');
+rounds.forEach((r, i) => {
+  const b = document.createElement('button');
+  b.className = 'rchip';
+  b.innerHTML = `${r.decision.mode === 'stop' ? 'End' : 'R' + r.round}<small>${r.decision.mode}</small>`;
+  b.setAttribute('aria-label', `Round ${r.round}: ${r.decision.mode}`);
+  b.onclick = () => { stop(); show(i); };
+  rbox.appendChild(b);
+});
+function lastDisc(i) { for (let k = i; k >= 0; k--) if (rounds[k].discoveries) return rounds[k].discoveries; return []; }
+function lastHyps(i) { for (let k = i; k >= 0; k--) if (rounds[k].hypotheses) return rounds[k].hypotheses; return []; }
+
+function show(i) {
+  const prevCur = cur; cur = i;
+  const r = rounds[i];
+  [...rbox.children].forEach((c, k) => { c.classList.toggle('now', k === i); c.classList.toggle('done', k < i); c.setAttribute('aria-current', k === i ? 'step' : 'false'); });
+  const pm = beliefAfter(i);
+  dots.forEach((d, k) => d.setAttribute('fill', ramp(pm[k] / 100)));
+  marks.innerHTML = ''; measured = {};
+  let films = 0;
+  const animate = i === prevCur + 1 || i === 0;
+  for (let k = 0; k <= i; k++) for (const e of rounds[k].experiments) {
+    const [x, y] = pos[e.idx];
+    const fresh = k === i;
+    (measured[e.idx] ||= []).push({id: e.id, ok: e.result.ok, eg: e.result.bandgap_ev, t80: e.result.t80_h});
+    films++;
+    const cls = fresh && animate ? ' new' : '';
+    if (!e.result.ok) el('path', {d: `M${x-3.3} ${y-3.3}l6.6 6.6M${x+3.3} ${y-3.3}l-6.6 6.6`, class: 't-fail' + cls}, marks);
+    else if (e.hit) el('rect', {x: x - 3.4, y: y - 3.4, width: 6.8, height: 6.8, transform: `rotate(45 ${x} ${y})`, class: 't-hit' + cls}, marks);
+    el('circle', {cx: x, cy: y, r: 4.6, class: 't-ring' + (fresh ? ' cur' : '') + cls, 'data-i': e.idx}, marks);
+  }
+  const spent = +(r.spent ?? 0);
+  const disc = lastDisc(i), hyps = lastHyps(i);
+  $('k-spent').innerHTML = `${spent.toFixed(1)}<small> / ${T.config.budget}</small>`;
+  $('k-bar').style.width = Math.min(100, spent / T.config.budget * 100) + '%';
+  $('k-films').textContent = films;
+  $('k-disc').textContent = disc.filter(d => d.status === 'confirmed').length;
+  const res = hyps.filter(h => ['supported', 'falsified', 'qualified'].includes(h.status)).length;
+  $('k-hyp').innerHTML = `${res}<small> / ${hyps.length}</small>`;
+
+  const isStop = r.decision.mode === 'stop';
+  $('round-title').textContent = isStop ? 'Campaign closed' : `Round ${r.round}`;
+  $('round-sub').textContent = isStop ? `After ${films} films and ${spent.toFixed(1)} of ${T.config.budget} budget units, about ${Math.round((rounds[i - 1]?.clock_h ?? 0) / 24)} lab-days.`
+    : `${r.experiments.length} films, ${Math.round(r.clock_h / 24)} lab-days elapsed. Select a film to see its protocol.`;
+  $('mode').innerHTML = `<span class="pill">${esc(r.decision.mode)}</span>PI decision`;
+  $('rationale').textContent = r.decision.rationale;
+
+  const ex = $('exps'); ex.innerHTML = '';
+  if (!r.experiments.length) ex.innerHTML = `<p class="empty" style="padding:12px 0">${isStop ? 'No more films. The hypothesis table and discoveries below are the report.' : 'No films this round.'}</p>`;
+  r.experiments.forEach(e => {
+    const d = document.createElement('button'); d.className = 'exp';
+    const rs = e.result;
+    let chips = '';
+    if (e.kind === 'replicate') chips += '<span class="chip c-rep">replicate</span>';
+    if (!rs.ok) chips += '<span class="chip c-fail">failed</span>';
+    if (e.hit) chips += '<span class="chip c-hit">meets spec</span>';
+    if (e.flag) chips += '<span class="chip c-sur">surprise</span>';
+    d.innerHTML = `<span class="id">${e.id}</span>
+      <span class="f">${esc(e.formula)}${chips}</span>
+      <span class="meas">${rs.ok ? `${rs.bandgap_ev.toFixed(3)} eV · ${rs.t80_h} h` : esc(rs.phase)}
+        <span class="pd" style="display:block">predicted ${e.predicted.eg.toFixed(2)} eV · ${e.predicted.t80_h} h</span></span>
+      <span class="why">${esc(e.purpose)}</span>`;
+    d.onclick = () => openProto(e);
+    ex.appendChild(d);
+  });
+  const ev = $('events'); ev.innerHTML = '';
+  (r.events || []).forEach(e => { const li = document.createElement('li'); li.className = 'e-' + e.type; li.textContent = e.text; ev.appendChild(li); });
+  renderHyps(hyps, r.new_hypotheses || []);
+  renderDisc(disc);
+  renderGantt(i);
+}
+
+function openProto(e) {
+  const p = e.protocol, r = e.result, s = e.safety;
+  $('protobody').innerHTML = `<h3 id="proto-title">${e.id} · ${esc(e.formula)}</h3><p class="sub">${esc(e.purpose)}</p>
+  <table>
+  <tr><td>Precursors (1 mL, 1.2 M)</td><td>${p.precursors.map(x => `${esc(x.reagent)} ${x.mmol} mmol`).join('<br>')}</td></tr>
+  <tr><td>Solvent, antisolvent</td><td>${esc(p.solvent)}, ${esc(p.antisolvent)}</td></tr>
+  <tr><td>Additives</td><td>${p.additives.length ? esc(p.additives.join(', ')) : 'none'}</td></tr>
+  <tr><td>Anneal, atmosphere</td><td>${esc(p.anneal)}, ${esc(p.atmosphere)}</td></tr>
+  <tr><td>Safety gate</td><td>Approved at level ${s.level} (${esc(s.label)})${s.flags.length ? '<br>' + esc(s.flags.join('; ')) : ''}</td></tr>
+  <tr><td>Model predicted</td><td>Eg ${e.predicted.eg.toFixed(3)} eV, T80 ${e.predicted.t80_h} h, P(meets spec) ${e.predicted.p_hit.toFixed(2)}</td></tr>
+  <tr><td>Lab measured</td><td>${r.ok ? `Eg ${r.bandgap_ev.toFixed(3)} eV, T80 ${r.t80_h} h` : 'Film failed QC'}<br>${esc(r.notes)}</td></tr>
+  <tr><td>Analyst</td><td>${esc(e.finding)}${e.flag ? '<br>' + esc(e.flag) : ''}</td></tr>
+  <tr><td>Station, time, cost</td><td>Station ${e.station}, hour ${e.start_h} to ${e.end_h}, ${r.cost} units</td></tr>
+  </table>`;
+  $('proto').showModal();
+}
+
+function renderHyps(hyps, fresh) {
+  const open = h => h.status === 'proposed' || h.status === 'testing';
+  const sorted = [...hyps].sort((a, b) => open(a) - open(b) || b.elo - a.elo);
+  const emin = Math.min(...hyps.map(h => h.elo)), emax = Math.max(...hyps.map(h => h.elo));
+  const label = {qualified: 'holds with exceptions', supported: 'supported', falsified: 'falsified', testing: 'testing', proposed: 'proposed'};
+  const t = $('hyptable');
+  t.innerHTML = `<thead><tr><th>ID</th><th>Hypothesis, prediction and kill condition</th><th>Origin</th><th>Evidence</th><th>Elo</th><th>Status</th></tr></thead>`;
+  const tb = document.createElement('tbody');
+  sorted.forEach(h => {
+    const tr = document.createElement('tr');
+    if (fresh.includes(h.id)) tr.className = 'newh';
+    const contrast = h.prediction.includes('higher by');
+    const ev = h.pass_rate == null ? '—' : contrast ? `Δ ${h.pass_rate.toFixed(2)} decades` : `${Math.round(h.pass_rate * 100)}% pass`;
+    const src = h.origin === 'literature' ? `literature<br>${esc(h.sources.join(', '))}` : `<b>${h.origin === 'llm' ? 'LLM' : 'from lab data'}</b><br>round ${h.created_round}, ${esc(h.sources.join(', '))}`;
+    tr.innerHTML = `<td><b>${h.id}</b></td>
+      <td><div class="stmt">${esc(h.statement)}</div><div class="pr">Predicts ${esc(h.prediction)}.</div><div class="kill">${esc(h.kill_condition)}</div>${h.origin !== 'literature' && h.rationale ? `<div class="kill">Evidence trail: ${esc(h.rationale)}</div>` : ''}</td>
+      <td class="origin">${src}</td>
+      <td class="nw">${ev}<div class="origin">n = ${h.n_evidence}</div></td>
+      <td class="nw"><b>${Math.round(h.elo)}</b><div class="elobar"><i style="width:${emax > emin ? 12 + 88 * (h.elo - emin) / (emax - emin) : 50}%"></i></div></td>
+      <td class="nw"><span class="status s-${h.status}">${label[h.status]}</span><div class="origin">${h.confidence && h.confidence !== '—' ? 'judge: ' + h.confidence.toLowerCase() + ' confidence' : ''}</div></td>`;
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+}
+
+function renderDisc(all) {
+  const box = $('disclist'); box.innerHTML = '';
+  if (!all.length) { box.innerHTML = '<p class="empty">Nothing has met spec yet. Candidates appear here after their first passing film.</p>'; return; }
+  all.forEach(d => {
+    const div = document.createElement('div'); div.className = 'disc';
+    const cls = d.status === 'confirmed' ? 'supported' : d.status === 'not reproduced' ? 'falsified' : 'testing';
+    div.innerHTML = `<div class="f">${esc(d.formula)}</div>
+      <div class="m">${d.eg != null ? `${d.eg.toFixed(3)} eV · T80 ${d.t80_h} h · detailed-balance limit ${d.sq_limit}%` : ''}</div>
+      <div class="v"><span class="status s-${cls}">${esc(d.status)}</span>, ${esc(d.reason || '')}</div>`;
+    box.appendChild(div);
+  });
+}
+
+function renderGantt(i) {
+  const gs = $('gantt'); gs.innerHTML = '';
+  const exps = rounds.slice(0, i + 1).flatMap(r => r.experiments);
+  const tasks = rounds.slice(0, i + 1).flatMap(r => (r.agent_tasks || []).map(t => ({...t, round: r.round})));
+  const tmax = Math.max(100, ...rounds.map(r => r.clock_h || 0));
+  const L = 90, Wd = 1120;
+  gs.setAttribute('viewBox', `0 0 ${Wd} 168`);
+  const sx = t => L + (Wd - L - 10) * t / tmax;
+  ['Station 1', 'Station 2', 'Agents'].forEach((n, k) => { el('rect', {x: L, y: 8 + k * 44, width: Wd - L - 10, height: 34, class: 'lane', rx: 3}, gs); el('text', {x: L - 10, y: 30 + k * 44, 'text-anchor': 'end', class: 'ln'}, gs).textContent = n; });
+  const kc = {exploit: 'var(--b4)', explore: 'var(--b2)', test: 'var(--b3)', replicate: 'var(--ink-3)'};
+  exps.forEach(e => {
+    const r = el('rect', {x: sx(e.start_h), y: 12 + (e.station - 1) * 44, width: Math.max(2, sx(e.end_h) - sx(e.start_h) - 1.5), height: 26, rx: 2, fill: e.result.ok ? kc[e.kind] : 'var(--bad)'}, gs);
+    el('title', {}, r).textContent = `${e.id} ${e.formula} (${e.kind}), hour ${e.start_h} to ${e.end_h}`;
+  });
+  tasks.forEach(t => { const c = el('circle', {cx: sx(t.start_h), cy: 8 + 2 * 44 + 17, r: 4, fill: 'var(--ink-2)'}, gs); el('title', {}, c).textContent = `${t.agent}: ${t.task} (round ${t.round})`; });
+  for (let h = 0; h <= tmax; h += 100) el('text', {x: sx(h), y: 158, 'text-anchor': 'middle', class: 'ax'}, gs).textContent = h + ' h';
+}
+
+/* ---------------- benchmark ---------------- */
+function bench() {
+  $('benchchart').innerHTML = '';
+  const st = B.strategies;
+  const order = ['Random', 'Grad-student OFAT', 'LLM-style (no BO)', 'Pure BO (no literature)', 'LabLoop (full)'];
+  const short = {'Random': 'Random', 'Grad-student OFAT': 'One factor at a time', 'LLM-style (no BO)': 'LLM-style, no BO', 'Pure BO (no literature)': 'Bayesian opt. only', 'LabLoop (full)': 'LabLoop'};
+  const col = {'Random': 'var(--ink-3)', 'Grad-student OFAT': 'var(--qual)', 'LLM-style (no BO)': 'var(--bad)', 'Pure BO (no literature)': 'var(--b2)', 'LabLoop (full)': 'var(--b4)'};
+  const s = $('benchchart'), Wd = 660, Hd = 390, L = 46, R = 150, Tp = 12, Bt = 42;
+  s.setAttribute('viewBox', `0 0 ${Wd} ${Hd}`);
+  const n = st['LabLoop (full)'].mean.length - 1;
+  const ymax = B.unseen_worlds ? Math.ceil(Math.max(...Object.values(st).map(v => Math.max(...v.hi))) / 2) * 2 + 2 : B.true_hits_total;
+  const X = v => L + (Wd - L - R) * v / n, Y = v => Hd - Bt - (Hd - Bt - Tp) * v / ymax;
+  for (let y = 0; y <= ymax; y += 2) { el('line', {x1: L, x2: Wd - R, y1: Y(y), y2: Y(y), class: 'gl'}, s); el('text', {x: L - 8, y: Y(y) + 4, 'text-anchor': 'end', class: 'ax'}, s).textContent = y; }
+  for (let x = 0; x <= n; x += 10) el('text', {x: X(x), y: Hd - Bt + 18, 'text-anchor': 'middle', class: 'ax'}, s).textContent = x;
+  el('text', {x: L + (Wd - L - R) / 2, y: Hd - 4, 'text-anchor': 'middle', class: 'ax'}, s).textContent = 'budget units spent (one film costs 1 to 1.5)';
+  const ym = Tp + (Hd - Bt - Tp) / 2;
+  el('text', {x: 12, y: ym, 'text-anchor': 'middle', class: 'ax', transform: `rotate(-90 12 ${ym})`}, s).textContent = B.unseen_worlds ? 'distinct true hits made (mean per world)' : `distinct true hits made, of ${ymax}`;
+  ['Pure BO (no literature)', 'LabLoop (full)'].forEach(k => {
+    const d = st[k];
+    el('polygon', {points: d.hi.map((v, i) => `${X(i)},${Y(v)}`).join(' ') + ' ' + d.lo.map((v, i) => `${X(i)},${Y(v)}`).reverse().join(' '), fill: col[k], opacity: .14}, s);
+  });
+  const ends = [];
+  order.forEach(k => {
+    el('polyline', {points: st[k].mean.map((v, i) => `${X(i)},${Y(v)}`).join(' '), fill: 'none', stroke: col[k], 'stroke-width': k === 'LabLoop (full)' ? 3.2 : 1.8, 'stroke-linejoin': 'round'}, s);
+    ends.push([k, Y(st[k].mean[n])]);
+  });
+  ends.sort((a, b) => a[1] - b[1]);
+  let last = -99;
+  ends.forEach(([k, y]) => { y = Math.max(y, last + 16); last = y; el('text', {x: Wd - R + 8, y: y + 4, class: 'lbl', fill: col[k]}, s).textContent = short[k]; });
+
+  const full = st['LabLoop (full)'], bo = st['Pure BO (no literature)'], ofat = st['Grad-student OFAT'];
+  const rnd = B.unseen_worlds ? {} : (B.random_expected_budget || {});
+  const x = (a, b) => (a && b) ? (b / a).toFixed(1) + '×' : '—';
+  $('callout').innerHTML = `Across ${B.seeds} independent campaigns, LabLoop made its first spec-meeting film after a median <b>${full.first_hit_median}</b> budget units. Bayesian optimisation alone needed <b>${bo.first_hit_median}</b> (${x(full.first_hit_median, bo.first_hit_median)} slower)${B.unseen_worlds ? `, and it reached three hits in ${Math.round(full.success_3 * 100)}% of worlds.` : ` and random screening would expect to need <b>${rnd['1'] ?? '—'}</b> (${x(full.first_hit_median, rnd['1'])}).`}`;
+  const t = $('benchtable');
+  t.innerHTML = `<thead><tr><th>Strategy</th><th>First hit</th><th>Third hit</th><th>Hits by ${B.budget}</th>${B.unseen_worlds ? '<th>Share found</th>' : ''}</tr></thead>`;
+  const tb = document.createElement('tbody');
+  Object.entries(st).forEach(([k, v]) => {
+    const tr = document.createElement('tr');
+    if (k === 'LabLoop (full)') tr.style.fontWeight = 650;
+    const nr = k === 'Random' && rnd['1'] ? `~${rnd['1']} expected` : 'not reached';
+    const nr3 = k === 'Random' && rnd['3'] ? `~${rnd['3']} expected` : 'not reached';
+    tr.innerHTML = `<td>${esc(k)}</td><td>${v.first_hit_median ?? nr}</td><td>${v.three_hits_median ?? nr3}</td><td>${v.final_mean.toFixed(1)}</td>${B.unseen_worlds ? `<td>${Math.round(v.found_frac * 100)}%</td>` : ''}`;
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+  $('benchnote').textContent = `Medians in budget units over ${B.seeds} seeds; “hits by ${B.budget}” is the mean number of distinct true-spec films made. Ablations remove one component each. Removing negative-result memory makes no measurable difference in this lab because failed films are rare near the optimum, and we report that rather than hide it. The literature prior gets the first hit about twice as fast but biases late search, which is why the PI relaxes it once the lab contradicts it.`;
+  $('benchsub').textContent = B.unseen_worlds
+    ? `Each seed draws fresh hidden physics: which element protects Sn, how strongly bandgaps bow, penalty sizes and end-member offsets. The agents were never tuned on these worlds, which hold ${Math.min(...B.hits_per_world)} to ${Math.max(...B.hits_per_world)} true hits each. LabLoop found ${Math.round(B.strategies['LabLoop (full)'].found_frac * 100)}% of them on average, against ${Math.round(B.strategies['Pure BO (no literature)'].found_frac * 100)}% for Bayesian optimisation alone.`
+    : `The landscape shown in the replay above, ${B.seeds} seeds of lab noise. This is the world the system was developed on, so treat the unseen-worlds view as the honest number.`;
+}
+bench();
+document.querySelectorAll('.seg button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.seg button').forEach(o => o.setAttribute('aria-checked', o === b));
+  B = BB[b.dataset.b]; bench();
+});
+
+/* ---------------- architecture ---------------- */
+(function arch() {
+  const s = $('arch');
+  const defs = el('defs', {}, s);
+  const mk = (id, c) => { const m = el('marker', {id, viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse'}, defs); el('path', {d: 'M0 0L10 5L0 10z', fill: c}, m); };
+  mk('ar', 'var(--ink-3)'); mk('ar2', 'var(--qual)');
+  const ln = (d, c = 'var(--ink-3)', m = 'ar', dash) => el('path', {d, stroke: c, 'stroke-width': 1.5, fill: 'none', 'marker-end': `url(#${m})`, ...(dash ? {'stroke-dasharray': dash} : {})}, s);
+  ln('M196 170 L224 170'); ln('M302 92 L302 140'); ln('M382 170 L420 170'); ln('M578 170 L606 170'); ln('M764 170 L792 170');
+  ln('M872 200 L872 246'); ln('M792 276 L764 276'); ln('M606 276 L578 276'); ln('M420 276 L118 276 L118 202');
+  ln('M950 170 C1060 170 1060 60 920 60 L 384 60', 'var(--qual)', 'ar2', '5 4');
+  el('text', {x: 640, y: 50, 'font-size': 12.5, fill: 'var(--qual)', 'text-anchor': 'middle'}, s).textContent = 'surprises and counterexamples spawn new hypotheses';
+  el('text', {x: 270, y: 296, 'font-size': 12.5, fill: 'var(--ink-3)', 'text-anchor': 'middle'}, s).textContent = 'belief state feeds the next decision';
+  const nodes = [
+    ['PI agent', 'goal, budget, stop rule', 38, 140], ['Literature', 'sourced claims', 224, 36], ['Hypothesis arena', 'propose, critique, Elo', 224, 140],
+    ['Designer + BO', 'GP, P(meets spec)', 420, 140], ['Safety gate', 'protocol review', 606, 140], ['Lab adapter', 'replay lab or robot API', 792, 140],
+    ['Analyst', 'findings, surprises', 792, 246], ['Judge', 'replication, rubric', 606, 246], ['Notebook', 'every result, incl. failures', 420, 246]];
+  nodes.forEach(([n, sub, x, y]) => {
+    const gg = el('g', {}, s);
+    el('rect', {x, y, width: 158, height: 60, rx: 6, fill: 'var(--sheet)', stroke: n === 'Designer + BO' || n === 'Hypothesis arena' ? 'var(--ink)' : 'var(--rule)', 'stroke-width': n === 'Designer + BO' || n === 'Hypothesis arena' ? 1.6 : 1}, gg);
+    el('text', {x: x + 12, y: y + 26, 'font-size': 15, 'font-weight': 650, fill: 'var(--ink)'}, gg).textContent = n;
+    el('text', {x: x + 12, y: y + 45, 'font-size': 12, fill: 'var(--ink-3)'}, gg).textContent = sub;
+  });
+})();
+
+/* ---------------- controls ---------------- */
+function stop() { clearInterval(timer); timer = null; $('play').textContent = 'Play'; }
+$('prev').onclick = () => { stop(); show(Math.max(0, cur - 1)); };
+$('next').onclick = () => { stop(); show(Math.min(rounds.length - 1, cur + 1)); };
+$('play').onclick = () => {
+  if (timer) return stop();
+  if (cur >= rounds.length - 1) show(0);
+  $('play').textContent = 'Pause';
+  timer = setInterval(() => { if (cur >= rounds.length - 1) return stop(); show(cur + 1); }, 4500);
+};
+document.addEventListener('keydown', e => {
+  if (e.target.closest('dialog, input, select')) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); $('next').click(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); $('prev').click(); }
+  if (e.key === ' ' && !e.target.closest('button')) { e.preventDefault(); $('play').click(); }
+});
+const tabs = [...document.querySelectorAll('.tab')];
+tabs.forEach(t => t.onclick = () => {
+  tabs.forEach(o => o.setAttribute('aria-selected', o === t));
+  document.querySelectorAll('.pane').forEach(p => p.hidden = p.id !== t.dataset.pane);
+});
+show(0);
+})();
+</script>
+</body>
+</html>
