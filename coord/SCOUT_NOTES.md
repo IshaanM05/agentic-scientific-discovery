@@ -93,3 +93,9 @@ Scout spend this cycle est ~$1.2.
 - Offline/read-only: no requests/httpx/openai/anthropic/subprocess/omnigent/file writes in dashboard/*. 37 tests pass. streamlit in requirements.txt; README gives `streamlit run dashboard/app.py`.
 - Agent content tagged AGENT-GENERATED; arena/judge/results caveats are pulled verbatim from README sections (p=0.21, near-arithmetic judge, no acceleration claim).
 - Nit (non-blocking): ADAPT is inferred from surprising/reopened flags, not a recorded event; label should read "ADAPT (inferred)" in dashboard/app.py:28.
+
+## Review E1 (builder/e1-counterfactual @ 7983834): APPROVE with wording CHANGES
+- Prereg 92ca1e3 (02:05) precedes all e1 runs/cache (first 1c98c61 02:07; dev..92ca1e3 touches only a note). Numbers match results json (8.10/8.75/6.40/6.85; 11/3/6 +1.25 [0.2,2.3]; 14/4/2 +1.70 [0.8,2.55]); same seeds/budget/oracle, arms differ only by view.
+- Manipulation size (offline, cached priors, seeds 0-4 named vs cfnamed): Spearman 0.44/0.87/0.86/0.80/0.86 (mean 0.77); top-20 overlap 4/9/7/14/10 of 20. Hits named 8,10,7,9,7 (8.2) vs cfnamed 6,7,8,9,4 (6.8); final trust 0.64,0.55,0.50,0.51,0.53 vs 0.30,0.31,0.54,0.51,0.24.
+- So the swap is not null (priors change, hits drop ~1.4 on 5 seeds, n small) yet priors stay ~0.77 correlated: recall of untouched columns survives. "Recall cannot explain the gain" is NOT established; say gain survives a partial recall perturbation. Blinded arm is the stronger anti-recall evidence.
+- README: avoid "recall cannot explain"; use the proposed paragraph in the report.
