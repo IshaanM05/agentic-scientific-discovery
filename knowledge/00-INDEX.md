@@ -5,6 +5,7 @@
 - OFFICIAL brief (wins over everything): [[../docs/CHALLENGE_BRIEF]] | Mandatory layer: [[omnigent]]
 ## Concepts (our design)
 [[loop-structure]] · [[hypothesis-arena]] · [[llm-guided-bo]] · [[belief-state]] · [[replay-oracle]] · [[judge-calibration]] · [[safety-gate]] · [[baselines-and-evaluation]]
+Omnigent (mandatory orchestration): [[omnigent-yaml]] install, tool/sub-agent/policy YAML, auth (T000 recon)
 ## Papers
 Full loop: [[co-scientist]] · [[robin]] · [[kosmos]] · [[ai-scientist]] · [[alphaevolve]]
 Experiment selection: [[biodiscoveryagent]] · [[lgbo]] · [[awcd-language-priors]]
