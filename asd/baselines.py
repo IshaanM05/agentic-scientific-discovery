@@ -1,7 +1,7 @@
 """Non-LLM baselines on the steel_strength replay oracle (T003). Offline, deterministic given the seed.
 
 Matched conditions for every arm: same pool (ReplayOracle(seed) permutation), same budget (60), same
-initial design (the first N_INIT ids c000.. of the seed's shuffled pool), same seeds. Arms differ only
+initial design (the first N_INIT ids of the seed's shuffled pool), same seeds. Arms differ only
 in how they choose experiments after the initial design. Nothing here reads unrevealed yields.
 """
 import math
