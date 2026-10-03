@@ -27,7 +27,7 @@ def kth(hs, k):
 
 
 def load(view, s):
-    return json.loads(Path(f"runs/t009/{view}/llm_bo_s{s}.json").read_text())["hits_by_step"]
+    return json.loads(Path(f"runs/{view}/llm_bo_s{s}.json" if view.startswith("e1/") else f"runs/t009/{view}/llm_bo_s{s}.json").read_text())["hits_by_step"]
 
 
 arms = {
@@ -35,6 +35,7 @@ arms = {
     "OFAT (n=20)": ([run_arm("ofat", s)["hits_by_step"] for s in range(20)], "#1b7837", "-"),
     "BO (n=20)": ([run_arm("bo", s)["hits_by_step"] for s in range(20)], "#2166ac", "-"),
     "blind llm_bo (n=20)": ([load("blind", s) for s in range(20)], "#b2182b", "-"),
+    "counterfactual-named llm_bo (n=20, Ni<->Mn swapped)": ([load("e1/cfnamed", s) for s in range(20)], "#e08214", "-"),
     "named llm_bo (n=5, memorisation flag set)": ([load("named", s) for s in range(5)], "#b2182b", "--"),
 }
 fig, (a1, a2) = plt.subplots(1, 2, figsize=(12, 4.6))
@@ -47,14 +48,14 @@ a1.set(xlabel="experiments used", ylabel="hits found (yield >= 2000 MPa)", title
 a1.legend(fontsize=7.5, loc="upper left")
 a1.grid(alpha=0.25)
 names = list(arms)
-w = 0.16
+w = 0.14
 for i, name in enumerate(names):
     hs, c, ls = arms[name]
     med, lo, hi = [], [], []
     for k in (1, 3, 5):
         v = kth(hs, k)
         med.append(np.median(v)); lo.append(np.percentile(v, 25)); hi.append(np.percentile(v, 75))
-    x = np.arange(3) + (i - 2) * w
+    x = np.arange(3) + (i - 2.5) * w
     med, lo, hi = map(np.array, (med, lo, hi))
     a2.bar(x, med, w, color=c, alpha=0.9 if ls == "-" else 0.45, hatch="//" if ls == "--" else None,
            yerr=[med - lo, hi - med], capsize=2, error_kw={"lw": 0.8})
@@ -68,3 +69,13 @@ fig.tight_layout()
 Path("docs").mkdir(exist_ok=True)
 fig.savefig("docs/headline.png", dpi=140)
 print("wrote docs/headline.png")
+r = json.loads(Path("results/e1_counterfactual.json").read_text())["trust_mean_by_step"]
+f2, ax = plt.subplots(figsize=(5.5, 3.6))
+for n, c in (("blind", "#b2182b"), ("cfnamed", "#e08214")):
+    ax.plot(range(len(r[n])), r[n], color=c, label={"blind": "blind", "cfnamed": "counterfactual-named"}[n])
+ax.set(xlabel="step (revealed set grows)", ylabel="Spearman(prior, revealed y), mean of 20 seeds", title="Trust meter")
+ax.legend()
+ax.grid(alpha=0.25)
+f2.tight_layout()
+f2.savefig("docs/trust_meter.png", dpi=140)
+print("wrote docs/trust_meter.png")
