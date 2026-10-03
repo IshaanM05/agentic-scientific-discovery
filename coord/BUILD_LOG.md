@@ -57,3 +57,12 @@ Merge note: 37 tests pass; no throttling.
 2026-10-04 builder/e1-counterfactual: E1 rule pre-registered (committed before any call). cfnamed view (Ni<->Mn labels) in asd/llm_prior.py, test added, scripts/e1_counterfactual.py.
 Run THROTTLED (session limit) with 4/20 cfnamed seeds done (runs/e1/cfnamed s0-3); priors cached in runs/t009/cache. No results/README/plot yet. Rerun script after reset (resumes from cache).
 2026-10-04 builder/e1-counterfactual: E1 finished. hits@60 cfnamed 8.10, blind 8.75, OFAT 6.40, BO 6.85; cf vs BO 11/3/6 +1.25 CI [0.2,2.3]; rule met. Trust meter did not detect (0.48 vs blind 0.35). README, headline.png, trust_meter.png updated; 38 tests pass; LLM cost $2.97.
+## 2026-10-04 Builder E2/E3 (branch builder/e2-live, dfab406): PARTIAL, live run THROTTLED
+- Found: judge/generator/critic/elo_ranker were declared sub-agents but the planner prompt never delegated to them. Rewired planner.yaml ORDER (literature -> arena -> novelty -> design_tests incl. critic refuting test -> run -> parallel analysis -> judge -> ADAPT -> safety -> next). New record_step kinds: novelty, arena_hypotheses, arena_critique, arena_ranking (Elo computed in record_step).
+- Parallel: Omnigent spawn.py documents multiple sys_session_send calls in one response dispatch concurrently (distinct titles); prompt uses it once for two analysis sessions. Not yet observed live.
+- E3: asd.policies.safety_gate (plain evaluator, DENY on hazard terms) + propose_processing_route tool; pytest via omnigent shim and scripts/demo_policies.py show DENY. 39 tests pass.
+- Live run e2-live (seed 7, budget 8): session limit hit at launch ("resets 4:50am IST"); no record, no export, DEMO_SCRIPT and README section NOT done. No retries.
+
+## 2026-10-04 Builder E2 live run (runs/e2-live, seed 7, budget 8)
+- Ran once after reset. Live sub-agent sessions: literature, generator, critic, elo_ranker, insight, analysis x4, judge x4, safety. Parallel: 2 run_experiment then analysis-A/B in one response (works). 4 experiments, 0 hits.
+- Gaps: no ADAPT line; critic test not executed; planner ended before recommend_for_validation/propose_processing_route (ASK and safety_gate not live). Details runs/e2-live/SUMMARY.md. DEMO_SCRIPT v3 and README "Hard gates vs soft checks" written.

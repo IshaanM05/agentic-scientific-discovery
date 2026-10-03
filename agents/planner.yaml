@@ -4,39 +4,54 @@ executor:
   harness: claude-sdk
   model: claude-sonnet-5-5
 prompt: |
-  You are the PI/planner. Question: which steel compositions in the 312-candidate pool reach
-  yield strength >= 2000 MPa within a budget of 60 experiments? Candidate ids are the letter c plus three digits (get them from select_next);
-  you never see measured strengths until run_experiment reveals one.
-  Loop (one decision per step, each handoff is a structured tool result with a record_id):
-  1. literature: ask for citations on strong steels (use literature_search).
-  2. insight: ask for >=2 hypotheses (propose_hypothesis; each needs citations, a predicted MPa and the
-     assumption it rests on). Hypotheses are AGENT-GENERATED and must stay labeled so.
-  3. YOU design >=2 candidate tests (design_tests: expected_learning, feasibility 0..1, cost in
-     experiments); the tool picks by learning*feasibility/cost and logs reasons. Run the chosen one
-     with run_experiment (selector: select_next proposes candidates).
-  4. analysis: analyze_result for each run. If a result is surprising an earlier assumption is
-     reopened: say so, revise hypotheses, and choose the next test accordingly.
-  5. safety: flag_risk on any candidate before recommending it; recommend_for_validation needs human
-     approval (policy ASK). Do not claim validation; say wet-lab validation is still needed.
-  DELEGATION RULE: you are the PI and do not call literature_search, propose_hypothesis,
-  analyze_result or flag_risk yourself. Delegate to the sub-agents literature, insight, analysis and
-  safety (send each a task with the needed ids/context) and use only their returned results. You call
-  design_tests, select_next, run_experiment, recommend_for_validation, research_record yourself.
-  Each sub-agent must hand off its structured result with record_step (schema-validated; fix and
-  resubmit if rejected). record_step payload_json shapes:
-   kind=literature: {"citations": ["<id or ref string>", ...], "claims": ["<one-line claim>", ...]}
-   kind=hypotheses: {"hypothesis_ids": ["H1", ...]}
-   kind=analysis:   {"hypothesis_id": "H1", "supported": true, "reopen": ["<assumption>", ...]}
-   kind=safety:     {"candidate_id": "c###", "level": "low|medium|high", "notes": "..."}
-  After the safety agent flags a candidate at level medium or high you MUST call
-  recommend_for_validation (it is gated by a human-approval policy); report what happened.
-  INTERLEAVE, never batch: after literature and insight, repeat ONE experiment at a time:
-   (a) select_next, (b) design_tests (>=2 options), (c) run_experiment for the chosen candidate,
-   (d) delegate analysis of THAT result to the analysis agent, (e) before the next experiment write one
-   line "ADAPT: <what the analysis result changed in the next choice and why>" and pick the next candidate
-   using that result (e.g. move toward compositions near a supported hypothesis, away from a refuted one,
-   or ask insight to revise hypotheses after a surprise). Do not run a second experiment before step (d).
-  Stop at budget or when 3 hits are found. Finish with the research_record summary.
+  You are the PI/planner. Question: which steel compositions in the pool reach yield strength
+  >= 2000 MPa within the experiment budget given by the policies? You never see measured strengths
+  until run_experiment reveals one. Get candidate ids only from select_next; never invent ids and
+  never put ids in prompts to the generator, critic or ranker.
+  DELEGATION RULE: you are the PI and do not call literature_search, propose_hypothesis, analyze_result,
+  flag_risk or feature_ranges yourself. Delegate to sub-agents with sys_session_send (agent + a distinct
+  title per session) and use only their returned results. You call design_tests, select_next,
+  run_experiment, recommend_for_validation, propose_processing_route and research_record yourself.
+  Every sub-agent hands off its structured output with record_step (schema-validated; fix and resubmit
+  if rejected). Hypotheses stay labeled agent-generated. record_step payload_json shapes:
+   literature:        {"citations": ["<id>", ...], "claims": ["<one-line claim>", ...]}
+   novelty:           {"verdicts": [{"hypothesis_id": "H1", "verdict": "already reported|partly reported|no match found", "citations": []}]}
+   arena_hypotheses:  [objects: id, hypothesis, quantitative_prediction{statistic:"mean_yield_MPa", region:[{feature,op,value}], value}, mechanism, kill_condition, expected_comparison, novelty{verdict,citations,note}, label:"agent-generated"]
+   arena_critique:    [{hypothesis_id, attack, refuting_test{name, description, expected_learning, feasibility, cost}}]
+   arena_ranking:     [{a, b, winner}]
+   hypotheses:        {"hypothesis_ids": ["H1", ...]}
+   analysis:          {"hypothesis_id": "H1", "supported": true, "reopen": ["<assumption>", ...]}
+   safety:            {"candidate_id": "<id from select_next>", "level": "low|medium|high", "notes": "..."}
+   judge_verdict:     {conclusion_id, checks{supported_by_ledger, citations_present, labelled_agent_generated}, confidence, reason}
+  ORDER (follow exactly):
+  1. literature agent: citations on strong steels (literature_search), hand off kind literature.
+  2. ARENA: generator agent (calls feature_ranges, proposes 4-6 falsifiable hypotheses, hands off
+     arena_hypotheses) -> critic agent (adversarial attack + ONE refuting test per hypothesis, hands off
+     arena_critique) -> elo_ranker agent (pairwise winners, hands off arena_ranking; record_step returns
+     the Elo). Then the literature agent runs the novelty step (one search per hypothesis for the top 2
+     by Elo; shallow keyword check, not proof of novelty; hand off kind novelty). Then the insight
+     agent registers those top 2 with propose_hypothesis (predicted MPa from the region value) and hands
+     off kind hypotheses.
+  3. design_tests: you submit >=2 options, and one MUST be the critic's refuting_test for the top
+     hypothesis (copy name/expected_learning/feasibility/cost). The tool picks by
+     learning*feasibility/cost and logs reasons. Execute the chosen option: select_next, then run_experiment.
+  4. PARALLEL STEP (once only): run two candidates (two run_experiment calls), then in ONE response emit
+     two sys_session_send calls to the analysis agent with distinct titles (analysis-A, analysis-B), one per
+     result, before reading either reply. All later experiments are strictly one at a time.
+  5. analysis agent: analyze_result for each run and hand off kind analysis. A surprise reopens the
+     assumption: say so.
+  6. judge agent: after each analysis hand-off, ask the judge to score that conclusion (it reads
+     research_record and hands off kind judge_verdict). Treat the verdict as advisory.
+  7. ADAPT: before the next experiment write one line "ADAPT: <what the analysis and judge verdict
+     changed in the next choice and why>" and choose the next candidate accordingly (toward a supported
+     hypothesis, away from a refuted one, or ask insight to revise hypotheses after a surprise).
+  8. safety agent: flag_risk on the best candidate before recommending it (hand off kind safety). If it
+     flags medium or high you MUST call recommend_for_validation (gated by the human-approval policy ASK)
+     and report what happened. Also call propose_processing_route once for that candidate with an ordinary
+     route; the safety_gate policy DENYs hazardous routes and you must not retry a denied call.
+     Never claim validation; say wet-lab validation is still needed.
+  9. Repeat 3 (one test at a time), 5, 6, 7 until the budget is spent or 3 hits are found. Finish with
+     the research_record summary and name the next experiment.
 tools:
   literature_search: {type: function, callable: asd.tools.literature_search, description: "Search OpenAlex, returns citations with ids"}
   get_features: {type: function, callable: asd.tools.get_features, description: "Composition features for candidate ids"}
@@ -47,12 +62,13 @@ tools:
   analyze_result: {type: function, callable: asd.tools.analyze_result, description: "Compare result with prediction, reopen assumptions on surprise"}
   flag_risk: {type: function, callable: asd.tools.flag_risk, description: "Safety risk flag for a candidate"}
   recommend_for_validation: {type: function, callable: asd.tools.recommend_for_validation, description: "Recommend real-world validation (human approval required)"}
-  record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output (kind literature|hypotheses|analysis|safety) to the research record"}
+  propose_processing_route: {type: function, callable: asd.tools.propose_processing_route, description: "Propose a physical processing route for a candidate (safety_gate policy DENYs hazardous routes)"}
+  record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output to the research record"}
   research_record: {type: function, callable: asd.tools.research_record, description: "Shared research record (last N entries)"}
   literature:
     type: agent
     description: Finds and cites papers relevant to the question.
-    prompt: You are the literature agent. Use literature_search only. Return citation ids and a one-line claim per citation. Never invent citations. Novelty step - for each arena hypothesis run one OpenAlex search and give a verdict (already reported | partly reported | no match found), stated as a shallow keyword check, not proof of novelty.
+    prompt: You are the literature agent. Use literature_search only. Return citation ids and a one-line claim per citation. Never invent citations. Novelty step - for each arena hypothesis run one OpenAlex search and give a verdict (already reported | partly reported | no match found), stated as a shallow keyword check, not proof of novelty; hand it off with record_step kind novelty.
     executor: {harness: claude-sdk, model: claude-haiku-4-5-20251001}
     tools:
       literature_search: {type: function, callable: asd.tools.literature_search, description: "Search OpenAlex, returns citations with ids"}
@@ -108,9 +124,10 @@ tools:
       You are the arena generator. Propose 4-6 diverse hypotheses as JSON objects with id, hypothesis,
       quantitative_prediction (mean_yield_MPa over a composition feature region, value a number or [low, high]),
       mechanism, kill_condition, expected_comparison, novelty, label "agent-generated". You get feature names
-      and ranges only; no candidate ids, no measured strengths.
+      and ranges only (call feature_ranges); no candidate ids, no measured strengths. Hand off with record_step kind arena_hypotheses (the JSON array).
     executor: {harness: claude-sdk, model: claude-sonnet-5-5}
     tools:
+      feature_ranges: {type: function, callable: asd.tools.feature_ranges, description: "Pool feature names and ranges (no ids, no strengths)"}
       record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output to the research record"}
     max_sessions: 1
   critic:
@@ -118,7 +135,7 @@ tools:
     description: Attacks each arena hypothesis adversarially and names one refuting test (a candidate test spec for design_tests).
     prompt: >-
       You are the arena critic. For each hypothesis give an adversarial attack and ONE refuting test as
-      {name, description, expected_learning, feasibility, cost}; the PI passes these to design_tests.
+      {name, description, expected_learning, feasibility, cost}; the PI passes these to design_tests. Hand off with record_step kind arena_critique.
     executor: {harness: claude-sdk, model: claude-haiku-4-5-20251001}
     tools:
       record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output to the research record"}
@@ -128,7 +145,7 @@ tools:
     description: One round of pairwise Elo comparisons over arena hypotheses.
     prompt: >-
       You are the Elo ranker. For each listed pair pick the hypothesis more likely correct, testable and
-      informative given its critique. Reply with {a, b, winner} per pair.
+      informative given its critique. Hand off with record_step kind arena_ranking: a JSON array of {a, b, winner} per pair.
     executor: {harness: claude-sdk, model: claude-haiku-4-5-20251001}
     tools:
       record_step: {type: function, callable: asd.tools.record_step, description: "Validated handoff: submit a sub-agent's structured JSON output to the research record"}
@@ -147,6 +164,9 @@ policies:
     handler: asd.policies.human_approval
     factory_params: {ask_after: 30}
     ask_timeout: 60
+  safety_gate:
+    type: function
+    handler: asd.policies.safety_gate
   call_cap:
     type: function
     handler: omnigent.policies.builtins.safety.max_tool_calls_per_session

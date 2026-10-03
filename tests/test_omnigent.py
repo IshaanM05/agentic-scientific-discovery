@@ -205,3 +205,23 @@ def test_no_concrete_candidate_id_in_research_prompts():
         txt = f.read_text(encoding="utf-8")
         found = set(re.findall(r"\bc\d+\b", txt)) - allow_ids.get(f.name, set())
         assert not found, f"{f.name} contains concrete candidate id(s) {found}"
+
+
+def test_safety_gate_denies_hazardous_route_via_omnigent_shim(run):
+    build = pytest.importorskip("omnigent.spec._omnigent_legacy_shim").build
+    gate = build(target="asd.policies.safety_gate")
+    mk = lambda tool, route: {"type": "tool_call", "target": tool, "data": {
+        "name": tool, "arguments": {"candidate_id": "c001", "route": route}}}
+    d = gate(mk("propose_processing_route", "Quench in molten salt without PPE"))
+    assert d["result"] == "DENY" and "safety gate" in d["reason"]
+    assert gate(mk("propose_processing_route", "Vacuum induction melt, age at 480 C"))["result"] == "ALLOW"
+    assert gate(mk("run_experiment", "molten salt"))["result"] == "ALLOW"
+    assert gate(mk("recommend_for_validation", "unshielded hydrogen charging"))["result"] == "DENY"
+
+
+def test_new_handoff_kinds_and_elo(run):
+    ok = T.record_step("ranker", "arena_ranking", json.dumps([{"a": "H1", "b": "H2", "winner": "H2"}]))
+    assert ok["accepted"] and ok["elo"]["H2"] > ok["elo"]["H1"]
+    bad = T.record_step("critic", "arena_critique", json.dumps([{"hypothesis_id": "H1"}]))
+    assert not bad["accepted"]
+    assert T.propose_processing_route("c001", "age at 480 C")["record_id"].startswith("rec-")

@@ -30,3 +30,10 @@ for i in range(LIMIT + 1):
 ev = {"type": "tool_call", "target": "recommend_for_validation", "data": {}, "session_state": {}}
 r = approval(ev)
 print(f"recommend_for_validation: approval={r['result']} ({r['reason']})")
+
+gate = build(target="asd.policies.safety_gate")
+for route in ("Vacuum induction melt, age at 480 C", "Quench in molten salt without PPE"):
+    ev = {"type": "tool_call", "target": "propose_processing_route",
+          "data": {"name": "propose_processing_route", "arguments": {"candidate_id": "c001", "route": route}}}
+    g = gate(ev)
+    print(f"propose_processing_route {route!r}: safety_gate={g['result']} {g.get('reason', '')}")

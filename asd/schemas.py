@@ -114,3 +114,10 @@ ARENA_CRITIQUE = _obj(["hypothesis_id", "attack", "refuting_test"], {
         "name": _STR, "description": _MS, "expected_learning": {"type": "number", "minimum": 0, "maximum": 1},
         "feasibility": {"type": "number", "minimum": 0, "maximum": 1}, "cost": {"type": "number", "minimum": 1}})})
 ARENA_MATCH = _obj(["a", "b", "winner"], {"a": _STR, "b": _STR, "winner": _STR})
+
+HANDOFF_NOVELTY = _obj(["verdicts"], {"verdicts": {"type": "array", "minItems": 1, "items": _obj(
+    ["hypothesis_id", "verdict", "citations"], {"hypothesis_id": _STR, "verdict": _NOVELTY["properties"]["verdict"],
+                                                 "citations": {"type": "array", "items": _STR}})}})
+HANDOFF_ARENA_HYPS = {"type": "array", "minItems": 2, "items": ARENA_HYP}
+HANDOFF_ARENA_CRITS = {"type": "array", "minItems": 1, "items": ARENA_CRITIQUE}
+HANDOFF_ARENA_RANK = {"type": "array", "minItems": 1, "items": ARENA_MATCH}
