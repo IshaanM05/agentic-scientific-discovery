@@ -3,7 +3,7 @@
 All tools are plain functions (JSON in, JSON-able dict out). They wrap asd.replay.ReplayOracle and
 append every decision to a shared research record (JSONL, one run-record id per entry).
 Every input and output is validated against a JSON schema (asd/schemas.py).
-Session config via env: ASD_SEED (0), ASD_BUDGET (60), ASD_RUN_DIR (runs/default).
+Session config via env: ASD_SEED (0), ASD_BUDGET (60), ASD_RUN_DIR (required), ASD_RUN_ID.
 """
 import hashlib
 import json
@@ -18,11 +18,37 @@ _STATE = {}
 SURPRISE_REL = 0.25  # |value - predicted| / predicted above this reopens assumptions
 
 
-def reset(seed=None, budget=None, run_dir=None):
+class RunConfigError(Exception):
+    pass
+
+
+def _guard(run_dir, seed, budget, run_id):
+    """Run-id guard: a run dir is bound to one (run_id, seed, budget) via meta.json. A tool refuses a
+    dir whose ledger/record belong to another run (stops spent budget leaking across runs)."""
+    meta_p = run_dir / "meta.json"
+    want = {"run_id": run_id, "seed": seed, "budget": budget}
+    if meta_p.exists():
+        have = json.loads(meta_p.read_text())
+        if have != want:
+            raise RunConfigError(f"run dir {run_dir} belongs to {have}, this process is {want}; refusing")
+    else:
+        if (run_dir / "ledger.jsonl").exists() or (run_dir / "record.jsonl").exists():
+            raise RunConfigError(f"run dir {run_dir} has a ledger but no meta.json (unknown owner); refusing")
+        meta_p.write_text(json.dumps(want))
+
+
+def reset(seed=None, budget=None, run_dir=None, run_id=None):
+    """Session config comes from args or ASD_SEED/ASD_BUDGET/ASD_RUN_DIR/ASD_RUN_ID. With no explicit
+    args, ASD_RUN_DIR is REQUIRED (no silent fallback to a shared dir)."""
+    if run_dir is None and "ASD_RUN_DIR" not in os.environ:
+        raise RunConfigError("ASD_RUN_DIR not set in the tool process (env passthrough failed); refusing "
+                             "to fall back to a shared run dir")
     seed = int(os.environ.get("ASD_SEED", 0)) if seed is None else seed
     budget = int(os.environ.get("ASD_BUDGET", 60)) if budget is None else budget
-    run_dir = Path(run_dir or os.environ.get("ASD_RUN_DIR", "runs/default"))
+    run_id = run_id or os.environ.get("ASD_RUN_ID", "")
+    run_dir = Path(run_dir or os.environ["ASD_RUN_DIR"])
     run_dir.mkdir(parents=True, exist_ok=True)
+    _guard(run_dir, seed, budget, run_id)
     rec = run_dir / "record.jsonl"
     _STATE.clear()
     _STATE.update(oracle=ReplayOracle(seed, budget, ledger_path=run_dir / "ledger.jsonl"), rec=rec,

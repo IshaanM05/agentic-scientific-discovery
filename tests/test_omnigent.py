@@ -151,3 +151,37 @@ def test_builtin_cost_policy_resolves():
     pytest.importorskip("omnigent")
     from omnigent.policies.builtins.cost import cost_budget
     assert callable(cost_budget(max_cost_usd=1.0))
+
+
+def test_run_id_guard_and_required_env(tmp_path, monkeypatch):
+    import pytest
+    d = tmp_path / "r"
+    T.reset(seed=1, budget=5, run_dir=d, run_id="A")
+    T.run_experiment(T._st()["oracle"].ids()[0])
+    assert (d / "ledger.jsonl").exists()
+    with pytest.raises(T.RunConfigError):        # same dir, other seed/run id
+        T.reset(seed=2, budget=5, run_dir=d, run_id="B")
+    with pytest.raises(T.RunConfigError):
+        T.reset(seed=1, budget=5, run_dir=d, run_id="B")
+    T.reset(seed=1, budget=5, run_dir=d, run_id="A")  # owner may resume
+    assert T._st()["oracle"].spent == 1
+    d2 = tmp_path / "legacy"
+    d2.mkdir()
+    (d2 / "ledger.jsonl").write_text("")
+    with pytest.raises(T.RunConfigError):        # ledger of unknown owner
+        T.reset(seed=1, budget=5, run_dir=d2)
+    monkeypatch.delenv("ASD_RUN_DIR", raising=False)
+    with pytest.raises(T.RunConfigError):        # no silent shared default
+        T.reset()
+
+
+def test_env_config_isolated_dirs(tmp_path, monkeypatch):
+    for seed in (3, 4):
+        monkeypatch.setenv("ASD_SEED", str(seed))
+        monkeypatch.setenv("ASD_RUN_DIR", str(tmp_path / f"s{seed}"))
+        monkeypatch.setenv("ASD_RUN_ID", f"id{seed}")
+        T.reset()
+        T.run_experiment(T._st()["oracle"].ids()[0])
+    import json
+    m = [json.loads((tmp_path / f"s{s}" / "meta.json").read_text()) for s in (3, 4)]
+    assert m[0]["seed"] == 3 and m[1]["seed"] == 4 and m[0]["run_id"] != m[1]["run_id"]
