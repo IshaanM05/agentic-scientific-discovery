@@ -9,7 +9,10 @@ Full loop: [[co-scientist]] · [[robin]] · [[kosmos]] · [[ai-scientist]] · [[
 Experiment selection: [[biodiscoveryagent]] · [[lgbo]] · [[awcd-language-priors]]
 Labs and cautions: [[a-lab]] · [[chemcrow]] · [[coscientist-boiko]]
 Evaluation: [[benchmarks]]
+## Datasets
+[[steel-strength]] (primary replay oracle) · [[expt-gap]] (fallback)
 ## Decisions
+[[ADR-001-replay-dataset]] replay oracle = steel_strength, hit yield >= 2000 MPa, B = 60
 (add ADRs in decisions/ and list them here)
 ## Gaps we claim
 Few systems choose the next experiment under a budget, and same-budget baseline comparisons are rare. See [[baselines-and-evaluation]].
