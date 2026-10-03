@@ -1,0 +1,17 @@
+name: hello
+description: Minimal agent that calls one asd/ function as a Python tool.
+executor:
+  harness: claude-sdk
+prompt: |
+  Call the tool toy_oracle_run with x=0.5 and seed=0, then reply with exactly the returned JSON.
+tools:
+  toy_oracle_run:
+    type: function
+    description: Run one toy experiment at x in [0,1].
+    callable: asd.hello_tool.toy_oracle_run
+    parameters:
+      type: object
+      properties:
+        x: {type: number}
+        seed: {type: integer}
+      required: [x]

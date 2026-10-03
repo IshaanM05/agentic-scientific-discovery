@@ -7,7 +7,7 @@ HYPOTHESIS = {
     "properties": {
         "id": {"type": "string"},
         "text": {"type": "string"},
-        "x_pred": {"type": "number"},
+        "x_pred": {"type": "number", "minimum": 0, "maximum": 1},
         "prediction": {"type": "number"},
     },
     "additionalProperties": False,

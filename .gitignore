@@ -7,7 +7,6 @@ knowledge/.obsidian/cache
 __pycache__/
 .venv/
 .cache/
-__pycache__/
 *.pyc
 .pytest_cache/
 .claude/worktrees/

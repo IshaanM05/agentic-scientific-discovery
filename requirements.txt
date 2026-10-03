@@ -1,0 +1,4 @@
+jsonschema
+pytest
+numpy
+omnigent==0.16.0
