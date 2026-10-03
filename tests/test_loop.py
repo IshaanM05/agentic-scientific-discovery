@@ -23,7 +23,7 @@ def test_one_round_end_to_end(tmp_path):
 
 def test_deterministic_and_cached(tmp_path):
     a = run(seed=3, budget=5, cache_dir=str(tmp_path / "c"))
-    b = run(seed=3, budget=5, cache_dir=str(tmp_path / "c"))
+    b = run(seed=3, budget=5, cache_dir=str(tmp_path / "c2"))
     assert json.dumps(a) == json.dumps(b)
     assert len(list((tmp_path / "c").glob("*.json"))) >= 1
 

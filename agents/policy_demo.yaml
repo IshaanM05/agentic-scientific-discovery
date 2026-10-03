@@ -1,0 +1,25 @@
+name: policy_demo
+description: Live demonstration that the Omnigent budget policy DENYs and the human-approval policy ASKs.
+executor:
+  harness: claude-sdk
+  model: claude-haiku-4-5-20251001
+prompt: |
+  Do exactly these steps in order and report each tool outcome verbatim, including any policy block:
+  1. run_experiment candidate_id=c000
+  2. run_experiment candidate_id=c001
+  3. run_experiment candidate_id=c002
+  4. recommend_for_validation candidate_id=c000 rationale="demo"
+  Do not retry blocked calls.
+tools:
+  run_experiment: {type: function, callable: asd.tools.run_experiment, description: "Reveal yield strength of one candidate (costs 1 experiment)"}
+  recommend_for_validation: {type: function, callable: asd.tools.recommend_for_validation, description: "Recommend real-world validation (human approval required)"}
+policies:
+  experiment_budget:
+    type: function
+    handler: asd.policies.experiment_budget
+    factory_params: {limit: 2}
+  human_approval:
+    type: function
+    handler: asd.policies.human_approval
+    factory_params: {ask_after: 99}
+    ask_timeout: 30
