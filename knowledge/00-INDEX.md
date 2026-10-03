@@ -8,7 +8,7 @@
 Omnigent (mandatory orchestration): [[omnigent-yaml]] install, tool/sub-agent/policy YAML, auth (T000 recon)
 Rigor: [[memorization-control]] T009 recall probe + blinded arm + decision rule for any speedup claim
 ## Papers
-Full loop: [[co-scientist]] · [[robin]] · [[kosmos]] · [[ai-scientist]] · [[alphaevolve]]
+Full loop: [[co-scientist]] · [[robin]] · [[kosmos]] · [[ai-scientist]] · [[alphaevolve]] · [[sciagents]]
 Experiment selection: [[biodiscoveryagent]] · [[lgbo]] · [[awcd-language-priors]]
 Labs and cautions: [[a-lab]] · [[chemcrow]] · [[coscientist-boiko]]
 Evaluation: [[benchmarks]]
