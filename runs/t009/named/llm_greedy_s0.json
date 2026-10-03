@@ -1,0 +1,1 @@
+{"arm": "llm_greedy", "view": "named", "seed": 0, "budget": 60, "n_init": 5, "spent": 60, "n_hits": 15, "hits_by_step": [6, 7, 8, 9, 10, 14, 15, 19, 20, 23, 30, 31, 33, 34, 35], "hits_at": {"20": 9, "40": 15, "60": 15}, "first_hit": 6, "first_pick_hit": true, "prior_missing": 0, "trust_final": 0.454, "trust_trace_every10": [1.0, 0.821, 0.59, 0.502, 0.442, 0.391]}
