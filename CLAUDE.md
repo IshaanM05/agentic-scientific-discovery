@@ -24,4 +24,4 @@ Before context passes ~50%, at the end of a cycle, or before stopping: update `c
 New durable fact -> one atomic note in `knowledge/` (template in `knowledge/templates/`), linked with [[wikilinks]] and added to the right MOC line in `00-INDEX.md`. Unverified claims carry `status: unverified`. Decisions go in `knowledge/decisions/` (ADR style) and one line in `coord/DECISIONS.md`.
 
 ## Git
-Feature branches only (`builder/*`, `scout/*`). Merge to main only after Scout approval in `coord/`.
+Feature branches only (`builder/*`, `scout/*`). Integration branch is `dev/agentic-loop`; branch builder/* and scout/* from it and merge back only after Scout approval in `coord/`. Never commit to main.

@@ -6,6 +6,7 @@
 - Spend limits: ask the human at $10 agent spend and at $18 total. Reserve $8-10 for eval runs.
 - Compaction: when a log passes 150 lines, the lead (or a Haiku subagent) moves older entries to coord/archive/ and leaves a 10-line digest at the top.
 - Freeze features 3 h before the deadline (06:00 ET Sun Oct 4).
-- Shared blackboard: agents work in git worktrees, but ALL coord/ reads and writes go to the main checkout by absolute path `C:\Users\Ishaan\Desktop\agentic-scientific-discovery\coord\`. Lead commits coord/ on main. Code and knowledge/ notes go on your own branch.
-- Merges into main: lead only, after Scout APPROVE. No pushes to main without the human's OK. Feature branches may be pushed.
+- Shared blackboard: agents work in git worktrees, but ALL coord/ reads and writes go to the main checkout by absolute path `C:\Users\Ishaan\Desktop\agentic-scientific-discovery\coord\`. Lead commits coord/ on dev/agentic-loop. Code and knowledge/ notes go on your own branch.
+- Integration branch is dev/agentic-loop. Never touch main. Merges into dev/agentic-loop: lead only, after Scout APPROVE. Merge dev/agentic-loop into main only when the human says so, at submission time. Feature branches may be pushed.
+- Git attribution: never mention Claude in commit messages, PR bodies or collaborators (no Co-Authored-By, no "Generated with" lines).
 - Cost: each agent appends its estimated spend to SCOREBOARD "Spend" line at cycle end.

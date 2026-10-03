@@ -1,7 +1,7 @@
 # HANDOFF (overwrite each cycle; keep <= 40 lines)
 updated: 2026-10-03 (cycle 0 start) by lead
 ## State
-- Phase/tier: 0 (nothing built yet). Scaffold committed locally on main (not pushed).
+- Phase/tier: 0 (nothing built yet). Scaffold committed on dev/agentic-loop (not pushed; main untouched).
 - Working: coord/, knowledge/ vault, agent definitions
 - Broken: nothing
 - Oracle: no .env / no MP key -> use bundled offline materials sample (MP API optional later)
