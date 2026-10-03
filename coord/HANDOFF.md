@@ -25,3 +25,4 @@ updated: 2026-10-03 16:00 ET (cycle 6, A done) by lead. Get ET via python with U
 agent ~$15 of $16 limit (lead ~2, scout ~5, builder ~8, rough self-reports) | model calls on Pro subscription, no throttling so far.
 - Cycle 7 (E plan): E1 counterfactual + E2 live end-to-end (incl. E3 safety block) in parallel; then E4 packaging; E5 optional. dev pushed at 5ea28db; main untouched.
 - THROTTLED (Pro session limit, resets 04:50 IST): E2 live run not done. builder/e2-live 4b9f5be has rewired planner (judge+arena live order, parallel analysis, safety_gate DENY, 39 tests) unreviewed. E1 status pending. Resume E2 run after reset: ASD_SEED=7 ASD_RUN_DIR=runs/e2-live ASD_RUN_ID=e2-live ASD_BUDGET=8.
+- E1 partial on builder/e1-counterfactual: pre-reg 92ca1e3 (before any call), code+test 1c98c61; 4/20 cfnamed seeds done; resume: python scripts/e1_counterfactual.py (cached), then plot + README; needs Scout review.
