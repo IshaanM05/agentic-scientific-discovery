@@ -29,3 +29,4 @@ agent ~$15 of $16 limit (lead ~2, scout ~5, builder ~8, rough self-reports) | mo
 - E1 MERGED 52ec008 (38 tests): cfnamed 8.10, blind 8.75, OFAT 6.40, BO 6.85; rule met by letter but weak manipulation (prior Spearman 0.77 named vs cf) -> no LLM-knowledge acceleration claim; blind arm is the main anti-recall evidence.
 - E2/E3 MERGED 506b817 (40 tests): runs/e2-live all sub-agents live, 4 exp 0 hits, no ADAPT (demo uses t011), safety_gate DENY tested; README hard-gates section. Next: E4 packaging.
 - E4 MERGED: diagram, LICENSE, responsible use, reproduce.ps1/.sh (both pass from fresh clone), references, SUBMISSION_CHECKLIST.md. 40 tests. Remaining: E5 optional; human: main OK, Replit, videos, form, Discord.
+- LabLoop integration: branch integration/labloop (9dbea32, 47 tests, reproduce OK). Contract docs/LABLOOP_INTEGRATION.md; workers W1/W2/W3 (cloud) on w1/labloop-tools, w2/labloop-results, w3/labloop-demo; lead merges after Scout; golden worlds 2000-2002.
