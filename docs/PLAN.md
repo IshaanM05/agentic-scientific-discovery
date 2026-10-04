@@ -30,7 +30,7 @@ truth" at the end, then switch to the Benchmark tab.
 ## Next (in priority order)
 
 1. **Human steering in the dashboard.** Veto or inject a hypothesis mid-run; the PI re-plans live.
-2. **Live Claude panel.** Stream hypothesis generation and critique, with offline replay as fallback.
+2. **Live LLM panel.** Stream hypothesis generation and critique, with offline replay as fallback.
 3. **Multi-fidelity.** A cheap noisy simulation vs expensive synthesis; the agent chooses which to spend on.
 4. **Multi-objective.** Efficiency, stability and lead content as a Pareto front.
 5. **Second lab adapter.** A published CRISPR screen as a replay biology lab, same harness.

@@ -2,7 +2,7 @@
 
 Base branch: `integration/labloop` (dev/agentic-loop + labloop-v2 merged, 47 tests pass).
 Goal: Omnigent orchestrates LabLoop's simulated perovskite lab as a second test bed, so our agent team runs on unseen worlds that no LLM can have memorised.
-Freeze 06:00 ET (15:30 IST) Oct 4. Rules: Sonnet 5.5 / Haiku 4.5 only, cache every LLM call, no Claude mention in commits, never touch main, never read .env.
+Freeze 06:00 ET (15:30 IST) Oct 4. Rules: Sonnet 5.5 / Haiku 4.5 only, cache every LLM call, no AI-tool mention in commits, never touch main, never read .env.
 
 ## Branches and file ownership (edit only your files; anything else -> ask the lead)
 | Worker | Branch (from integration/labloop) | Owns |

@@ -44,7 +44,7 @@ In the demo run it does exactly that, unprompted:
 | Notebook | SQLite, full provenance | failures stored as first-class data |
 
 The LLM proposes and critiques; the acquisition function decides; the Judge decides
-what counts as known. With `ANTHROPIC_API_KEY` set, Claude writes new hypotheses (in
+what counts as known. With `ANTHROPIC_API_KEY` set, an LLM writes new hypotheses (in
 the validated DSL) and PI rationales. Without it, a deterministic rule-based scientist
 runs, so the demo can never fail on stage.
 
@@ -82,7 +82,7 @@ python -m labloop                    # watch a campaign in the terminal
 python -m labloop --world 42         # an unseen hidden world
 python scripts/build_dashboard.py    # rebuild docs/index.html (add --fresh-bench to rerun benchmarks)
 pytest -q                            # 7 tests: smoke, determinism, safety, unseen worlds
-ANTHROPIC_API_KEY=... python -m labloop   # Claude-written hypotheses and PI rationale
+ANTHROPIC_API_KEY=... python -m labloop   # LLM-written hypotheses and PI rationale
 ```
 
 ## Limits
