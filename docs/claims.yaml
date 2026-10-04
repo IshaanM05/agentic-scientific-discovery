@@ -12,7 +12,7 @@ scan:
 notes:
 - 'No sourced number differs from its committed source file: 0 mismatches among the claims below.'
 - README.md says "40 offline tests pass"; pytest on integration/labloop collects 47 (41 passed, 5 skipped, 1 failed with the known omnigent import error in a sandbox). The count is not stored in any result file, so it is listed as unsourced, not checked.
-- docs/LABLOOP_README.md prints pure BO hits by 60 as 8.2 while runs/benchmark_unseen.json and docs/RESULTS_LABLOOP.md give 8.25 (a rounding of 8.25, so the claim passes at tolerance 0.051); the 9.9 vs 8.2 headline gap is 1.65 in the data.
+- docs/LABLOOP_README.md prints pure BO hits by 60 as 8.2 while runs/benchmark_unseen.json and docs/RESULTS_LABLOOP.md give 8.25 (a rounding of 8.25, so the claim passes at tolerance 0.051); the 9.9 vs 8.25 headline gap is 1.65 in the data.
 - The README LabLoop sections and docs/RESULTS_LABLOOP.md exist only on branch w2/labloop-results; on integration/labloop those claims report SKIP, not OK. Re-run the checker after merging w2 (any SKIP then means a document or source went missing; use --strict).
 - Several README sentences restate numbers that appear earlier (for example the 22.2 s approval hold three times); each occurrence is its own claim, so an edit to one copy is caught.
 claims:
@@ -3235,7 +3235,7 @@ claims:
   branch: w2/labloop-results
 - id: results.verify.bo_hits
   doc: docs/RESULTS_LABLOOP.md
-  text: the headline gap over pure BO (9.9 vs 8.2)
+  text: the headline gap over pure BO (9.9 vs 8.25)
   value: 8.2
   source: runs/benchmark_unseen.json
   key: strategies/Pure BO (no literature)/mean/60
