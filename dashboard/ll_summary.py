@@ -63,16 +63,21 @@ def summarize(run, runs_dir=None):
     for e in rec:
         k = e.get("kind")
         if k == "analysis":
-            vs = e.get("verdicts") or e.get("hypothesis_verdicts") or []
-            n_ref = sum(1 for v in vs if "refuted" in json.dumps(v).lower()) if isinstance(vs, list) else 0
+            if isinstance(e.get("refuted"), list):  # live asd.labloop_tools schema: ids refuted in this analysis
+                n_ref = len(e["refuted"])
+            else:
+                vs = e.get("verdicts") or e.get("hypothesis_verdicts") or []
+                n_ref = sum(1 for v in vs if "refuted" in json.dumps(v).lower()) if isinstance(vs, list) else 0
             relaxed = bool(e.get("relaxations") or e.get("prior_relaxations"))
             refuted += n_ref
             pending = {"after": e.get("record_id"), "refuted": n_ref, "relaxed": relaxed} if (n_ref or relaxed) else pending
-        elif k == "pi_decision" and pending:
-            adapt.append({**pending, "next_decision": e.get("record_id"), "mode": e.get("mode")})
+        elif k == "pi_decision" and (pending or "ADAPT" in str(e.get("planner_rationale") or "")):
+            base = pending or {"after": None, "refuted": 0, "relaxed": False}
+            adapt.append({**base, "next_decision": e.get("record_id"), "mode": e.get("mode"),
+                          "planner_adapt_line": "ADAPT" in str(e.get("planner_rationale") or "")})
             pending = None
     judge = [e for e in rec if e.get("kind") == "judge_verdict"]
-    disc = judge[-1].get("discoveries", []) if judge else []
+    disc = (judge[-1].get("discovery_verdicts") or judge[-1].get("discoveries") or []) if judge else []
     n_disc = sum(1 for x in disc if isinstance(x, dict) and x.get("replicated")) if isinstance(disc, list) else 0
     return {
         "run": run, "world": start.get("world"), "seed": start.get("seed"), "budget": start.get("budget"),

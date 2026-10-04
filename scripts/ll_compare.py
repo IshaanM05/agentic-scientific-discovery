@@ -129,12 +129,15 @@ def parse_run(path: Path) -> dict:
     budget = float(_get(start, "budget") or 60.0)
     set_world(world)
     keys = {c.key: i for i, c in enumerate(composition_space())}
+    by_formula = {c.formula(): c.key for c in composition_space()}  # live records store the formula string
     truth = space_arrays()[-1]
     curve, seen, spent, bad = [], set(), 0.0, 0
     for r in recs:
         if r.get("kind") != "experiment":
             continue
         k = _comp_key(r)
+        if k is None and isinstance(r.get("composition"), str):
+            k = by_formula.get(r["composition"])
         cost = _get(r, "cost", "units_charged")
         if k not in keys or cost is None:
             bad += 1
@@ -146,11 +149,24 @@ def parse_run(path: Path) -> dict:
     if bad and not curve:
         return {"run": path.parent.name, "unparsed": f"{bad} experiment records without composition/cost"}
     adapt_explicit = sum(1 for r in recs if r.get("kind") == "adapt")
+    # live asd.labloop_tools schema: ADAPT lines live in pi_decision.planner_rationale
+    adapt_explicit += sum(1 for r in recs if r.get("kind") == "pi_decision"
+                          and "ADAPT" in str(r.get("planner_rationale") or ""))
     analyses = [r for r in recs if r.get("kind") == "analysis"]
-    refuted = sum(_count(r, ("refuted", "falsified")) for r in analyses)
     relax = sum(1 for r in analyses if _get(r, "prior_relaxations", "relaxations"))
     judge = [r for r in recs if r.get("kind") == "judge_verdict"]
-    replicated = sum(_count(r, ("replicated", "confirmed")) for r in judge)
+    last = judge[-1] if judge else {}
+    if isinstance(last.get("discovery_verdicts"), list) or isinstance(last.get("hypothesis_verdicts"), list):
+        # each judge record restates the full state: read the LAST one, dedupe by formula / id
+        dv = last.get("discovery_verdicts") or []
+        replicated = len({d.get("formula") for d in dv if isinstance(d, dict)
+                          and (d.get("replicated") is True or str(d.get("status", "")).lower() == "confirmed")})
+        hv = last.get("hypothesis_verdicts") or []
+        refuted = len({h.get("id") for h in hv if isinstance(h, dict)
+                       and any(w in str(h.get("status", "")).lower() for w in ("refuted", "falsified"))})
+    else:  # fallback: assumed fixture schema
+        refuted = sum(_count(r, ("refuted", "falsified")) for r in analyses)
+        replicated = sum(_count(r, ("replicated", "confirmed")) for r in judge)
     m = _metrics(curve, replicated, refuted, adapt_explicit or (refuted + relax),
                  int(truth.sum()), spent)
     m.update(run=path.parent.name, world=world, seed=_get(start, "seed"), budget=budget,
