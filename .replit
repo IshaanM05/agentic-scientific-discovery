@@ -1,0 +1,15 @@
+# Fallback static host: serves docs/index.html (self-contained, offline, no secrets).
+run = "python3 -m http.server 8000 --directory docs"
+entrypoint = "docs/index.html"
+modules = ["python-3.11"]
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+deploymentTarget = "static"
+publicDir = "docs"
+
+[[ports]]
+localPort = 8000
+externalPort = 80

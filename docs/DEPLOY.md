@@ -11,6 +11,9 @@ CLI alternative: `npx vercel --prod` from the repo root.
 ## GitHub Pages (fallback)
 Settings > Pages > Source: branch, folder `/docs`. URL: `https://ishaanm05.github.io/agentic-scientific-discovery/`.
 
+## Replit (second fallback)
+Import the repo into Replit (Create Repl > Import from GitHub). `.replit` and `replit.nix` serve `docs/` with `python3 -m http.server 8000`; for a permanent URL choose Deploy > Static (public dir `docs`, set in `.replit`). Nothing to install and no secrets.
+
 ## Before submitting
 - Rebuild after the last `runs/ll-*` commit: `python scripts/build_dashboard.py`, then commit `docs/index.html`.
 - Open the live URL in a private window; confirm the "Omnigent runs" tab lists the runs (or says none are committed).
