@@ -43,7 +43,8 @@ def _units(e):
 
 def list_ll_runs(runs_dir=None):
     d = Path(runs_dir) if runs_dir else ROOT / "runs"
-    return sorted(p.name for p in d.glob("ll-*") if (p / "record.jsonl").exists())
+    # ll-offline-* are rule-based offline simulations (used for reports), not live Omnigent runs: never list them here
+    return sorted(p.name for p in d.glob("ll-*") if (p / "record.jsonl").exists() and not p.name.startswith("ll-offline"))
 
 
 def summarize(run, runs_dir=None):

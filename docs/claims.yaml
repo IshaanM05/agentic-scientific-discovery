@@ -3413,237 +3413,6 @@ claims:
   key: arms/wrong=100%,revision=on/hits60_mean
   tol: 0.005
   branch: w2/labloop-results
-- id: final.demo.ll.full_hits
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 9.9
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean
-  tol: 0.005
-- id: final.demo.ll.full_lo
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 8.25
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean_ci/0
-  tol: 0.005
-- id: final.demo.ll.full_hi
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 11.7
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean_ci/1
-  tol: 0.005
-- id: final.demo.ll.bo_hits
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 8.25
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean
-  tol: 0.005
-- id: final.demo.ll.bo_lo
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 6.65
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean_ci/0
-  tol: 0.005
-- id: final.demo.ll.bo_hi
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 9.75
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean_ci/1
-  tol: 0.005
-- id: final.demo.ll.gap
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 1.65
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
-  tol: 0.005
-- id: final.demo.ll.gap_lo
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 0.05
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
-  tol: 0.005
-- id: final.demo.ll.gap_hi
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 3.2
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
-  tol: 0.005
-- id: final.demo.ll.first_full
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 6.5
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/first_hit_median
-  tol: 0.005
-- id: final.demo.ll.first_bo
-  doc: docs/DEMO_SCRIPT.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 30.5
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/first_hit_median
-  tol: 0.005
-- id: final.pitch.ll.full_hits
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 9.9
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean
-  tol: 0.005
-- id: final.pitch.ll.full_lo
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 8.25
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean_ci/0
-  tol: 0.005
-- id: final.pitch.ll.full_hi
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 11.7
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean_ci/1
-  tol: 0.005
-- id: final.pitch.ll.bo_hits
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 8.25
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean
-  tol: 0.005
-- id: final.pitch.ll.bo_lo
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 6.65
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean_ci/0
-  tol: 0.005
-- id: final.pitch.ll.bo_hi
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 9.75
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean_ci/1
-  tol: 0.005
-- id: final.pitch.ll.gap
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 1.65
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
-  tol: 0.005
-- id: final.pitch.ll.gap_lo
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 0.05
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
-  tol: 0.005
-- id: final.pitch.ll.gap_hi
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 3.2
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
-  tol: 0.005
-- id: final.pitch.ll.first_full
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 6.5
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/first_hit_median
-  tol: 0.005
-- id: final.pitch.ll.first_bo
-  doc: docs/PITCH.md
-  text: 'LabLoop 9.90 hits [8.25, 11.70] vs pure BO 8.25 [6.65, 9.75] at 60 units (paired +1.65 [+0.05, +3.20]), median first hit 6.5 vs 30.5 units'
-  value: 30.5
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/first_hit_median
-  tol: 0.005
-- id: final.judge.ll.full_hits
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 9.9
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean
-  tol: 0.005
-- id: final.judge.ll.full_lo
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 8.25
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean_ci/0
-  tol: 0.005
-- id: final.judge.ll.full_hi
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 11.7
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/hits60_mean_ci/1
-  tol: 0.005
-- id: final.judge.ll.bo_hits
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 8.25
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean
-  tol: 0.005
-- id: final.judge.ll.bo_lo
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 6.65
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean_ci/0
-  tol: 0.005
-- id: final.judge.ll.bo_hi
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 9.75
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/hits60_mean_ci/1
-  tol: 0.005
-- id: final.judge.ll.gap
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 1.65
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
-  tol: 0.005
-- id: final.judge.ll.gap_lo
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 0.05
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
-  tol: 0.005
-- id: final.judge.ll.gap_hi
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 3.2
-  source: runs/ll_benchmark.json
-  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
-  tol: 0.005
-- id: final.judge.ll.first_full
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 6.5
-  source: runs/ll_benchmark.json
-  key: strategies/LabLoop (full)/first_hit_median
-  tol: 0.005
-- id: final.judge.ll.first_bo
-  doc: docs/JUDGE_GUIDE.md
-  text: '9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75], paired gap +1.65 [+0.05, +3.20] (barely above zero); median first hit 6.5 vs 30.5 units'
-  value: 30.5
-  source: runs/ll_benchmark.json
-  key: strategies/Pure BO (no literature)/first_hit_median
-  tol: 0.005
 - id: final.pitch.ll.base2000.hits60
   doc: docs/PITCH.md
   text: 'mean hits@60 14.6, 7.8 and 15.4; mean units to first hit 1.7, 6.4 and 6.4'
@@ -3707,11 +3476,347 @@ claims:
   source: runs/ll_compare.json
   key: baseline/2002/summary/adapt_events/mean
   tol: 0.05
+- id: final.demo.big.full_hits
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 9.86
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean
+  tol: 0.006
+- id: final.demo.big.full_lo
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 8.88
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/0
+  tol: 0.006
+- id: final.demo.big.full_hi
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 10.89
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/1
+  tol: 0.006
+- id: final.demo.big.bo_hits
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 8.04
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean
+  tol: 0.006
+- id: final.demo.big.bo_lo
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 7.43
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/0
+  tol: 0.006
+- id: final.demo.big.bo_hi
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 8.67
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/1
+  tol: 0.006
+- id: final.demo.big.gap
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 1.82
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
+  tol: 0.006
+- id: final.demo.big.gap_lo
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 1.29
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
+  tol: 0.006
+- id: final.demo.big.gap_hi
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 2.35
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
+  tol: 0.006
+- id: final.demo.big.first_full
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 7.0
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_median
+  tol: 0.006
+- id: final.demo.big.first_bo
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 30.0
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_median
+  tol: 0.006
+- id: final.demo.big.worlds
+  doc: docs/DEMO_SCRIPT.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 46
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/worlds_ref_more_hits
+  tol: 0.0
+- id: final.judge.big.full_hits
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 9.86
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean
+  tol: 0.006
+- id: final.judge.big.full_lo
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 8.88
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/0
+  tol: 0.006
+- id: final.judge.big.full_hi
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 10.89
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/1
+  tol: 0.006
+- id: final.judge.big.bo_hits
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 8.04
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean
+  tol: 0.006
+- id: final.judge.big.bo_lo
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 7.43
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/0
+  tol: 0.006
+- id: final.judge.big.bo_hi
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 8.67
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/1
+  tol: 0.006
+- id: final.judge.big.gap
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 1.82
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
+  tol: 0.006
+- id: final.judge.big.gap_lo
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 1.29
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
+  tol: 0.006
+- id: final.judge.big.gap_hi
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 2.35
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
+  tol: 0.006
+- id: final.judge.big.first_full
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 7.0
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_median
+  tol: 0.006
+- id: final.judge.big.first_bo
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 30.0
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_median
+  tol: 0.006
+- id: final.judge.big.worlds
+  doc: docs/JUDGE_GUIDE.md
+  text: '9.86 hits [95% CI 8.88, 10.89] vs pure BO 8.04 [7.43, 8.67], paired gap +1.82 [+1.29, +2.35] (ahead in 46 of 60 worlds); median first hit 7.0 vs 30.0 units'
+  value: 46
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/worlds_ref_more_hits
+  tol: 0.0
+- id: final.pitch.big.full_hits
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 9.86
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean
+  tol: 0.006
+- id: final.pitch.big.full_lo
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 8.88
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/0
+  tol: 0.006
+- id: final.pitch.big.full_hi
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 10.89
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/1
+  tol: 0.006
+- id: final.pitch.big.bo_hits
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 8.04
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean
+  tol: 0.006
+- id: final.pitch.big.bo_lo
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 7.43
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/0
+  tol: 0.006
+- id: final.pitch.big.bo_hi
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 8.67
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/1
+  tol: 0.006
+- id: final.pitch.big.gap
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 1.82
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
+  tol: 0.006
+- id: final.pitch.big.gap_lo
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 1.29
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
+  tol: 0.006
+- id: final.pitch.big.gap_hi
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 2.35
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
+  tol: 0.006
+- id: final.pitch.big.first_full
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 7.0
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_median
+  tol: 0.006
+- id: final.pitch.big.first_bo
+  doc: docs/PITCH.md
+  text: 'LabLoop 9.86 hits [8.88, 10.89] vs pure BO 8.04 [7.43, 8.67] at 60 units (paired +1.82 [+1.29, +2.35]), median first hit 7.0 vs 30.0 units'
+  value: 30.0
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_median
+  tol: 0.006
+- id: final.demo.small.full
+  doc: docs/DEMO_SCRIPT.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 9.9
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean
+  tol: 0.005
+- id: final.demo.small.bo
+  doc: docs/DEMO_SCRIPT.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 8.25
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean
+  tol: 0.005
+- id: final.demo.small.gap
+  doc: docs/DEMO_SCRIPT.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 1.65
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
+  tol: 0.005
+- id: final.demo.small.gap_lo
+  doc: docs/DEMO_SCRIPT.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 0.05
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
+  tol: 0.005
+- id: final.demo.small.gap_hi
+  doc: docs/DEMO_SCRIPT.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 3.2
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
+  tol: 0.005
+- id: final.judge.small.full
+  doc: docs/JUDGE_GUIDE.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 9.9
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean
+  tol: 0.005
+- id: final.judge.small.bo
+  doc: docs/JUDGE_GUIDE.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 8.25
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean
+  tol: 0.005
+- id: final.judge.small.gap
+  doc: docs/JUDGE_GUIDE.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 1.65
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
+  tol: 0.005
+- id: final.judge.small.gap_lo
+  doc: docs/JUDGE_GUIDE.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 0.05
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
+  tol: 0.005
+- id: final.judge.small.gap_hi
+  doc: docs/JUDGE_GUIDE.md
+  text: 'the earlier 20-world rerun gave 9.90 vs 8.25, gap +1.65 [+0.05, +3.20]'
+  value: 3.2
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
+  tol: 0.005
+- id: final.qa.big.full
+  doc: docs/QA_PREP.md
+  text: '9.86 [8.88, 10.89] vs 8.04 [7.43, 8.67], paired +1.82 [+1.29, +2.35]; median first hit 7.0 vs 30.0 units'
+  value: 9.86
+  source: runs/ll_big_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean
+  tol: 0.006
+- id: final.qa.big.bo
+  doc: docs/QA_PREP.md
+  text: '9.86 [8.88, 10.89] vs 8.04 [7.43, 8.67], paired +1.82 [+1.29, +2.35]; median first hit 7.0 vs 30.0 units'
+  value: 8.04
+  source: runs/ll_big_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean
+  tol: 0.006
+- id: final.qa.big.gap
+  doc: docs/QA_PREP.md
+  text: '9.86 [8.88, 10.89] vs 8.04 [7.43, 8.67], paired +1.82 [+1.29, +2.35]; median first hit 7.0 vs 30.0 units'
+  value: 1.82
+  source: runs/ll_big_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
+  tol: 0.006
 
 unsourced:
 - id: readme.tests.count
   doc: README.md
-  text: 40 offline tests pass from a fresh clone
+  text: 117 offline tests (no model calls) are collected
   reason: A test count, not stored in any committed result file; verify with pytest --collect-only.
 - id: readme.probe.cluster
   doc: README.md
