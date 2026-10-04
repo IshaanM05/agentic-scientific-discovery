@@ -1,0 +1,339 @@
+{
+ "target_id": "T-0167",
+ "signal": {
+  "period_d": 3.462168,
+  "epoch": 131.09023,
+  "duration_h": 6.274,
+  "depth_ppm": 1366.2,
+  "snr": 55.3
+ },
+ "stellar": {
+  "teff_k": 6208,
+  "radius_rsun": 1.081,
+  "mass_msun": 1.073,
+  "rho_cat": 0.8351,
+  "rho_err_dex": 0.106,
+  "logg": 4.401
+ },
+ "prior": {
+  "H1": 0.35868,
+  "H2": 0.23967,
+  "H3": 0.1405,
+  "H4": 0.13058,
+  "H5": 0.13058
+ },
+ "posterior": {
+  "H1": 0.00141,
+  "H2": 0.00948,
+  "H3": 0.04576,
+  "H4": 0.94179,
+  "H5": 0.00156
+ },
+ "budget": {
+  "max_tests": 5,
+  "used": 5,
+  "cost_units_used": 8.0,
+  "cost_units_max": 10.0
+ },
+ "hypotheses": [
+  {
+   "id": "H1",
+   "name": "planet",
+   "prior": 0.35868,
+   "posterior": 0.00141,
+   "origin": "default"
+  },
+  {
+   "id": "H2",
+   "name": "eclipsing_binary",
+   "prior": 0.23967,
+   "posterior": 0.00948,
+   "origin": "default"
+  },
+  {
+   "id": "H3",
+   "name": "blended_background_eb",
+   "prior": 0.1405,
+   "posterior": 0.04576,
+   "origin": "default"
+  },
+  {
+   "id": "H4",
+   "name": "stellar_variability",
+   "prior": 0.13058,
+   "posterior": 0.94179,
+   "origin": "default"
+  },
+  {
+   "id": "H5",
+   "name": "instrumental_artifact",
+   "prior": 0.13058,
+   "posterior": 0.00156,
+   "origin": "default"
+  },
+  {
+   "id": "H2-2P",
+   "name": "EB at twice the reported period",
+   "parent": "H2",
+   "mechanism": "Pipelines fold twin-star eclipses at half the true period; primary and secondary then alternate as 'odd' and 'even' transits.",
+   "predicted_signatures": [
+    {
+     "test_id": "T-odd-even",
+     "expected_outcome": ">3 sigma"
+    }
+   ],
+   "origin": "agent_generated",
+   "proposed_by": "house"
+  },
+  {
+   "id": "H3-long",
+   "name": "Blend: dips too long for this star",
+   "parent": "H3",
+   "mechanism": "Duration is 2.2x the central-transit duration expected for the catalog star; the eclipsing body may orbit a different (background) star.",
+   "predicted_signatures": [
+    {
+     "test_id": "T-centroid",
+     "expected_outcome": ">5 sigma"
+    },
+    {
+     "test_id": "T-density",
+     "expected_outcome": "much lower"
+    }
+   ],
+   "origin": "agent_generated",
+   "proposed_by": "house"
+  }
+ ],
+ "tests_run": [
+  {
+   "test_id": "T-systematics",
+   "run_id": "run-T-0167-T-systematics-efbc2e",
+   "outcome_bin": 0,
+   "outcome_label": "<15% flagged",
+   "metrics": {
+    "flagged_fraction": 0.13043,
+    "n_epochs": 23,
+    "n_flagged": 3
+   },
+   "quality": "ok",
+   "weight": 1.0,
+   "rerun": false,
+   "window_factor": 3.0,
+   "evidence_ids": [
+    "EV-thompson2018"
+   ]
+  },
+  {
+   "test_id": "T-odd-even",
+   "run_id": "run-T-0167-T-odd-even-acd45d",
+   "outcome_bin": 2,
+   "outcome_label": ">3 sigma",
+   "metrics": {
+    "odd_depth_ppm": 1047.16589,
+    "even_depth_ppm": 693.68846,
+    "diff_sigma": 6.14988,
+    "n_odd_transits": 11,
+    "n_even_transits": 12
+   },
+   "quality": "ok",
+   "weight": 1.0,
+   "rerun": false,
+   "window_factor": 3.0,
+   "evidence_ids": [
+    "EV-coughlin2016",
+    "EV-thompson2018"
+   ]
+  },
+  {
+   "test_id": "T-secondary",
+   "run_id": "run-T-0167-T-secondary-db8426",
+   "outcome_bin": 0,
+   "outcome_label": "<2 sigma",
+   "metrics": {
+    "secondary_depth_ppm": 28.90267,
+    "secondary_sigma": 1.13312,
+    "n_in": 201
+   },
+   "quality": "ok",
+   "weight": 1.0,
+   "rerun": false,
+   "window_factor": 3.0,
+   "evidence_ids": [
+    "EV-coughlin2016"
+   ]
+  },
+  {
+   "test_id": "T-odd-even",
+   "run_id": "run-T-0167-T-odd-even-acb110",
+   "outcome_bin": 2,
+   "outcome_label": ">3 sigma",
+   "metrics": {
+    "odd_depth_ppm": 1105.69829,
+    "even_depth_ppm": 681.21395,
+    "diff_sigma": 7.23456,
+    "n_odd_transits": 11,
+    "n_even_transits": 12
+   },
+   "quality": "ok",
+   "weight": 0.0,
+   "rerun": true,
+   "window_factor": 5.0,
+   "evidence_ids": [
+    "EV-coughlin2016",
+    "EV-thompson2018"
+   ]
+  },
+  {
+   "test_id": "T-density",
+   "run_id": "run-T-0167-T-density-5b9d46",
+   "outcome_bin": 0,
+   "outcome_label": "much lower",
+   "metrics": {
+    "rho_transit": 0.0039,
+    "rho_catalog": 0.8351,
+    "log_rho_ratio": -2.33061,
+    "a_over_r": 1.51523,
+    "impact_b": 0.9
+   },
+   "quality": "ok",
+   "weight": 1.0,
+   "rerun": false,
+   "window_factor": 3.0,
+   "evidence_ids": [
+    "EV-seager2003"
+   ]
+  },
+  {
+   "test_id": "T-density",
+   "run_id": "run-T-0167-T-density-34aee3",
+   "outcome_bin": 0,
+   "outcome_label": "much lower",
+   "metrics": {
+    "rho_transit": 0.0039,
+    "rho_catalog": 0.8351,
+    "log_rho_ratio": -2.3312,
+    "a_over_r": 1.51453,
+    "impact_b": 0.9
+   },
+   "quality": "ok",
+   "weight": 0.0,
+   "rerun": true,
+   "window_factor": 5.0,
+   "evidence_ids": [
+    "EV-seager2003"
+   ]
+  },
+  {
+   "test_id": "T-periodogram",
+   "run_id": "run-T-0167-T-periodogram-6a116e",
+   "outcome_bin": 2,
+   "outcome_label": "matches signal period",
+   "metrics": {
+    "rotation_period_d": 3.46407,
+    "ls_power": 0.82127,
+    "amplitude_ppm": 951.07758,
+    "harmonic_mismatch": 0.00055,
+    "strong": true
+   },
+   "quality": "ok",
+   "weight": 1.0,
+   "rerun": false,
+   "window_factor": 3.0,
+   "evidence_ids": [
+    "EV-mcquillan2014"
+   ]
+  },
+  {
+   "test_id": "T-periodogram",
+   "run_id": "run-T-0167-T-periodogram-4cbb40",
+   "outcome_bin": 2,
+   "outcome_label": "matches signal period",
+   "metrics": {
+    "rotation_period_d": 3.46407,
+    "ls_power": 0.82127,
+    "amplitude_ppm": 951.07758,
+    "harmonic_mismatch": 0.00055,
+    "strong": true
+   },
+   "quality": "ok",
+   "weight": 0.0,
+   "rerun": true,
+   "window_factor": 5.0,
+   "evidence_ids": [
+    "EV-mcquillan2014"
+   ]
+  }
+ ],
+ "evidence": [],
+ "open_critiques": [],
+ "trajectory": [
+  {
+   "step": 0,
+   "after": null,
+   "posterior": {
+    "H1": 0.35868,
+    "H2": 0.23967,
+    "H3": 0.1405,
+    "H4": 0.13058,
+    "H5": 0.13058
+   }
+  },
+  {
+   "step": 1,
+   "after": "T-systematics",
+   "posterior": {
+    "H1": 0.46747,
+    "H2": 0.32694,
+    "H3": 0.17019,
+    "H4": 0.03304,
+    "H5": 0.00236
+   }
+  },
+  {
+   "step": 2,
+   "after": "T-odd-even",
+   "posterior": {
+    "H1": 0.07004,
+    "H2": 0.66287,
+    "H3": 0.20257,
+    "H4": 0.06134,
+    "H5": 0.00319
+   }
+  },
+  {
+   "step": 3,
+   "after": "T-secondary",
+   "posterior": {
+    "H1": 0.13495,
+    "H2": 0.6078,
+    "H3": 0.15828,
+    "H4": 0.0932,
+    "H5": 0.00577
+   }
+  },
+  {
+   "step": 4,
+   "after": "T-density",
+   "posterior": {
+    "H1": 0.05727,
+    "H2": 0.01913,
+    "H3": 0.49201,
+    "H4": 0.41596,
+    "H5": 0.01565
+   }
+  },
+  {
+   "step": 5,
+   "after": "T-periodogram",
+   "posterior": {
+    "H1": 0.00141,
+    "H2": 0.00948,
+    "H3": 0.04576,
+    "H4": 0.94179,
+    "H5": 0.00156
+   }
+  }
+ ],
+ "status": "closed",
+ "history_ref": "ledger://T-0167"
+}

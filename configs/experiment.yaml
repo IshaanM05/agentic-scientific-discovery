@@ -1,0 +1,38 @@
+# Experiment configuration: budgets, thresholds, seeds and data sizes.
+# Every benchmark/demo run reads this file; change values here, not in code.
+
+seeds:
+  calibration: 1001     # synthetic calibration set (likelihood tables only)
+  blind: 2002           # synthetic blind test set (all reported results)
+  random_baseline: 7    # B2 random-order baseline
+  bootstrap: 11
+
+data:
+  n_calibration: 600
+  n_blind: 240
+  # class mix (H1..H5); roughly Kepler-like: about half of signals are false positives
+  class_mix: {H1: 0.36, H2: 0.24, H3: 0.14, H4: 0.13, H5: 0.13}
+  baseline_days: 80.0
+  cadence_min: 30.0
+
+budget:
+  max_tests: 5
+  cost_units_max: 10.0
+
+stopping:
+  posterior_threshold: 0.90
+  min_eig_bits: 0.02
+
+planner:
+  exploration_bonus: 0.25      # House's bounded contrarian bonus (beta)
+  parallel_ratio: 0.85         # dispatch the runner-up in parallel if its score >= ratio * best
+  parallel_max_batch: 2
+
+foreman:
+  weights: {ok: 1.0, marginal: 0.5, unreliable: 0.15}
+  surprise_threshold: 0.15     # P(outcome | leader) below this -> surprise -> counter-experiment
+  rerun_cost_fraction: 0.5     # cost of a detrending-sensitivity rerun, as a fraction of the test cost
+
+benchmark:
+  threshold_sweep: [0.6, 0.7, 0.8, 0.9, 0.95, 0.98]
+  n_bootstrap: 1000
