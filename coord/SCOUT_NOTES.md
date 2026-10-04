@@ -115,3 +115,12 @@ Scout spend this cycle est ~$1.2.
 - Files: only asd/labloop_tools.py, agents/labloop_planner.yaml, tests/test_labloop_tools.py, RUNBOOK append in docs/LABLOOP_INTEGRATION.md.
 - No hidden truth in return paths (measured values of tested compositions only). Nine ll_* tools, ll_state.json per run dir, set_world in Ctx._build every call, no urllib/Anthropic call (stub LLM).
 - Commits clean (no trailer/AI mention). No secrets. Tests: 60 passed, 0 skipped.
+## 2026-10-04 Review: w3/labloop-demo (9c4fa62) -> integration/labloop
+Verdict: APPROVE (2 minor notes).
+- Ownership: only extra files are README.md (Live demo section, required by contract) and scripts/build_dashboard.py (wires __LLRUNS__; needed to rebuild docs/index.html). OK.
+- Offline: dashboard/ll_summary.py imports only json/pathlib; no requests/httpx/anthropic/subprocess. docs/index.html has no external URLs (only the svg xmlns).
+- Numbers: none published without source. DEMO_SCRIPT has 2 [TO FILL] markers (1:32-1:52 row): benchmark hits/units-to-first-hit from docs/RESULTS_LABLOOP.md; ll-w2000 run stats. Fill before submission.
+- Hosting: vercel.json (static, outputDirectory docs, no build) and .replit/replit.nix (http.server on docs, static deploy) are sane.
+- Tests on w3 head: 49 passed.
+- Note 1: both commits have author "Claude <noreply@anthropic.com>" (no co-author trailer). Rewrite author before the public merge if the no-AI-mention rule covers author identity.
+- Note 2: README/DEPLOY live URL is a placeholder until deploy.
