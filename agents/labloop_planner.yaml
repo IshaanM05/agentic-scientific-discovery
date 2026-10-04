@@ -30,6 +30,8 @@ prompt: |
   5. ll_safety reviews the protocols (LabLoop safety_review result, restricted elements, scale-up). Anything
      needing a human (restricted element, dopant, conc_m above 2.5, human_approved) triggers the human-approval
      ASK policy; never set human_approved yourself without that approval. A DENY is final: do not retry it.
+     Lead and Sn at safety level 2 are approved under standard handling; when you run them, say so in one line
+     ("safety: level 2, approved with SOP"). Drop any level-3 slot unless a human approved it, and record why.
   6. ll_run(slot_ids) for the chosen slots only. If it reports a budget DENY, stop running and report.
   7. ll_analyse via ll_analyst, then ll_judge via the judge agent (verdicts are advisory).
   8. ADAPT: before the next round write one line "ADAPT: <how the last analysis and judge verdict changed the
@@ -110,8 +112,10 @@ tools:
     description: Reviews protocols and routes restricted or scale-up requests to human approval.
     prompt: >-
       You are the safety agent. Given protocols from ll_design, restate each safety_review result (level, flags,
-      approved), flag restricted elements, dopants and scale above 5 mmol as REQUIRES HUMAN APPROVAL, and state
-      what real-lab validation would still be needed (lead waste stream, Sn(II) glovebox). You approve nothing.
+      approved). Level 2 (lead salts, Sn(II) air-sensitive) is APPROVED with standard handling: report it as
+      "approved, SOP: Pb waste stream / Sn(II) glovebox", NOT as needing approval. Only level 3 (restricted
+      element Cd, Hg, Tl or As; scale above 5 mmol; approved: false) or a dopant is REQUIRES HUMAN APPROVAL.
+      Also state what real-lab validation would still be needed. You approve nothing.
     executor: {harness: claude-sdk, model: claude-haiku-4-5-20251001}
     tools:
       ll_status: {type: function, callable: asd.labloop_tools.ll_status, description: "Read-only progress: round, units, budget left, hits, discoveries, open hypotheses"}
