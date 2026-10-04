@@ -20,7 +20,10 @@ Written by the finisher worker. Offline only: no model credentials, no deploy, n
 | w6/pitch-materials | 8f8082c | already in integration |
 | w7/claims-audit | f13fcdc | already in integration |
 | w8/knowledge-graph | 7b2d7bf | already in integration |
-| w10/stat-tightening | 5f7978b | new here (60-world results) |
+| w10/stat-tightening | 07408ec | new here (60-world results and misspecification; its `docs/RESULTS_LABLOOP_BIG.md` replaced my earlier draft) |
+| w12/ll-w2000 | e485b85 | `runs/ll-w2000-full`, report; its `runs/ll-smoke2000` conflicted with the lead's, the lead's kept |
+| w12/ll-w2001 | fd2816e | `runs/ll-w2001`, `runs/ll-smoke2001`, report |
+| w12/ll-w2002 | 19afa50 | `runs/ll-w2002`, `runs/ll-smoke2002`, report |
 Not touched: `main`, `dev/agentic-loop`. No pull request opened.
 
 ## Tests (`python -m pytest -q`, Python 3.11 sandbox, no `omnigent` package)
@@ -36,8 +39,10 @@ Not touched: `main`, `dev/agentic-loop`. No pull request opened.
 | LabLoop, 60 worlds x 20 seeds, rule-based scientist: hits@60 full vs pure BO | 9.86 [8.88, 10.89] vs 8.04 [7.43, 8.67]; paired +1.82 [+1.29, +2.35]; ahead in 46 of 60 worlds | `runs/ll_big_benchmark.json`, `docs/RESULTS_LABLOOP_BIG.md` |
 | Same, median units to first hit | 7.0 vs 30.0 (reached 1186 vs 1133 of 1200 runs) | same |
 | LabLoop, 20 worlds (earlier rerun) | 9.90 vs 8.25, paired +1.65 [+0.05, +3.20] | `runs/ll_benchmark.json` |
-| LabLoop live Omnigent, world 2000 (PARTIAL, 16 films, 23.5 of 60 units, n = 1) | 6 distinct true hits (world holds 16), first hit 1.5 units, 5 hits by 20 units vs baseline 4.6 (range 3-6, 5 seeds) | `runs/ll_compare.json` |
-| Worlds 2001, 2002 Omnigent | not run | `docs/TODO_HUMAN.md` item 1 |
+| LabLoop live Omnigent, world 2000, `ll-w2000-full` (complete by stop rule, 15 films, 22.0 of 60 units, n = 1) | 6 of 16 true hits, first 2.5 units, 6 hits by 20 units vs baseline 4.6 (range 3-6, 5 seeds) | `runs/ll_compare_w2000_full.json` |
+| Same world, earlier `ll-w2000` (PARTIAL, 23.5 units) | 6 of 16, first 1.5, 5 by 20 units | `runs/ll_compare.json` |
+| World 2001, `ll-w2001` (planner ended it, 31 films, 46.0 units) | 8 of 8 true hits, first 10.0 units (baseline 6.4), 2 by 20 units (baseline 3.0) | `runs/ll_compare.json` |
+| World 2002, `ll-w2002` (stop rule, 18 films, 26.5 units) | 8 of 28, first 4.0 units (baseline 6.4), 5 by 20 units (baseline 3.4); baseline 15.4 at 60 units, so not comparable at 60 | `runs/ll_compare.json` |
 
 ## Fixes made in this pass (and why)
 - `9.9 vs 8.2` now reads `9.9 vs 8.25` (docs, claims). `docs/LABLOOP_README.md` still prints 8.2 in the teammate's table; it is his table and the audit notes it as a rounding.
@@ -48,12 +53,12 @@ Not touched: `main`, `dev/agentic-loop`. No pull request opened.
 - `asd/kg.py`: reads the live record schema (ids instead of objects, list-valued hypothesis updates, `exp_id`), which crashed `make_kg.py` once `runs/ll-w2000` arrived; duplicate experiment nodes removed.
 
 ## Safety sweep (2026-10-04)
-- Hidden-truth names: no `eg_true`, `lt_true`, `world_params` anywhere in agent-visible run records, notebooks (`ll-w2000`, `ll-smoke2000`, `ll-offline-w3100`, steel runs) or reports. The key `true_hits` appears only in offline benchmark outputs (`runs/benchmark*.json`, `runs/trace_seed1.json`, `runs/ll_calibrate.json`, `runs/ll_compare*.json`) and the demo page (`docs/index.html`, `dashboard/template.html`), which agents never read, and in guard lists (`asd/kg.py`, `asd/kg_tools.py`) that forbid them.
+- Hidden-truth names (re-run on `ll-w2000-full`, `ll-w2001`, `ll-w2002` and the smoke runs, files and notebooks: 0 matches; the three `docs/LIVE_RUN_REPORT_W200*.md` match only because they quote the grep pattern): no `eg_true`, `lt_true`, `world_params` anywhere in agent-visible run records, notebooks (`ll-w2000`, `ll-smoke2000`, `ll-offline-w3100`, steel runs) or reports. The key `true_hits` appears only in offline benchmark outputs (`runs/benchmark*.json`, `runs/trace_seed1.json`, `runs/ll_calibrate.json`, `runs/ll_compare*.json`) and the demo page (`docs/index.html`, `dashboard/template.html`), which agents never read, and in guard lists (`asd/kg.py`, `asd/kg_tools.py`) that forbid them.
 - Secrets: no key, token value or `.env` tracked; only env-var names in docs (`ANTHROPIC_API_KEY`, `CLAUDE_CODE_OAUTH_TOKEN`). The earlier-exposed subscription token still has to be rotated (TODO item 2); git history was not scanned for it.
-- AI-tool names: commit messages on the branch have none beyond the `CLAUDE.md` pointer commit. **19 commits from worker branches carry the author identity "Claude <noreply@anthropic.com>"** (not fixable without rewriting shared history; TODO item 11 gives a squash-merge command). Files: the remaining mentions are functional identifiers or honest method disclosure, kept on purpose: harness name `claude-sdk` and model ids in `agents/*.yaml` and tests, env-var names, the `claude` CLI used for LLM calls (README "Deviation: temperature"), `coord/*` notes (lead's files, untouched), `docs/AGENT_PROMPT.md`, `knowledge/` notes, `labloop/` (read-only). Prose mentions in `docs/LABLOOP_README.md`, `docs/PLAN.md`, `docs/LABLOOP_INTEGRATION.md` were reworded.
+- AI-tool names: commit messages on the branch have none beyond the `CLAUDE.md` pointer commit. **28 commits from worker branches carry the author identity "Claude <noreply@anthropic.com>"** (not fixable without rewriting shared history; TODO item 11 gives a squash-merge command). Files: the remaining mentions are functional identifiers or honest method disclosure, kept on purpose: harness name `claude-sdk` and model ids in `agents/*.yaml` and tests, env-var names, the `claude` CLI used for LLM calls (README "Deviation: temperature"), `coord/*` notes (lead's files, untouched), `docs/AGENT_PROMPT.md`, `knowledge/` notes, `labloop/` (read-only). Prose mentions in `docs/LABLOOP_README.md`, `docs/PLAN.md`, `docs/LABLOOP_INTEGRATION.md` were reworded.
 
 ## Known issues and honest limits
-- Omnigent evidence on LabLoop is one partial run (n = 1); its hits@40 and hits@60 columns in `ll_compare.json` repeat 6 because the run ended at 23.5 units. ADAPT is counted differently by `ll_compare` (5) and the dashboard (2, inferred); the planner wrote no "ADAPT:" line in `ll-w2000`.
+- Omnigent evidence on LabLoop is three single samples (one per world, seed 0). All ended before 60 units (stop rule or planner decision), so hits@40 and hits@60 columns in `ll_compare.json` repeat the final count and are not measurements at those budgets; only hits by 20 units compares like with like. On world 2002 the baseline finds more hits at 60 units (15.4 vs 8 at 26.5 units), and on world 2001 the Omnigent first hit was later than the baseline's. ADAPT is counted differently by `ll_compare` (2, 3, 4 for 2000-full, 2001, 2002) and the dashboard (inferred); the planners wrote 0, 4 and 0 literal "ADAPT:" lines. Run-report notes the planner skipped a loop step in 2001 (round 9) and a judge sub-agent looped in 2000-full; the judge's "confirmed" counts (5, 3, 4) are two-film agreement and differ from `ll_compare`'s replicated counts.
 - LabLoop gains are for the rule-based scientist inside a team-designed simulator; the benefit of the Omnigent team over the rule-based one is not measured.
 - Steel: public benchmark, memorisation flag set, so no acceleration claim; probe n=20 at default sampling; approval hold shown once interactively; headless runs decline.
 - `docs/LABLOOP_README.md` is the teammate's text; it was not independently proofread beyond the table rerun.
@@ -64,11 +69,11 @@ Not touched: `main`, `dev/agentic-loop`. No pull request opened.
 
 ## Independent audit against the five scoring criteria
 Weakest points
-1. **Omnigent orchestration on the unseen-worlds test bed is thinly evidenced (30% criterion).** One partial live run (world 2000, 23.5 of 60 units) plus an 8-unit smoke run; worlds 2001 and 2002 absent. Support: `docs/RESULTS_LABLOOP.md` section 5, `runs/ll_compare.json`.
+1. **Omnigent orchestration on the unseen-worlds test bed is evidenced by single samples (30% criterion).** One live run per world, each ended early, with mixed results against the rule-based baseline (better at 20 units on 2000 and 2002, worse first hit on 2001, fewer total hits on 2002). Support: `docs/RESULTS_LABLOOP.md` section 5, `runs/ll_compare.json`, `docs/LIVE_RUN_REPORT_W200*.md`.
 2. **No measured acceleration from LLM knowledge (20% criterion).** Memorisation flag set, label-swap manipulation weak, judge near-arithmetic, arena at chance; the steel gain is evidence against baselines, not a learning claim. Support: README "Test bed 1" and E1, `results/judge_calibration.json`, `results/arena_calibration.json`.
 3. **Breakthrough potential rests on a simulator the team designed (25% criterion), and the deliverables that judges see first are missing:** no live URL, videos or team names yet. Support: `docs/RESULTS_LABLOOP_BIG.md` (limits), `docs/TODO_HUMAN.md`, `docs/SUBMISSION_CHECKLIST.md`.
 
 Strongest points
 1. **Rigor and honesty (15%).** Every published number is tied to a committed file by a strict audit that exits 0; a pre-registered counterfactual; limits stated next to each claim. Support: `docs/CLAIMS_AUDIT.md`, `scripts/check_claims.py`, README "Counterfactual test (E1)".
-2. **Enforced guardrails with evidence (30% and 10%).** Budget and safety DENY policies tested through the Omnigent shim, an approval ASK held 22.2 s in an interactive run, hidden truth kept out of tool outputs by test, a refutation changing the next experiment in a live run. Support: `asd/policies.py`, `tests/test_labloop_tools.py`, `runs/t011-repl30/APPROVAL_EVIDENCE.md`, `runs/t011`.
+2. **Enforced guardrails with evidence (30% and 10%).** Budget and safety DENY policies tested through the Omnigent shim, an approval ASK held 22.2 s in an interactive run, hidden truth kept out of tool outputs by test, a refutation changing the next experiment in a live run, and three live LabLoop runs whose records contain no hidden-truth names. Support: `asd/policies.py`, `tests/test_labloop_tools.py`, `runs/t011-repl30/APPROVAL_EVIDENCE.md`, `runs/t011`.
 3. **A second test bed that removes the memorisation objection, measured at scale with correct statistics (25% and 20%).** 60 worlds x 20 seeds, bootstrap over worlds, intervals that exclude zero against Bayesian optimisation, ablations, calibration against hidden truth. Support: `docs/RESULTS_LABLOOP_BIG.md`, `scripts/ll_big_benchmark.py`, `docs/RESULTS_LABLOOP.md`.
