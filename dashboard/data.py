@@ -85,10 +85,16 @@ def load_results():
 
 
 def readme_section(title):
-    """Exact README text of a '## title' section (caveats are shown verbatim)."""
+    """Exact README text of a section titled `title` (any heading level 2-4; ends at the next heading of the
+    same or a higher level, so nested subsections stay inside; caveats are shown verbatim)."""
     txt = (ROOT / "README.md").read_text(encoding="utf-8")
-    m = re.search(r"^## " + re.escape(title) + r"\n(.*?)(?=^## |\Z)", txt, re.S | re.M)
-    return m.group(1).strip() if m else ""
+    m = re.search(r"^(#{2,4}) (?:\*\*)?" + re.escape(title) + r"(?:\*\*)?\n", txt, re.M)
+    if not m:
+        return ""
+    level = len(m.group(1))
+    rest = txt[m.end():]
+    end = re.search(r"^#{2,%d} " % level, rest, re.M)
+    return (rest[:end.start()] if end else rest).strip()
 
 
 def parse_all():
