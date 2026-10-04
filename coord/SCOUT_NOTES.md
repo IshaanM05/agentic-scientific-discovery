@@ -110,3 +110,13 @@ Scout spend this cycle est ~$1.2.
 - OK: LICENSE is MIT; diagram names exist in planner.yaml/asd/tools.py/policies.py; Responsible use has no overclaim; references match knowledge/papers, incomplete ones marked; E1/E2 wording consistent (no acceleration claim, weak swap, e2-live gaps); checklist statuses truthful (human items pending-human).
 - EDIT 1: README line 5 "37 offline tests" -> "40 offline tests".
 - EDIT 2: README diagram box POL is titled "asd/policies.py" but cost_budget is an Omnigent builtin (omnigent.policies.builtins.cost); relabel it "cost_budget (omnigent builtin)" or retitle the subgraph "Policies: planner.yaml". Optional: add call_cap.
+
+## 2026-10-04 Review: w3/labloop-demo (9c4fa62) -> integration/labloop
+Verdict: APPROVE (2 minor notes).
+- Ownership: only extra files are README.md (Live demo section, required by contract) and scripts/build_dashboard.py (wires __LLRUNS__; needed to rebuild docs/index.html). OK.
+- Offline: dashboard/ll_summary.py imports only json/pathlib; no requests/httpx/anthropic/subprocess. docs/index.html has no external URLs (only the svg xmlns).
+- Numbers: none published without source. DEMO_SCRIPT has 2 [TO FILL] markers (1:32-1:52 row): benchmark hits/units-to-first-hit from docs/RESULTS_LABLOOP.md; ll-w2000 run stats. Fill before submission.
+- Hosting: vercel.json (static, outputDirectory docs, no build) and .replit/replit.nix (http.server on docs, static deploy) are sane.
+- Tests on w3 head: 49 passed.
+- Note 1: both commits have author "Claude <noreply@anthropic.com>" (no co-author trailer). Rewrite author before the public merge if the no-AI-mention rule covers author identity.
+- Note 2: README/DEPLOY live URL is a placeholder until deploy.
