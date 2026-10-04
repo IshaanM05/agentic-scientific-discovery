@@ -110,3 +110,9 @@ Scout spend this cycle est ~$1.2.
 - OK: LICENSE is MIT; diagram names exist in planner.yaml/asd/tools.py/policies.py; Responsible use has no overclaim; references match knowledge/papers, incomplete ones marked; E1/E2 wording consistent (no acceleration claim, weak swap, e2-live gaps); checklist statuses truthful (human items pending-human).
 - EDIT 1: README line 5 "37 offline tests" -> "40 offline tests".
 - EDIT 2: README diagram box POL is titled "asd/policies.py" but cost_budget is an Omnigent builtin (omnigent.policies.builtins.cost); relabel it "cost_budget (omnigent builtin)" or retitle the subgraph "Policies: planner.yaml". Optional: add call_cap.
+
+## 2026-10-04 Review w2/labloop-results (6d56adb): CHANGES (one item)
+- Ownership OK (only scripts/ll_*, docs/RESULTS_LABLOOP.md, runs/ll_*.json, docs/ll_headline.png; README gets only the two new sections).
+- Recomputed from runs/ll_benchmark.json: median first hit 6.5 vs 30.5; hits 9.90 vs 8.25, paired +1.65 [0.05, 3.20]; neg-memory +0.30 [0.10, 0.55]. All match.
+- Caveats honest (team simulator, rule-based baseline, means vs medians, Omnigent unmeasured). No hidden truth beyond aggregates; no secrets. 47 tests pass.
+- CHANGE: all 7 commits have author "Claude <noreply@anthropic.com>" (AI identity in history). Rewrite author to a team member before merge, or squash-merge with a human author.
