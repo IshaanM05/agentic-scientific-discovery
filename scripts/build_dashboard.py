@@ -14,12 +14,14 @@ from pathlib import Path
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "dashboard"))
 
 from labloop.benchmark import run_benchmark  # noqa: E402
 from labloop.campaign import Config, run_campaign  # noqa: E402
 from labloop.chemistry import A_MIXES, composition_space, space_arrays  # noqa: E402
 from labloop.literature import CLAIMS  # noqa: E402
 from labloop.surrogate import Surrogate  # noqa: E402
+import ll_summary  # noqa: E402
 
 
 def space_payload() -> dict:
@@ -72,7 +74,7 @@ if __name__ == "__main__":
         bench[key] = json.loads(path.read_text())
 
     html = (ROOT / "dashboard" / "template.html").read_text()
-    html = html.replace("__TRACE__", embed(compact(trace))).replace("__BENCH__", embed(bench)).replace("__SPACE__", embed(space_payload()))
+    html = html.replace("__TRACE__", embed(compact(trace))).replace("__BENCH__", embed(bench)).replace("__SPACE__", embed(space_payload())).replace("__LLRUNS__", embed(ll_summary.summarize_all()))
     out = ROOT / "docs" / "index.html"
     out.parent.mkdir(exist_ok=True)
     out.write_text(html)
