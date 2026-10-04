@@ -191,3 +191,34 @@ def test_restricted_and_scaleup_blocked_without_approval(rd):
     assert not L.ll_run([p["slot_id"] for p in d["protocols"]])["results"]
     d2 = L.ll_design([{"kind": "explore", "conc_m": 4.0, "human_approved": True}])
     assert d2["protocols"][0]["runnable"]
+
+
+def test_planner_yaml_loads_and_wires():
+    import importlib
+    import yaml
+    spec = yaml.safe_load((ROOT / "agents" / "labloop_planner.yaml").read_text())
+    subs = {k: v for k, v in spec["tools"].items() if v.get("type") == "agent"}
+    assert set(subs) == {"ll_literature_agent", "ll_generator", "ll_critic", "ll_analyst", "ll_judge", "ll_safety"}
+    models = {k: v["executor"]["model"] for k, v in subs.items()}
+    assert models["ll_generator"] == models["ll_analyst"] == "claude-sonnet-5-5"
+    assert all(models[k] == "claude-haiku-4-5-20251001" for k in ("ll_literature_agent", "ll_critic", "ll_judge", "ll_safety"))
+    assert spec["executor"]["model"] == "claude-sonnet-5-5"
+    for d in list(spec["tools"].values()) + [t for s in subs.values() for t in s["tools"].values()]:
+        if d.get("type") == "function":
+            mod, fn = d["callable"].rsplit(".", 1)
+            assert callable(getattr(importlib.import_module(mod), fn))
+    assert all(s["tools"] for s in subs.values())  # declared explicitly, never inherited
+    for pol in ("ll_budget", "ll_safety_gate", "ll_human_approval"):
+        mod, fn = spec["policies"][pol]["handler"].rsplit(".", 1)
+        assert callable(getattr(importlib.import_module(mod), fn))
+    for needle in ("at least TWO", "ADAPT:", "NEXT-EXPERIMENT"):
+        assert needle in spec["prompt"]
+
+
+def test_planner_yaml_loads_with_omnigent():
+    omni = pytest.importorskip("omnigent.spec")
+    spec = omni.load(ROOT / "agents" / "labloop_planner.yaml")
+    assert spec.name == "labloop_planner"
+    assert all(t.path is not None for t in spec.local_tools)
+    assert {s.name for s in spec.sub_agents} == {"ll_literature_agent", "ll_generator", "ll_critic", "ll_analyst",
+                                                  "ll_judge", "ll_safety"}
