@@ -1,4 +1,4 @@
-# SCOUT_NOTES (append-only, newest at bottom, entries <= 8 lines)
+﻿# SCOUT_NOTES (append-only, newest at bottom, entries <= 8 lines)
 2026-10-03 scout cycle 1: answered T002 open question.
 - Dataset: steel_strength, figshare 10.6084/m9.figshare.7250453 file 13354691; license MIT via figshare API (opened); sha256 matches matminer metadata.
 - Hit: yield strength >= 2000 MPa -> 15/312 (4.8%). Fallback expt_gap figshare 9765779 (MIT), gap >= 4 eV -> 191/4604.
@@ -134,3 +134,9 @@ Verdict: APPROVE (2 minor notes).
 - Recomputed from runs/ll_mf_benchmark.json (20 worlds x 10 seeds): 13.40 vs 12.57 hits@60, paired +0.83, bootstrap CI [0.32, 1.40] (doc 1.41, rounding), 12/20 worlds better, first hit 12.96 vs 15.76 = 2.80 earlier. Matches.
 - RESULTS_MULTIFIDELITY.md: +3.92 vs labloop appears in the table only and is labeled confounded in Reading; headline claim is mf vs sf_eig. OK.
 - No truth fields in result JSON (hits/first/counts only); no secrets in new files. Tests: 57 passed.
+## 2026-10-04 Scout review W6/W7/W8 (trial merge incl. w2/labloop-results)
+- All three: new files only; no secrets; no eg_true/lt_true/world params (claims.yaml "true_hits" keys are judge calibration counts, fine). No "+3.92" anywhere.
+- W6 CHANGES: 14 lines carry [TO FILL] (JUDGE_GUIDE 3,8,9,10,29; PITCH 8,19,25; QA_PREP 3,7,13; VIDEO_SCRIPTS 3,18,28); one "9.9 vs 8.2" at QA_PREP:7 -> 8.25. PITCH:11 title "faster than BO" is an uncaveated speedup claim. QA_PREP:10 arena Spearman 0.56 p=0.21 and judge n=12 acc 1.00 conflict with allowed 0.39 [0.28,0.50] and precision 0.96/recall 0.58.
+- W7 APPROVE: check_claims.py offline; plain and --strict exit 0 on trial merge with w2: 447 claims, 0 failed, 11 unsourced, 29 uncovered-number warnings.
+- W8 CHANGES (minor): kg.build_labloop_record parses ll_start, literature, arena_round, pi_decision, experiment, analysis (fixture 40 exp, synthetic ok); ignores design and judge_verdict; experiment label reads e["formula"] not "composition" string. tests/test_kg.py::test_make_kg_embeds_idempotently fails on Windows (scripts/make_kg.py:37 read_text() without encoding="utf-8").
+- Tests on trial merge: 67 passed, 1 failed (the above).
