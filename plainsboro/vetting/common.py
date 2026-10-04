@@ -30,7 +30,7 @@ def detrend(lc, period: float, epoch: float, dur_d: float, window_factor: float 
     masked[lc.quality] = np.nan
     s = pd.Series(masked)
     trend = s.rolling(win, center=True, min_periods=max(3, win // 5)).median()
-    trend = trend.interpolate(limit_direction="both").to_numpy()
+    trend = trend.interpolate(limit_direction="both").to_numpy(copy=True)
     trend[~np.isfinite(trend)] = np.nanmedian(f)
     return f / trend
 

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -158,7 +159,8 @@ def start(target, cfg, opts):
         narrator = llm.Narrator()
     lab = Lab(tabs, cfg, name="P-live", benchmark_mode=opts["benchmark_mode"], live_literature=opts["live_lit"],
               ledger=Ledger(ROOT / "runs" / "demo_ledger.jsonl"), approver=lambda e: "deny", n_interval_draws=300,
-              narrator=narrator, threshold=cfg["stopping"]["posterior_threshold"])
+              narrator=narrator, threshold=cfg["stopping"]["posterior_threshold"],
+              research=opts["research"] and llm.available())
     st.session_state.update(lab=lab, gen=lab.investigate(target), events=[], pending=None, record=None,
                             primed=False, answer=None, target_id=target.target_id)
 
@@ -194,12 +196,49 @@ def pump(mode: str):
             return
 
 
+def go(mode: str):
+    with st.spinner("Agents working (live research can take ~20 s)…"):
+        pump(mode)
+
+
+def save_key(provider: str, key: str, remember: bool):
+    var = {"Anthropic (Claude)": "ANTHROPIC_API_KEY", "Google Gemini": "GEMINI_API_KEY"}[provider]
+    os.environ[var] = key.strip()
+    os.environ["PP_LLM_PROVIDER"] = "anthropic" if var.startswith("ANTHROPIC") else "gemini"
+    if remember:
+        env = ROOT / ".env"
+        lines = [x for x in (env.read_text(encoding="utf-8").splitlines() if env.exists() else [])
+                 if not x.startswith((var + "=", "PP_LLM_PROVIDER="))]
+        lines += [f"{var}={key.strip()}", f"PP_LLM_PROVIDER={os.environ['PP_LLM_PROVIDER']}"]
+        env.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def render_research(ev):
+    b = ev.get("brief") or {}
+    st.markdown(f"**Live research** · {HYP_LABELS[ev['leader']]} vs {HYP_LABELS[ev['contrarian']]}")
+    st.caption(f"Query: “{ev.get('query', '')}” · {len(ev.get('papers', []))} papers from arXiv + OpenAlex · "
+               f"read by `{b.get('model') or 'no LLM'}`")
+    if b.get("model"):
+        with st.container(border=True):
+            st.markdown(b.get("text", ""))
+        if b.get("stripped"):
+            st.caption(f"Removed {len(b['stripped'])} citation(s) the model invented: {', '.join(b['stripped'])}")
+    else:
+        st.info(b.get("text", ""))
+    with st.expander("Papers retrieved"):
+        for p in ev.get("papers", []):
+            mark = "✔ cited" if p["id"] in b.get("cited", []) else ""
+            st.markdown(f"- [{p['id']}]({p['url']}) *{p['title']}* ({p['year']}) {mark}")
+
+
 def render_event(ev):
     name, role, icon = AGENTS.get(ev["agent"], (ev["agent"], "", "•"))
     with st.chat_message(ev["agent"], avatar=icon):
         st.markdown(f"**{name}** · <span style='color:#8a8984'>{role} · {ev['kind']}</span>", unsafe_allow_html=True)
         k = ev["kind"]
-        if k == "plan" and ev.get("plan") and ev["plan"]["candidates"]:
+        if k == "research":
+            render_research(ev)
+        elif k == "plan" and ev.get("plan") and ev["plan"]["candidates"]:
             st.write(ev["text"])
             df = pd.DataFrame(ev["plan"]["candidates"]).sort_values("score", ascending=False)
             df["chosen"] = df.test_id.isin(ev["plan"]["chosen"])
@@ -249,17 +288,37 @@ with st.sidebar:
     max_tests = st.slider("Budget: max tests", 2, 8, int(cfg0["budget"]["max_tests"]))
     max_cost = st.slider("Budget: max cost units", 3.0, 16.0, float(cfg0["budget"]["cost_units_max"]), 0.5)
     st.header("2 · Options")
-    live_lit = st.checkbox("Live literature (OpenAlex + arXiv resolver)", value=True)
+    live_lit = st.checkbox("Live literature (arXiv citation check + OpenAlex)", value=True)
     bench_mode = st.checkbox("Benchmark mode (block target-specific lookups)", value=True)
-    narrate = st.checkbox("LLM voices for agents (needs OPENAI_API_KEY with credit)", value=False,
-                          disabled=not llm.available())
+
+    st.header("3 · AI research")
+    prov = llm.provider()
+    if prov:
+        st.success(f"Connected: **{prov}** · `{llm.default_model(prov)}`")
+    else:
+        st.warning("No API key yet. Add an Anthropic or Gemini key so Cameron can read papers live.")
+    # On a shared deployment set PP_ALLOW_KEY_ENTRY=0 and put the key in the host's secrets instead:
+    # a key typed here changes the server process for every visitor.
+    if os.environ.get("PP_ALLOW_KEY_ENTRY", "1") != "0":
+        with st.expander("Set API key", expanded=prov is None):
+            kp = st.selectbox("Provider", ["Anthropic (Claude)", "Google Gemini"], key="key_provider")
+            kv = st.text_input("API key", type="password", key="key_value")
+            remember = st.checkbox("Remember in .env (local file, git-ignored)", value=False, key="key_remember")
+            if st.button("Save key", width="stretch", disabled=not kv.strip()):
+                save_key(kp, kv, remember)
+                st.rerun()
+    research = st.checkbox("Live research brief (Cameron reads papers with the LLM)", value=llm.available(),
+                           disabled=not llm.available())
+    narrate = st.checkbox("LLM voices for agents", value=False, disabled=not llm.available())
+
     if st.button("▶ Start investigation", type="primary", width="stretch"):
         cfg = copy.deepcopy(cfg0)
         cfg["stopping"]["posterior_threshold"] = thr
         cfg["budget"].update(max_tests=max_tests, cost_units_max=max_cost)
-        start(gk.get_target(target_id), cfg, dict(live_lit=live_lit, benchmark_mode=bench_mode, narrate=narrate))
+        start(gk.get_target(target_id), cfg, dict(live_lit=live_lit, benchmark_mode=bench_mode, narrate=narrate,
+                                                 research=research))
         st.session_state.set_name = set_name
-        pump("decision")
+        go("decision")
         st.rerun()
     st.caption("Labels are held by the Data Gatekeeper and revealed only after the verdict.")
 
@@ -276,13 +335,13 @@ with tab_inv:
         c1, c2, c3, c4 = st.columns(4)
         done = ss.record is not None
         if c1.button("Next step", disabled=done or ss.pending is not None, width="stretch"):
-            pump("one"); st.rerun()
+            go("one"); st.rerun()
         if c2.button("Run to next decision", disabled=done or ss.pending is not None, width="stretch"):
-            pump("decision"); st.rerun()
+            go("decision"); st.rerun()
         if c3.button("Run to verdict", disabled=done or ss.pending is not None, width="stretch"):
-            pump("end"); st.rerun()
+            go("end"); st.rerun()
         if c4.button("Reset", width="stretch"):
-            for k in ("gen", "events", "record", "pending", "lab"):
+            for k in ("gen", "events", "record", "pending", "lab", "answer", "primed"):
                 ss.pop(k, None)
             st.rerun()
 
@@ -290,9 +349,9 @@ with tab_inv:
             st.warning(f"🛡️ **Human approval required** · {ss.pending['text']}")
             a1, a2 = st.columns(2)
             if a1.button("Approve", type="primary", width="stretch"):
-                ss.answer = "approve"; ss.pending = None; pump("decision"); st.rerun()
+                ss.answer = "approve"; ss.pending = None; go("decision"); st.rerun()
             if a2.button("Deny", width="stretch"):
-                ss.answer = "deny"; ss.pending = None; pump("decision"); st.rerun()
+                ss.answer = "deny"; ss.pending = None; go("decision"); st.rerun()
 
         if target is not None:
             st.pyplot(lc_figure(target), width="stretch")

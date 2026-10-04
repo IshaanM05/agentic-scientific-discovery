@@ -5,42 +5,130 @@
 * `single_agent_diagnose` is baseline B0 (design 12.1): one LLM with the same
   test tools, data and budget that picks its own tests and verdict.
 
-Provider: Anthropic if ANTHROPIC_API_KEY is set (model PP_LLM_MODEL, default
-claude-sonnet-5-5), otherwise OpenAI via OPENAI_API_KEY (default gpt-4o-mini).
+Provider: chosen at call time from the keys present (PP_LLM_PROVIDER forces one):
+Anthropic (ANTHROPIC_API_KEY, default claude-sonnet-5-5), Gemini (GEMINI_API_KEY or
+GOOGLE_API_KEY, default gemini-flash-latest), then OpenAI (OPENAI_API_KEY, default gpt-4o-mini).
+PP_LLM_MODEL overrides the model. Keys can also live in a `.env` file at the repo root.
 """
 from __future__ import annotations
 
 import json
 import os
 
-from .config import HYP_IDS, HYP_LABELS
+import requests
+
+from .config import HYP_IDS, HYP_LABELS, ROOT
 from .vetting.registry import REGISTRY
 
-PROVIDER = "anthropic" if os.environ.get("ANTHROPIC_API_KEY") else "openai"
-DEFAULT_MODEL = os.environ.get("PP_LLM_MODEL", "claude-sonnet-5-5" if PROVIDER == "anthropic" else "gpt-4o-mini")
+KEY_VARS = {"anthropic": ("ANTHROPIC_API_KEY",), "gemini": ("GEMINI_API_KEY", "GOOGLE_API_KEY"),
+            "openai": ("OPENAI_API_KEY",)}
+DEFAULT_MODELS = {"anthropic": "claude-sonnet-5-5", "gemini": "gemini-flash-latest", "openai": "gpt-4o-mini"}
+
+
+def load_dotenv(path=None):
+    """Minimal .env loader (KEY=VALUE lines); never overrides variables already set."""
+    path = path or ROOT / ".env"
+    if not os.path.exists(path):
+        return
+    for line in open(path, encoding="utf-8"):
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        os.environ.setdefault(k.strip(), v.strip().strip("'\""))
+
+
+load_dotenv()
+
+
+def _key(provider: str) -> str | None:
+    return next((os.environ[v] for v in KEY_VARS[provider] if os.environ.get(v)), None)
+
+
+def provider() -> str | None:
+    forced = os.environ.get("PP_LLM_PROVIDER", "").lower()
+    if forced in KEY_VARS:
+        return forced if _key(forced) else None
+    return next((p for p in KEY_VARS if _key(p)), None)
+
+
+def default_model(p: str | None = None) -> str:
+    p = p or provider() or "anthropic"
+    return os.environ.get("PP_LLM_MODEL") or DEFAULT_MODELS[p]
+
+
+# kept for callers that read these at import time
+PROVIDER = provider() or "anthropic"
+DEFAULT_MODEL = default_model(PROVIDER)
 
 PERSONAS = {
     "house": "Dr. Gregory House: sardonic, contrarian, brilliant; assumes the obvious answer is wrong.",
     "foreman": "Dr. Eric Foreman: rigorous skeptic who demands controls.",
     "cuddy": "Dr. Lisa Cuddy: decisive administrator who guards the budget.",
-    "cameron": "Dr. Allison Cameron: careful,  evidence-first.",
+    "cameron": "Dr. Allison Cameron: careful, evidence-first.",
 }
 
 
 def available() -> bool:
-    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY"))
+    return provider() is not None
 
 
-def _client():
-    if PROVIDER == "anthropic":
+class _Gemini:
+    """Tiny REST client for the Gemini generateContent endpoint (no extra dependency).
+
+    Free-tier keys have small per-model daily quotas and Google retires old models, so on a
+    429 (quota) or 404 (retired) the call falls through to the next model in GEMINI_FALLBACKS.
+    """
+    URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    last_model: str | None = None
+    exhausted: dict[str, float] = {}  # model -> time it hit quota; skipped for 10 minutes
+
+    def text(self, model, system, user, max_tokens, temperature, json_mode=False):
+        gen = {"maxOutputTokens": max_tokens + 2048, "temperature": temperature}
+        if json_mode:
+            gen["responseMimeType"] = "application/json"
+        body = {"systemInstruction": {"parts": [{"text": system}]},
+                "contents": [{"role": "user", "parts": [{"text": user}]}], "generationConfig": gen}
+        import time
+        errors = []
+        order = list(dict.fromkeys([model, *GEMINI_FALLBACKS]))
+        fresh = [m for m in order if time.time() - _Gemini.exhausted.get(m, 0) > 600]
+        for m in fresh or order:
+            r = requests.post(self.URL.format(model=m), json=body, timeout=90,
+                              headers={"x-goog-api-key": _key("gemini")})
+            if r.status_code in (404, 429, 503):
+                if r.status_code != 503:
+                    _Gemini.exhausted[m] = time.time()
+                errors.append(f"{m}: {r.status_code}")
+                continue
+            if r.status_code != 200:
+                raise RuntimeError(f"Gemini {m} {r.status_code}: {r.text[:300]}")
+            cands = r.json().get("candidates") or []
+            parts = (cands[0].get("content") or {}).get("parts", []) if cands else []
+            self.last_model = m
+            return "".join(p.get("text", "") for p in parts if not p.get("thought")).strip()
+        raise RuntimeError("Every Gemini model is out of quota or unavailable (" + "; ".join(errors) + ").")
+
+
+GEMINI_FALLBACKS = ["gemini-3.5-flash", "gemini-flash-lite-latest", "gemini-3.1-flash-lite"]
+
+
+def _client(p: str | None = None):
+    p = p or provider()
+    if p == "anthropic":
         import anthropic
-        return anthropic.Anthropic()
+        return anthropic.Anthropic(api_key=_key("anthropic"))
+    if p == "gemini":
+        return _Gemini()
     from openai import OpenAI
-    return OpenAI()
+    return OpenAI(api_key=_key("openai"))
 
 
-def _text(client, model: str, system: str, user: str, max_tokens: int = 160, temperature: float = 0.4) -> str:
-    if PROVIDER == "anthropic":
+def _text(client, model: str, system: str, user: str, max_tokens: int = 160, temperature: float = 0.4,
+          json_mode: bool = False) -> str:
+    if isinstance(client, _Gemini):
+        return client.text(model, system, user, max_tokens, temperature, json_mode)
+    if type(client).__module__.startswith("anthropic"):
         r = client.messages.create(model=model, max_tokens=max_tokens, system=system,
                                    messages=[{"role": "user", "content": user}])
         return "".join(b.text for b in r.content if b.type == "text").strip()
@@ -50,9 +138,21 @@ def _text(client, model: str, system: str, user: str, max_tokens: int = 160, tem
     return r.choices[0].message.content.strip()
 
 
+def complete(system: str, user: str, max_tokens: int = 700, temperature: float = 0.2,
+             json_mode: bool = False) -> tuple[str, str]:
+    """One-shot completion with whichever provider is configured. Returns (text, "provider:model")."""
+    p = provider()
+    if p is None:
+        raise RuntimeError("No LLM key set (ANTHROPIC_API_KEY, GEMINI_API_KEY or OPENAI_API_KEY).")
+    m = default_model(p)
+    client = _client(p)
+    out = _text(client, m, system, user, max_tokens, temperature, json_mode)
+    return out, f"{p}:{getattr(client, 'last_model', None) or m}"
+
+
 class Narrator:
-    def __init__(self, model: str = DEFAULT_MODEL):
-        self.model = model
+    def __init__(self, model: str | None = None):
+        self.model = model or default_model()
         self.client = _client()
         self.failures = 0
 
@@ -93,6 +193,8 @@ def _b0_tools():
 
 def single_agent_diagnose(target, outcomes: dict, budget: dict, model: str = DEFAULT_MODEL, max_turns: int = 12):
     """Baseline B0. Uses the same cached outcomes (matched evidence) as every other condition."""
+    if provider() not in ("anthropic", "openai"):
+        raise NotImplementedError("B0 tool-use loop supports Anthropic or OpenAI keys.")
     client = _client()
     tools = _b0_tools()
     s = target.signal
@@ -120,7 +222,7 @@ def single_agent_diagnose(target, outcomes: dict, budget: dict, model: str = DEF
         run.append(tid)
         return None, {"test_id": tid, "outcome": o["outcome_label"], "metrics": o["metrics"]}
 
-    if PROVIDER == "anthropic":
+    if provider() == "anthropic":
         atools = [{"name": t["name"], "description": t["description"], "input_schema": t["schema"]} for t in tools]
         msgs = [{"role": "user", "content": first}]
         for _ in range(max_turns):

@@ -47,7 +47,7 @@ class Lab:
                  threshold: float | None = None, benchmark_mode: bool = True, outcome_cache: dict | None = None,
                  ledger: Ledger | None = None, approver: Callable = auto_approver, live_literature: bool = False,
                  rng_seed: int = 7, n_interval_draws: int = 100, gatekeeper=None, kg_path=None,
-                 narrator=None, max_workers: int = 2):
+                 narrator=None, max_workers: int = 2, research: bool = False):
         self.cfg = cfg or experiment()
         self.name = name
         self.tables = tables.copy() if adaptive else tables
@@ -67,6 +67,7 @@ class Lab:
         self.live_literature = live_literature
         self.n_draws = n_interval_draws
         self.narrator = narrator
+        self.research = research  # live LLM literature brief (needs an API key)
         self.max_workers = max_workers
         self.rng = np.random.default_rng(rng_seed)
         self.escalations = 0
@@ -126,6 +127,25 @@ class Lab:
         wb.open_critiques.append({"id": f"C{len(wb.open_critiques) + 1}", "text": text, "test_id": test_id,
                                   "permanent": permanent})
 
+    def _research(self, wb, tid: str, leader: str, contrarian: str) -> Generator:
+        """Cameron researches leader vs contrarian live: arXiv + OpenAlex, then an LLM reads the abstracts."""
+        from . import research
+        q = research.queries(leader, contrarian)[1]
+        ok, _ = yield from self._tool("cameron", "literature_search", {"query": q, "target_id": tid}, tid)
+        if not ok:
+            return
+        _, papers = research.gather(leader, contrarian)
+        try:
+            b = research.brief(leader, contrarian, papers)
+        except Exception as exc:  # a failed LLM call is reported, never hidden
+            b = {"text": f"LLM brief failed ({type(exc).__name__}: {str(exc)[:200]}). Papers listed unread.",
+                 "model": None, "cited": [], "stripped": []}
+        wb.evidence.extend({"id": f"LIT-{p['id']}", "source_id": p["id"], "title": p["title"], "url": p["url"],
+                            "role": "context"} for p in papers if p["id"] in b["cited"])
+        yield self._msg("cameron", f"Live research: {HYP_LABELS[leader]} vs {HYP_LABELS[contrarian]}. Read "
+                                   f"{len(papers)} papers via {b['model'] or 'no LLM'}; cited {len(b['cited'])}.",
+                        tid, kind="research", query=q, papers=papers, brief=b, leader=leader, contrarian=contrarian)
+
     # ------------------------------------------------------------------ discovery loop
     def investigate(self, target) -> Generator:
         t_start = time.perf_counter()
@@ -164,7 +184,10 @@ class Lab:
             wb.evidence.extend(e.model_dump() for e in pack)
             yield self._msg("cameron", "Context: " + "; ".join(f"{e.source_id} ({e.claim[:70]}...)" for e in pack),
                             tid, kind="evidence", evidence=[e.model_dump() for e in pack])
-            if self.live_literature:
+            if self.research:
+                order = sorted(wb.posterior, key=wb.posterior.get, reverse=True)
+                yield from self._research(wb, tid, order[0], order[1])
+            elif self.live_literature:
                 lead0 = wb.leader()
                 order = sorted(wb.posterior, key=wb.posterior.get, reverse=True)
                 q = self.cameron.methodology_query(lead0, order[1])
@@ -292,6 +315,9 @@ class Lab:
                 if new_leader != old_leader and self.house.enabled:
                     yield self._msg("house", self.house.reopen(old_leader, new_leader, wb.posterior), tid,
                                     kind="reopen", old=old_leader, new=new_leader)
+                    if self.research and self.cameron.enabled:
+                        runner_up = sorted(wb.posterior, key=wb.posterior.get, reverse=True)[1]
+                        yield from self._research(wb, tid, new_leader, runner_up)
 
         # ---- verdict
         interval = self._interval(wb)

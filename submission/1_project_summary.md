@@ -1,0 +1,9 @@
+# Princeton-Plainsboro: an AI diagnostic team for exoplanet signals
+
+**The problem.** Space telescopes like Kepler and TESS flag tens of thousands of tiny, repeating dips in starlight. Most are not planets. They are eclipsing binary stars, starspots, background blends or instrument glitches. Astronomers can run many vetting tests, but each one costs time and attention. The real bottleneck is deciding *which test to run next, and when to stop*.
+
+**What we built.** A multi-agent lab modelled on the TV show *House M.D.* Each dip is a patient. House proposes a differential diagnosis and always argues for an alternative. Cuddy picks the test that gives the most information per unit of cost. Chase runs 8 real physics tests on the light curve. Foreman challenges every surprising result with a counter-experiment. Cameron researches the question live: she searches arXiv and OpenAlex, and an LLM (Gemini or Claude) reads the abstracts and writes a brief that may cite only papers it actually retrieved. Wilson records what each case taught the lab. The team updates a Bayesian posterior after every test and returns a verdict with a confidence interval. Uncertain cases go to a human, and policies written as code block label leaks, external writes and "confirmed planet" claims.
+
+**Who benefits.** Exoplanet survey teams and citizen-science vetting projects that face more candidates than people.
+
+**What works today.** On 240 blind synthetic targets, the team matched a standard fixed checklist's accuracy at about **1.9× lower test cost**. It raised the accuracy ceiling from 0.85 to 0.92 and cut human escalations from 42% to 26%. Every decision is logged and replayable. We also report an honest negative result: on 48 real Kepler candidates, the synthetic gains do not transfer yet, and the report shows what the next experiment must fix.

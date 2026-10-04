@@ -153,6 +153,24 @@ python -m plainsboro.eval.run_real                     # -> results/REAL_REPORT.
 `make benchmark`, `make demo`, `make test` and `make real` wrap the same commands. Seeds, budgets and thresholds live
 in [configs/experiment.yaml](configs/experiment.yaml).
 
+### Live AI research (Gemini or Claude)
+
+Cameron can research each question on the spot. At intake, and again every time the leading hypothesis flips, she
+searches arXiv and OpenAlex live for papers on *leader vs. contrarian* and hands the titles and abstracts to an LLM,
+which writes a 2–4 point brief ([plainsboro/research.py](plainsboro/research.py)). Guardrails: the query must pass
+`no_target_specific_lookup` first; the model replies in JSON and may cite only IDs that were actually retrieved
+(anything else is stripped and shown as removed); the brief is context only and never moves the posterior.
+
+```bash
+cp .env.example .env          # then put ONE key in it: GEMINI_API_KEY=... or ANTHROPIC_API_KEY=...
+```
+
+Alternatively, paste a key into **3 · AI research → Set API key** in the app's sidebar. Provider order is Anthropic
+(`claude-sonnet-5-5`), then Gemini (`gemini-flash-latest`, falling back to `gemini-3.5-flash` and the lite models
+when a free-tier quota runs out), then OpenAI. `PP_LLM_PROVIDER` and `PP_LLM_MODEL` override. On a shared deployment
+set `PP_ALLOW_KEY_ENTRY=0` and supply the key through the host's secrets. Without a key, the lab still runs and
+lists the retrieved papers unread. On the free Gemini tier, a brief takes 20–40 s.
+
 ### Demo UI ([app/streamlit_app.py](app/streamlit_app.py))
 
 The scientist sets the objective in the sidebar (case set, target, stopping threshold, budget), then steps through the
@@ -257,12 +275,15 @@ plainsboro/
   policies.py                     Omnigent-contract policies + PolicyEngine
   record/                         whiteboard + append-only ledger
   omnigent_tools.py               file-backed tool layer used by the Omnigent bundle
-  literature.py                   arXiv resolver, OpenAlex search, curated method references
-  llm.py                          optional LLM narrator + single-agent baseline B0
+  literature.py                   arXiv resolver + search, OpenAlex search, curated method references
+  research.py                     Cameron's live research: search now, LLM brief with citation allow-list
+  llm.py                          LLM providers (Anthropic, Gemini, OpenAI), narrator, single-agent baseline B0
   eval/                           calibrate, run_benchmark, analyze, run_real
 app/streamlit_app.py              live demo
 results/                          REPORT.md, REAL_REPORT.md, summary.json, figures/, benchmark ledgers & records
 tests/test_lab.py                 13 tests
+submission/                       hackathon summary, video scripts, one-pager (make_onepager.py), dataset card
+.env.example                      where the LLM API key goes (.env is git-ignored)
 ```
 
 ### Design-document mapping
@@ -279,3 +300,7 @@ tests/test_lab.py                 13 tests
 | 9.4–9.6 debate, reopen, stopping | `agents/house.py`, `agents/foreman.py`, `lab.py` |
 | 12 baselines, ablations, oracle, statistics | `eval/run_benchmark.py`, `eval/analyze.py` |
 | 12.6 controls | label-leak canary test, detrending-sensitivity reruns, fixed splits |
+
+## Team
+
+Built for the Hack-Nation 7th Global AI Hackathon by [FAZ610](https://github.com/FAZ610), [IshaanM05](https://github.com/IshaanM05) and [SSM11011](https://github.com/SSM11011).

@@ -24,7 +24,7 @@ class Cameron:
         if key in self._evidence:
             return self._evidence[key]
         kb = KNOWLEDGE_BASE[key]
-        res = resolve_arxiv(kb["arxiv"], offline=not self.live)
+        res = resolve_arxiv(kb["arxiv"], offline=not self.live, refresh=self.live)
         if res["resolved"] is False:
             self.dropped.append(key)
             return None

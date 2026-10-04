@@ -18,11 +18,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-demo = ["streamlit>=1.35"]
+demo = ["streamlit>=1.50"]
 omnigent = ["omnigent>=0.16"]
 real = ["lightkurve>=2.4"]
 llm = ["openai>=1.40", "anthropic>=0.40"]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "reportlab>=4.0"]
 
 [tool.setuptools.packages.find]
 include = ["plainsboro*"]
