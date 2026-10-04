@@ -52,10 +52,13 @@ def summarize(run, runs_dir=None):
     rec = _jl(d / "record.jsonl")
     start = next((e for e in rec if e.get("kind") == "ll_start"), {})
     exps = [e for e in rec if e.get("kind") == "experiment"]
-    units, first_hit, hits, curve = 0.0, None, 0, []
+    units, first_hit, hits, curve, seen_hit = 0.0, None, 0, [], set()
     for e in exps:
         units += _units(e)
-        if _is_hit(e):
+        comp = e.get("composition")
+        if _is_hit(e) and (comp is None or comp not in seen_hit):
+            if comp is not None:
+                seen_hit.add(comp)  # distinct compositions: a repeated film of the same composition is not a new hit
             hits += 1
             if first_hit is None:
                 first_hit = round(units, 2)

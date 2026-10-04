@@ -461,26 +461,28 @@ def build_labloop_record(rec: list[dict], g: Graph | None = None) -> Graph:
         if k == "ll_start":
             g.meta.update(world_id=e.get("world"), budget=e.get("budget"), run_id=e.get("run_id"))
         elif k == "literature":
-            for c in e.get("claims") or e.get("citations") or []:
+            for c in e.get("claims") or e.get("citations") or e.get("claim_ids") or []:
+                if isinstance(c, str):  # live schema records ids only
+                    c = {"id": c}
                 cid = "cit:" + str(c.get("id") or c.get("source"))
-                g.node(cid, "citation", f"{c.get('id', '')}: {c.get('claim') or c.get('title')}",
+                g.node(cid, "citation", f"{c.get('id', '')}: {c.get('claim') or c.get('title') or '(id only in the run record)'}",
                        source=c.get("source") or rid, order=i, used=True,
                        evidence={k2: c.get(k2) for k2 in ("claim", "title", "source", "year")})
-            for h in e.get("hypotheses") or []:
+            for h in e.get("hypotheses") or e.get("hypothesis_ids") or []:
                 _rec_hyp(g, h, i, rid, "literature")
         elif k == "arena_round":
             for h in e.get("admitted") or e.get("hypotheses") or []:
-                _rec_hyp(g, h, i, rid, h.get("source", "agent"))
+                _rec_hyp(g, h, i, rid, h.get("source", "agent") if isinstance(h, dict) else "agent")
         elif k == "pi_decision":
             did = f"dec:{rid}"
-            g.node(did, "decision", f"{e.get('mode')}: {e.get('rationale', '')}", source=rid, order=i,
+            g.node(did, "decision", f"{e.get('mode')}: {e.get('rationale') or e.get('planner_rationale') or e.get('labloop_rationale') or ''}", source=rid, order=i,
                    evidence={"mode": e.get("mode"), "rationale": e.get("rationale"), "budget_left": e.get("budget_left")})
             for f in new_f:
                 g.edge(f, did, "caused_decision", True, "temporal: finding recorded before this decision")
             new_f, last_dec = [], did
         elif k == "experiment":
             res = e.get("result") or e
-            nid = "exp:" + str(e.get("id") or e.get("slot_id") or rid)
+            nid = "exp:" + str(e.get("id") or e.get("exp_id") or e.get("slot_id") or rid)
             bg, t80 = res.get("bandgap_ev"), res.get("t80_h")
             fml = e.get("formula") or (e.get("composition") if isinstance(e.get("composition"), str) else None)
             g.node(nid, "experiment", f"{fml or nid}: " + (f"Eg {bg} eV, T80 {t80} h" if bg else "no film"),
@@ -497,11 +499,14 @@ def build_labloop_record(rec: list[dict], g: Graph | None = None) -> Graph:
                 fid = f"find:{rid}:{j}"
                 g.node(fid, "finding", txt, source=rid, order=i + j / 100, status="finding", evidence={"text": txt})
                 new_f.append(fid)
-            for hid, v in (e.get("verdicts") or e.get("hypothesis_updates") or {}).items():
+            upd = e.get("verdicts") or e.get("hypothesis_updates") or {}
+            if isinstance(upd, list):  # live schema: list of {id, status, ...}
+                upd = {u.get("id"): u.get("status") for u in upd if isinstance(u, dict) and u.get("id")}
+            for hid, v in upd.items():
                 v = v.get("verdict") if isinstance(v, dict) else v
                 fid = f"find:{rid}:{hid}"
                 g.node(fid, "finding", f"{hid} {v}", source=rid, order=i, status=str(v), evidence={"hypothesis_id": hid})
-                et = "refutes" if "refut" in str(v) else "supports"
+                et = "refutes" if ("refut" in str(v) or "falsif" in str(v)) else "supports"
                 g.edge(fid, "hyp:" + hid, et, basis="analysis verdict update")
                 new_f.append(fid)
             for r_ in e.get("prior_relaxations") or []:
@@ -513,6 +518,8 @@ def build_labloop_record(rec: list[dict], g: Graph | None = None) -> Graph:
 
 
 def _rec_hyp(g, h, i, rid, src):
+    if isinstance(h, str):  # live schema records ids only
+        h = {"id": h}
     hid = "hyp:" + str(h.get("id"))
     g.node(hid, "hypothesis", f"{h.get('id')}: {h.get('prediction') or h.get('statement')}", source=rid, order=i,
            status=h.get("status", "open"), agent_generated=True,

@@ -362,14 +362,74 @@
    }
   }
  },
- "omnigent_runs": [],
+ "omnigent_runs": [
+  {
+   "hits@20": 5,
+   "hits@40": 6,
+   "hits@60": 6,
+   "first_hit_units": 1.5,
+   "discoveries_replicated": 4,
+   "hypotheses_refuted": 3,
+   "adapt_events": 5,
+   "true_hits_in_world": 16,
+   "units_spent": 23.5,
+   "films": 16,
+   "run": "ll-w2000",
+   "world": 2000,
+   "seed": 0,
+   "budget": 60.0,
+   "skipped_experiment_records": 0
+  }
+ ],
  "missing_run_files": [
-  "runs/ll-w2000/record.jsonl",
   "runs/ll-w2001/record.jsonl",
   "runs/ll-w2002/record.jsonl"
  ],
  "source": "live runs",
- "omnigent_summary": null,
- "note": "No Omnigent run records available; baseline only.",
+ "omnigent_summary": {
+  "hits@20": {
+   "mean": 5.0,
+   "min": 5,
+   "max": 5,
+   "n": 1
+  },
+  "hits@40": {
+   "mean": 6.0,
+   "min": 6,
+   "max": 6,
+   "n": 1
+  },
+  "hits@60": {
+   "mean": 6.0,
+   "min": 6,
+   "max": 6,
+   "n": 1
+  },
+  "first_hit_units": {
+   "mean": 1.5,
+   "min": 1.5,
+   "max": 1.5,
+   "n": 1
+  },
+  "discoveries_replicated": {
+   "mean": 4.0,
+   "min": 4,
+   "max": 4,
+   "n": 1
+  },
+  "hypotheses_refuted": {
+   "mean": 3.0,
+   "min": 3,
+   "max": 3,
+   "n": 1
+  },
+  "adapt_events": {
+   "mean": 5.0,
+   "min": 5,
+   "max": 5,
+   "n": 1
+  }
+ },
+ "note": "Omnigent n is small; no significance claimed.",
  "caveat": "Team-designed simulator; synthetic worlds; rule-based scientist is the baseline."
 }

@@ -27,7 +27,7 @@ Complete and frozen for submission: an Omnigent-orchestrated agent team (planner
 | LabLoop, median units to first hit | 6.5 vs 30.5 | 20/20 vs 19/20 runs reached it | same |
 | LabLoop, 60 further worlds (3000-3059, 1,200 runs per arm), full vs pure BO (hits@60) | 9.86 vs 8.04 | paired +1.82 [+1.29, +2.35], bootstrap over worlds; ahead in 46 of 60 worlds | same; `docs/RESULTS_LABLOOP_BIG.md` |
 | LabLoop, same 60 worlds, median units to first hit | 7.0 vs 30.0 | reached in 1,186 vs 1,133 of 1,200 runs | same |
-| LabLoop, Omnigent live runs on worlds 2000-2002 | not measured in this repo | n = 0 committed | `runs/ll-w2000..2002` missing; see `docs/TODO_HUMAN.md` |
+| LabLoop, live Omnigent run on world 2000 | 6 distinct true hits by 23.5 of 60 units (partial run); 5 hits by 20 units vs 4.6 for the rule-based baseline | n = 1 run; baseline range 3-6 over 5 seeds | partial run; worlds 2001, 2002 not run (`docs/TODO_HUMAN.md`) |
 
 Details: steel in "Test bed 1" below; LabLoop in `docs/RESULTS_LABLOOP.md` (and `docs/RESULTS_LABLOOP_BIG.md` when present).
 
@@ -70,7 +70,7 @@ flowchart TD
 Solid arrows are data or calls; dotted arrows are policy checks that run before the tool executes.
 
 ## The two test beds
-Two test beds, deliberately different. **Steel strength** (below) uses real public data, but the data has been public since 2018, so an LLM may recall it (memorisation flag set; no LLM-knowledge acceleration claim). **LabLoop** (`labloop/`, a teammate's work; `docs/LABLOOP_README.md`, contract in `docs/LABLOOP_INTEGRATION.md`) is a simulated halide-perovskite lab: 2,772 compositions, hidden physics redrawn per world id, target bandgap 1.24-1.38 eV with T80 >= 500 h, and a textbook prior under which no film qualifies. On unseen worlds recall is impossible. **The simulator was designed by our team and the worlds are synthetic: it is a benchmark, not evidence about real devices.** Omnigent orchestrates LabLoop through `agents/labloop_planner.yaml` and `asd/labloop_tools.py` (contract in `docs/LABLOOP_INTEGRATION.md`); live Omnigent runs on it are not yet committed (`docs/TODO_HUMAN.md`).
+Two test beds, deliberately different. **Steel strength** (below) uses real public data, but the data has been public since 2018, so an LLM may recall it (memorisation flag set; no LLM-knowledge acceleration claim). **LabLoop** (`labloop/`, a teammate's work; `docs/LABLOOP_README.md`, contract in `docs/LABLOOP_INTEGRATION.md`) is a simulated halide-perovskite lab: 2,772 compositions, hidden physics redrawn per world id, target bandgap 1.24-1.38 eV with T80 >= 500 h, and a textbook prior under which no film qualifies. On unseen worlds recall is impossible. **The simulator was designed by our team and the worlds are synthetic: it is a benchmark, not evidence about real devices.** Omnigent orchestrates LabLoop through `agents/labloop_planner.yaml` and `asd/labloop_tools.py` (contract in `docs/LABLOOP_INTEGRATION.md`); one partial live Omnigent run on world 2000 is committed (`runs/ll-w2000`), worlds 2001 and 2002 are not run (`docs/TODO_HUMAN.md`).
 
 ### Test bed 1: steel strength
 **Question.** Can an agent team choose which experiments to run next so that it finds high-value candidates in fewer experiments than standard baselines, under a hard experiment budget and human approval for risky actions?
@@ -114,7 +114,7 @@ All offline, deterministic, no model calls (`scripts/ll_benchmark.py`, `ll_calib
 - **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64] (conservative; misses true hits it never replicated).
 - **Arena vs hidden truth:** Spearman(Elo, true share of region meeting spec) per-run mean 0.39 [0.28, 0.50]; random ordering about 0 (218 hypotheses, 20 runs; Elo is a proxy for relevance, not truth).
 - **Prior misspecification:** belief revision adds +1.15 hits [+0.15, +2.40] when the prior is fully wrong, but costs hits when the prior is right (-2.60 [-3.55, -1.65]).
-- **Golden worlds 2000-2002:** rule-based baseline recorded; the Omnigent comparison awaits live runs (the script reports missing records and is tested on a synthetic fixture).
+- **Golden worlds 2000-2002:** rule-based baseline recorded on all three (5 seeds each). Omnigent: `runs/ll-w2000` (live Omnigent, world 2000, seed 0, budget 60; PARTIAL, stopped at 16 films and 23.5 of 60 units): 6 distinct true hits (world holds 16), first hit at 1.5 units, 5 hits by 20 units vs 4.6 for the rule-based baseline (range 3-6, 5 seeds); n = 1. Worlds 2001 and 2002 were not run (`docs/TODO_HUMAN.md` item 1). Also `runs/ll-smoke2000` (budget 8).
 
 Related work, each read by abstract only: Olympus (2021, benchmarking framework for noisy optimization and experiment planning), Atlas (Digital Discovery 2025, Bayesian optimization for self-driving labs), Rainbow (Nature Communications 2025, perovskite nanocrystal self-driving lab).
 

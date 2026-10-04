@@ -3812,6 +3812,160 @@ claims:
   source: runs/ll_big_benchmark.json
   key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
   tol: 0.006
+- id: final.demo.w2000.films
+  doc: docs/DEMO_SCRIPT.md
+  text: 'PARTIAL, stopped at 16 films and 23.5 of 60 units'
+  value: 16
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/films
+  tol: 0.0
+- id: final.demo.w2000.units
+  doc: docs/DEMO_SCRIPT.md
+  text: 'PARTIAL, stopped at 16 films and 23.5 of 60 units'
+  value: 23.5
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/units_spent
+  tol: 0.05
+- id: final.demo.w2000.hits
+  doc: docs/DEMO_SCRIPT.md
+  text: '6 distinct true hits (world holds 16), first hit at 1.5 units, 4 replicated discoveries, 3 refutations, 5 ADAPT events by the `ll_compare` count'
+  value: 6
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/hits@60
+  tol: 0.0
+- id: final.demo.w2000.world
+  doc: docs/DEMO_SCRIPT.md
+  text: '6 distinct true hits (world holds 16), first hit at 1.5 units, 4 replicated discoveries, 3 refutations, 5 ADAPT events by the `ll_compare` count'
+  value: 16
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/true_hits_in_world
+  tol: 0.0
+- id: final.demo.w2000.first
+  doc: docs/DEMO_SCRIPT.md
+  text: '6 distinct true hits (world holds 16), first hit at 1.5 units, 4 replicated discoveries, 3 refutations, 5 ADAPT events by the `ll_compare` count'
+  value: 1.5
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/first_hit_units
+  tol: 0.05
+- id: final.demo.w2000.repl
+  doc: docs/DEMO_SCRIPT.md
+  text: '6 distinct true hits (world holds 16), first hit at 1.5 units, 4 replicated discoveries, 3 refutations, 5 ADAPT events by the `ll_compare` count'
+  value: 4
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/discoveries_replicated
+  tol: 0.0
+- id: final.demo.w2000.refuted
+  doc: docs/DEMO_SCRIPT.md
+  text: '6 distinct true hits (world holds 16), first hit at 1.5 units, 4 replicated discoveries, 3 refutations, 5 ADAPT events by the `ll_compare` count'
+  value: 3
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/hypotheses_refuted
+  tol: 0.0
+- id: final.demo.w2000.adapt
+  doc: docs/DEMO_SCRIPT.md
+  text: '6 distinct true hits (world holds 16), first hit at 1.5 units, 4 replicated discoveries, 3 refutations, 5 ADAPT events by the `ll_compare` count'
+  value: 5
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/adapt_events
+  tol: 0.0
+- id: final.demo.w2000.h20
+  doc: docs/DEMO_SCRIPT.md
+  text: '5 hits by 20 units vs 4.6 for the rule-based baseline (range 3-6, 5 seeds)'
+  value: 5
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/hits@20
+  tol: 0.0
+- id: final.demo.base.h20
+  doc: docs/DEMO_SCRIPT.md
+  text: '5 hits by 20 units vs 4.6 for the rule-based baseline (range 3-6, 5 seeds)'
+  value: 4.6
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@20/mean
+  tol: 0.05
+- id: final.demo.base.h20min
+  doc: docs/DEMO_SCRIPT.md
+  text: '5 hits by 20 units vs 4.6 for the rule-based baseline (range 3-6, 5 seeds)'
+  value: 3
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@20/min
+  tol: 0.0
+- id: final.demo.base.h20max
+  doc: docs/DEMO_SCRIPT.md
+  text: '5 hits by 20 units vs 4.6 for the rule-based baseline (range 3-6, 5 seeds)'
+  value: 6
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@20/max
+  tol: 0.0
+- id: final.qa.w2000.adapt
+  doc: docs/QA_PREP.md
+  text: "5 by `ll_compare`'s count (the replay dashboard's stricter inferred count is 2"
+  value: 5
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/adapt_events
+  tol: 0.0
+- id: final.pitch.w2000.units
+  doc: docs/PITCH.md
+  text: 'PARTIAL: stopped at 16 films and 23.5 of 60 units'
+  value: 23.5
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/units_spent
+  tol: 0.05
+- id: final.pitch.w2000.films
+  doc: docs/PITCH.md
+  text: 'PARTIAL: stopped at 16 films and 23.5 of 60 units'
+  value: 16
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/films
+  tol: 0.0
+- id: final.pitch.w2000.hits
+  doc: docs/PITCH.md
+  text: 'found 6 distinct true hits (the world holds 16), first hit at 1.5 units, and 5 hits by 20 units vs 4.6 (range 3-6, 5 seeds)'
+  value: 6
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/hits@60
+  tol: 0
+- id: final.pitch.w2000.world
+  doc: docs/PITCH.md
+  text: 'found 6 distinct true hits (the world holds 16), first hit at 1.5 units, and 5 hits by 20 units vs 4.6 (range 3-6, 5 seeds)'
+  value: 16
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/true_hits_in_world
+  tol: 0
+- id: final.pitch.w2000.first
+  doc: docs/PITCH.md
+  text: 'found 6 distinct true hits (the world holds 16), first hit at 1.5 units, and 5 hits by 20 units vs 4.6 (range 3-6, 5 seeds)'
+  value: 1.5
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/first_hit_units
+  tol: 0.05
+- id: final.pitch.w2000.h20
+  doc: docs/PITCH.md
+  text: 'found 6 distinct true hits (the world holds 16), first hit at 1.5 units, and 5 hits by 20 units vs 4.6 (range 3-6, 5 seeds)'
+  value: 5
+  source: runs/ll_compare.json
+  key: omnigent_runs/0/hits@20
+  tol: 0
+- id: final.pitch.w2000.b
+  doc: docs/PITCH.md
+  text: 'found 6 distinct true hits (the world holds 16), first hit at 1.5 units, and 5 hits by 20 units vs 4.6 (range 3-6, 5 seeds)'
+  value: 4.6
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@20/mean
+  tol: 0.05
+- id: final.pitch.w2000.bmin
+  doc: docs/PITCH.md
+  text: 'found 6 distinct true hits (the world holds 16), first hit at 1.5 units, and 5 hits by 20 units vs 4.6 (range 3-6, 5 seeds)'
+  value: 3
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@20/min
+  tol: 0
+- id: final.pitch.w2000.bmax
+  doc: docs/PITCH.md
+  text: 'found 6 distinct true hits (the world holds 16), first hit at 1.5 units, and 5 hits by 20 units vs 4.6 (range 3-6, 5 seeds)'
+  value: 6
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@20/max
+  tol: 0
 
 unsourced:
 - id: readme.tests.count

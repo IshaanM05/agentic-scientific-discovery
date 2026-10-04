@@ -1,1468 +1,1304 @@
 {
  "meta": {
   "kind": "labloop",
-  "title": "LabLoop campaign (world 2000, seed 7)",
+  "title": "LabLoop Omnigent run ll-w2000",
   "warnings": [],
+  "backend": "Omnigent run records (LabLoop simulator)",
   "world_id": 2000,
-  "seed": 7,
   "budget": 60.0,
-  "backend": "rule-based scientist (offline)",
-  "note": "OFFLINE rule-based LabLoop campaign; no Omnigent run records were found, so this is the baseline scientist on world 2000, seed 7",
-  "data_source": "offline rule-based campaign, world 2000, seed 7, budget 60.0",
+  "run_id": "ll-w2000",
+  "data_source": "Omnigent run records in /home/user/agentic-scientific-discovery/runs/ll-w2000",
   "counts": {
    "question": 1,
-   "hypothesis": 7,
-   "experiment": 20,
-   "citation": 6,
-   "finding": 15,
-   "decision": 7,
+   "hypothesis": 17,
+   "experiment": 16,
+   "citation": 8,
+   "finding": 41,
+   "decision": 10,
    "edges": 109,
-   "inferred_edges": 37
+   "inferred_edges": 64
   }
  },
  "nodes": [
   {
    "id": "q:1",
    "type": "question",
-   "label": "Find a stable, lead-reduced perovskite absorber for single-junction solar cells: bandgap 1.24\u20131.38 eV with T80 \u2265 500 h.",
-   "source": "campaign goal",
+   "label": "Find a stable, lead-reduced perovskite absorber meeting the bandgap and T80 target",
+   "source": "task",
    "order": -1,
+   "evidence": {}
+  },
+  {
+   "id": "cit:L1",
+   "type": "citation",
+   "label": "L1: (id only in the run record)",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "target": {
-     "eg_min": 1.24,
-     "eg_max": 1.38,
-     "t80_min_hours": 500.0
-    }
-   }
+    "claim": null,
+    "title": null,
+    "source": null,
+    "year": null
+   },
+   "used": true
   },
   {
    "id": "cit:L2",
    "type": "citation",
-   "label": "L2: Mixed Sn-Pb iodide perovskites show anomalous bandgap bowing: mixed films absorb further into the IR than either end member.",
-   "source": "Hao et al., J. Am. Chem. Soc. 136, 8094 (2014)",
-   "order": -0.5,
+   "label": "L2: (id only in the run record)",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "claim": "Mixed Sn-Pb iodide perovskites show anomalous bandgap bowing: mixed films absorb further into the IR than either end member.",
-    "source": "Hao et al., J. Am. Chem. Soc. 136, 8094 (2014)"
+    "claim": null,
+    "title": null,
+    "source": null,
+    "year": null
    },
    "used": true
   },
   {
    "id": "cit:L3",
    "type": "citation",
-   "label": "L3: FA/Cs Sn-Pb (\u224850% Sn) films reach \u22481.2-1.25 eV and serve as low-gap tandem subcells.",
-   "source": "Eperon et al., Science 354, 861 (2016)",
-   "order": -0.5,
+   "label": "L3: (id only in the run record)",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "claim": "FA/Cs Sn-Pb (\u224850% Sn) films reach \u22481.2-1.25 eV and serve as low-gap tandem subcells.",
-    "source": "Eperon et al., Science 354, 861 (2016)"
+    "claim": null,
+    "title": null,
+    "source": null,
+    "year": null
    },
    "used": true
   },
   {
    "id": "cit:L4",
    "type": "citation",
-   "label": "L4: Sn(II) readily oxidises to Sn(IV), creating p-doping and fast degradation; stability drops with Sn content.",
-   "source": "Noel et al., Energy Environ. Sci. 7, 3061 (2014)",
-   "order": -0.5,
+   "label": "L4: (id only in the run record)",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "claim": "Sn(II) readily oxidises to Sn(IV), creating p-doping and fast degradation; stability drops with Sn content.",
-    "source": "Noel et al., Energy Environ. Sci. 7, 3061 (2014)"
+    "claim": null,
+    "title": null,
+    "source": null,
+    "year": null
    },
    "used": true
   },
   {
    "id": "cit:L5",
    "type": "citation",
-   "label": "L5: Mixed I/Br films phase-segregate under illumination (Hoke effect) when Br \u2273 20%.",
-   "source": "Hoke et al., Chem. Sci. 6, 613 (2015)",
-   "order": -0.5,
+   "label": "L5: (id only in the run record)",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "claim": "Mixed I/Br films phase-segregate under illumination (Hoke effect) when Br \u2273 20%.",
-    "source": "Hoke et al., Chem. Sci. 6, 613 (2015)"
+    "claim": null,
+    "title": null,
+    "source": null,
+    "year": null
    },
    "used": true
   },
   {
    "id": "cit:L6",
    "type": "citation",
-   "label": "L6: Adding a small fraction of Cs to FA/MA perovskites improves phase stability and reproducibility.",
-   "source": "Saliba et al., Energy Environ. Sci. 9, 1989 (2016)",
-   "order": -0.5,
+   "label": "L6: (id only in the run record)",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "claim": "Adding a small fraction of Cs to FA/MA perovskites improves phase stability and reproducibility.",
-    "source": "Saliba et al., Energy Environ. Sci. 9, 1989 (2016)"
+    "claim": null,
+    "title": null,
+    "source": null,
+    "year": null
    },
    "used": true
   },
   {
    "id": "cit:L7",
    "type": "citation",
-   "label": "L7: MA-based perovskites are intrinsically thermally unstable at 85 \u00b0C.",
-   "source": "Conings et al., Adv. Energy Mater. 5, 1500477 (2015)",
-   "order": -0.5,
+   "label": "L7: (id only in the run record)",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "claim": "MA-based perovskites are intrinsically thermally unstable at 85 \u00b0C.",
-    "source": "Conings et al., Adv. Energy Mater. 5, 1500477 (2015)"
+    "claim": null,
+    "title": null,
+    "source": null,
+    "year": null
+   },
+   "used": true
+  },
+  {
+   "id": "cit:L8",
+   "type": "citation",
+   "label": "L8: (id only in the run record)",
+   "source": "rec-0002",
+   "order": 1,
+   "evidence": {
+    "claim": null,
+    "title": null,
+    "source": null,
+    "year": null
    },
    "used": true
   },
   {
    "id": "hyp:H1",
    "type": "hypothesis",
-   "label": "H1: Bandgap mixes linearly (Vegard's law), so half-Sn iodides sit midway between end members.",
-   "source": "campaign hypothesis H1",
-   "order": 0,
+   "label": "H1: None",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "statement": "Bandgap mixes linearly (Vegard's law), so half-Sn iodides sit midway between end members.",
-    "prediction": "bandgap (eV) between 1.40 eV and 1.56 eV for Sn 0.4\u20130.6, Br = 0, Cl = 0",
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region fall outside 1.40 eV\u20131.56 eV.",
-    "origin": "literature",
-    "elo": 1287.4,
-    "n_evidence": 3,
-    "pass_rate": 0.0,
-    "judge_confidence": "Medium",
-    "sources": [
-     "textbook interpolation"
-    ],
-    "rationale": "Default assumption for alloy bandgaps.",
-    "region": {
-     "sn": [
-      0.4,
-      0.6
-     ],
-     "br": [
-      0,
-      0
-     ],
-     "cl": [
-      0,
-      0
-     ]
-    }
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
    },
-   "round": 0,
-   "status": "falsified",
+   "status": "open",
    "agent_generated": true,
-   "label_note": "agent-generated hypothesis (rule-based, adapted from literature claims); unvalidated. Backend: rule-based scientist (offline)"
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
   },
   {
    "id": "hyp:H2",
    "type": "hypothesis",
-   "label": "H2: Sn-Pb mixing bows the bandgap below both end members.",
-   "source": "campaign hypothesis H2",
-   "order": 0,
+   "label": "H2: None",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "statement": "Sn-Pb mixing bows the bandgap below both end members.",
-    "prediction": "bandgap (eV) < 1.36 eV for Sn 0.3\u20130.7, Br = 0, FA \u2265 0.6",
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 1.36 eV.",
-    "origin": "literature",
-    "elo": 1244.4,
-    "n_evidence": 14,
-    "pass_rate": 0.71,
-    "judge_confidence": "Medium",
-    "sources": [
-     "L2",
-     "L3"
-    ],
-    "rationale": "Reported anomalous bowing in mixed Sn-Pb iodides.",
-    "region": {
-     "sn": [
-      0.3,
-      0.7
-     ],
-     "br": [
-      0,
-      0
-     ],
-     "fa": [
-      0.6,
-      1
-     ]
-    }
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
    },
-   "round": 0,
-   "status": "qualified",
+   "status": "open",
    "agent_generated": true,
-   "label_note": "agent-generated hypothesis (rule-based, adapted from literature claims); unvalidated. Backend: rule-based scientist (offline)"
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
   },
   {
    "id": "hyp:H3",
    "type": "hypothesis",
-   "label": "H3: Any film with \u226530% Sn degrades fast from Sn(II) oxidation.",
-   "source": "campaign hypothesis H3",
-   "order": 0,
+   "label": "H3: None",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "statement": "Any film with \u226530% Sn degrades fast from Sn(II) oxidation.",
-    "prediction": "log10 T80 (h) < 400 h for Sn \u2265 0.3",
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 400 h.",
-    "origin": "literature",
-    "elo": 1166.7,
-    "n_evidence": 14,
-    "pass_rate": 0.07,
-    "judge_confidence": "High",
-    "sources": [
-     "L4"
-    ],
-    "rationale": "Sn2+ oxidation is the dominant failure mode of Sn perovskites.",
-    "region": {
-     "sn": [
-      0.3,
-      1.0
-     ]
-    }
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
    },
-   "round": 0,
-   "status": "falsified",
+   "status": "open",
    "agent_generated": true,
-   "label_note": "agent-generated hypothesis (rule-based, adapted from literature claims); unvalidated. Backend: rule-based scientist (offline)"
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
   },
   {
    "id": "hyp:H4",
    "type": "hypothesis",
-   "label": "H4: Br-rich mixed halides without Cs segregate and lose stability.",
-   "source": "campaign hypothesis H4",
-   "order": 0,
+   "label": "H4: None",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "statement": "Br-rich mixed halides without Cs segregate and lose stability.",
-    "prediction": "log10 T80 (h) < 250 h for Br 0.3\u20130.6, Cs \u2264 0.05",
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 250 h.",
-    "origin": "literature",
-    "elo": 1301.1,
-    "n_evidence": 0,
-    "pass_rate": null,
-    "judge_confidence": "\u2014",
-    "sources": [
-     "L5"
-    ],
-    "rationale": "Light-induced halide segregation.",
-    "region": {
-     "br": [
-      0.3,
-      0.6
-     ],
-     "cs": [
-      0,
-      0.05
-     ]
-    }
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
    },
-   "round": 0,
-   "status": "proposed",
+   "status": "open",
    "agent_generated": true,
-   "label_note": "agent-generated hypothesis (rule-based, adapted from literature claims); unvalidated. Backend: rule-based scientist (offline)"
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
   },
   {
    "id": "hyp:H5",
    "type": "hypothesis",
-   "label": "H5: Cs/FA double-cation Pb iodides are the stable baseline.",
-   "source": "campaign hypothesis H5",
-   "order": 0,
+   "label": "H5: None",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "statement": "Cs/FA double-cation Pb iodides are the stable baseline.",
-    "prediction": "log10 T80 (h) > 600 h for Cs 0.1\u20130.3, FA \u2265 0.6, Sn = 0, Br \u2264 0.1",
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure <= 600 h.",
-    "origin": "literature",
-    "elo": 1112.7,
-    "n_evidence": 2,
-    "pass_rate": 0.5,
-    "judge_confidence": "\u2014",
-    "sources": [
-     "L6"
-    ],
-    "rationale": "Entropic stabilisation of the black phase.",
-    "region": {
-     "cs": [
-      0.1,
-      0.3
-     ],
-     "fa": [
-      0.6,
-      1.0
-     ],
-     "sn": [
-      0,
-      0
-     ],
-     "br": [
-      0,
-      0.1
-     ]
-    }
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
    },
-   "round": 0,
-   "status": "testing",
+   "status": "open",
    "agent_generated": true,
-   "label_note": "agent-generated hypothesis (rule-based, adapted from literature claims); unvalidated. Backend: rule-based scientist (offline)"
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
   },
   {
    "id": "hyp:H6",
    "type": "hypothesis",
-   "label": "H6: MA-majority films are thermally unstable.",
-   "source": "campaign hypothesis H6",
-   "order": 0,
+   "label": "H6: None",
+   "source": "rec-0002",
+   "order": 1,
    "evidence": {
-    "statement": "MA-majority films are thermally unstable.",
-    "prediction": "log10 T80 (h) < 250 h for MA \u2265 0.5",
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 250 h.",
-    "origin": "literature",
-    "elo": 1087.7,
-    "n_evidence": 1,
-    "pass_rate": 1.0,
-    "judge_confidence": "\u2014",
-    "sources": [
-     "L7"
-    ],
-    "rationale": "MA volatilises under heat.",
-    "region": {
-     "ma": [
-      0.5,
-      1.0
-     ]
-    }
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
    },
-   "round": 0,
-   "status": "testing",
+   "status": "open",
    "agent_generated": true,
-   "label_note": "agent-generated hypothesis (rule-based, adapted from literature claims); unvalidated. Backend: rule-based scientist (offline)"
-  },
-  {
-   "id": "dec:R1",
-   "type": "decision",
-   "label": "R1 seed: No data yet, so slots test the goal-relevant literature hypotheses (H2, H1, H5, H3, H6); H4 parked because their regions cannot me\u2026",
-   "source": "notebook decisions round 1",
-   "order": 1001,
-   "evidence": {
-    "mode": "seed",
-    "rationale": "No data yet, so slots test the goal-relevant literature hypotheses (H2, H1, H5, H3, H6); H4 parked because their regions cannot meet the spec.",
-    "slots": [
-     {
-      "kind": "test",
-      "purpose": "Test H2: Sn-Pb mixing bows the bandgap below both end members.",
-      "hypothesis": "H2"
-     },
-     {
-      "kind": "test",
-      "purpose": "Test H1: Bandgap mixes linearly (Vegard's law), so half-Sn iodides sit midway between end members.",
-      "hypothesis": "H1"
-     },
-     {
-      "kind": "test",
-      "purpose": "Test H5: Cs/FA double-cation Pb iodides are the stable baseline.",
-      "hypothesis": "H5"
-     },
-     {
-      "kind": "test",
-      "purpose": "Test H3: Any film with \u226530% Sn degrades fast from Sn(II) oxidation.",
-      "hypothesis": "H3"
-     },
-     {
-      "kind": "test",
-      "purpose": "Test H6: MA-majority films are thermally unstable.",
-      "hypothesis": "H6"
-     }
-    ]
-   },
-   "round": 1
-  },
-  {
-   "id": "exp:E001",
-   "type": "experiment",
-   "label": "E001 Cs0.1FA0.9Pb0.7Sn0.3I3: Eg 1.299 eV, T80 643 h (meets spec)",
-   "source": "notebook experiments E001",
-   "order": 1010,
-   "evidence": {
-    "notebook_id": "E001",
-    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I3",
-    "purpose": "Test H2: Sn-Pb mixing bows the bandgap below both end members.",
-    "kind": "test",
-    "bandgap_ev": 1.299,
-    "t80_h": 643,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.492,
-     "t80_h": 260,
-     "p_hit": 0.019
-    },
-    "surprise": 2.34,
-    "finding": "Eg 1.299 eV (pred 1.49\u00b10.08); T80 643 h (pred 260 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": "H2"
-   },
-   "round": 1,
-   "hit": true
-  },
-  {
-   "id": "exp:E002",
-   "type": "experiment",
-   "label": "E002 Cs0.1FA0.9Pb0.6Sn0.4I3: Eg 1.269 eV, T80 973 h (meets spec)",
-   "source": "notebook experiments E002",
-   "order": 1011,
-   "evidence": {
-    "notebook_id": "E002",
-    "formula": "Cs0.1FA0.9Pb0.6Sn0.4I3",
-    "purpose": "Test H1: Bandgap mixes linearly (Vegard's law), so half-Sn iodides sit midway between end members.",
-    "kind": "test",
-    "bandgap_ev": 1.269,
-    "t80_h": 973,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.479,
-     "t80_h": 157,
-     "p_hit": 0.011
-    },
-    "surprise": 2.54,
-    "finding": "Eg 1.269 eV (pred 1.48\u00b10.08); T80 973 h (pred 157 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": "H1"
-   },
-   "round": 1,
-   "hit": true
-  },
-  {
-   "id": "exp:E003",
-   "type": "experiment",
-   "label": "E003 Cs0.1FA0.9PbI3: Eg 1.518 eV, T80 1086 h",
-   "source": "notebook experiments E003",
-   "order": 1012,
-   "evidence": {
-    "notebook_id": "E003",
-    "formula": "Cs0.1FA0.9PbI3",
-    "purpose": "Test H5: Cs/FA double-cation Pb iodides are the stable baseline.",
-    "kind": "test",
-    "bandgap_ev": 1.518,
-    "t80_h": 1086,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.0,
-    "predicted": {
-     "eg": 1.532,
-     "t80_h": 1000,
-     "p_hit": 0.022
-    },
-    "surprise": 0.17,
-    "finding": "Eg 1.518 eV (pred 1.53\u00b10.08); T80 1086 h (pred 1000 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": "H5"
-   },
-   "round": 1,
-   "hit": false
-  },
-  {
-   "id": "exp:E004",
-   "type": "experiment",
-   "label": "E004 Cs0.2FA0.8Pb0.7Sn0.3I3: Eg 1.315 eV, T80 693 h (meets spec)",
-   "source": "notebook experiments E004",
-   "order": 1013,
-   "evidence": {
-    "notebook_id": "E004",
-    "formula": "Cs0.2FA0.8Pb0.7Sn0.3I3",
-    "purpose": "Test H3: Any film with \u226530% Sn degrades fast from Sn(II) oxidation.",
-    "kind": "test",
-    "bandgap_ev": 1.315,
-    "t80_h": 693,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.504,
-     "t80_h": 260,
-     "p_hit": 0.014
-    },
-    "surprise": 2.29,
-    "finding": "Eg 1.315 eV (pred 1.50\u00b10.08); T80 692 h (pred 260 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": "H3"
-   },
-   "round": 1,
-   "hit": true
-  },
-  {
-   "id": "exp:E005",
-   "type": "experiment",
-   "label": "E005 FA0.5MA0.5Pb0.9Sn0.1I3: Eg 1.412 eV, T80 190 h",
-   "source": "notebook experiments E005",
-   "order": 1014,
-   "evidence": {
-    "notebook_id": "E005",
-    "formula": "FA0.5MA0.5Pb0.9Sn0.1I3",
-    "purpose": "Test H6: MA-majority films are thermally unstable.",
-    "kind": "test",
-    "bandgap_ev": 1.412,
-    "t80_h": 190,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.535,
-     "t80_h": 237,
-     "p_hit": 0.005
-    },
-    "surprise": 1.49,
-    "finding": "Eg 1.412 eV (pred 1.54\u00b10.08); T80 190 h (pred 237 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": "H6"
-   },
-   "round": 1,
-   "hit": false
-  },
-  {
-   "id": "find:E001:surprise",
-   "type": "finding",
-   "label": "Cs0.1FA0.9Pb0.7Sn0.3I3: surprise in bandgap (z = -2.3)",
-   "source": "notebook experiments E001",
-   "order": 1020,
-   "evidence": {
-    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I3",
-    "flag": "surprise in bandgap (z = -2.3)",
-    "z_eg": -2.34,
-    "z_lt": 0.94,
-    "predicted": {
-     "eg": 1.492,
-     "t80_h": 260,
-     "p_hit": 0.019
-    },
-    "measured": "Eg 1.299 eV, T80 643 h"
-   },
-   "round": 1,
-   "status": "surprise"
-  },
-  {
-   "id": "find:E002:surprise",
-   "type": "finding",
-   "label": "Cs0.1FA0.9Pb0.6Sn0.4I3: surprise in bandgap (z = -2.5)",
-   "source": "notebook experiments E002",
-   "order": 1021,
-   "evidence": {
-    "formula": "Cs0.1FA0.9Pb0.6Sn0.4I3",
-    "flag": "surprise in bandgap (z = -2.5)",
-    "z_eg": -2.54,
-    "z_lt": 1.89,
-    "predicted": {
-     "eg": 1.479,
-     "t80_h": 157,
-     "p_hit": 0.011
-    },
-    "measured": "Eg 1.269 eV, T80 973 h"
-   },
-   "round": 1,
-   "status": "surprise"
-  },
-  {
-   "id": "find:E004:surprise",
-   "type": "finding",
-   "label": "Cs0.2FA0.8Pb0.7Sn0.3I3: surprise in bandgap (z = -2.3)",
-   "source": "notebook experiments E004",
-   "order": 1023,
-   "evidence": {
-    "formula": "Cs0.2FA0.8Pb0.7Sn0.3I3",
-    "flag": "surprise in bandgap (z = -2.3)",
-    "z_eg": -2.29,
-    "z_lt": 1.02,
-    "predicted": {
-     "eg": 1.504,
-     "t80_h": 260,
-     "p_hit": 0.014
-    },
-    "measured": "Eg 1.315 eV, T80 693 h"
-   },
-   "round": 1,
-   "status": "surprise"
-  },
-  {
-   "id": "find:R1:H2",
-   "type": "finding",
-   "label": "H2 supported (n = 3, judge: Medium)",
-   "source": "notebook hypothesis_events R1 H2",
-   "order": 1030,
-   "evidence": {
-    "hypothesis_id": "H2",
-    "event": "H2 supported (n = 3, judge: Medium)",
-    "n_evidence": 14,
-    "pass_rate": 0.71,
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 1.36 eV.",
-    "note": ""
-   },
-   "round": 1,
-   "status": "supported"
-  },
-  {
-   "id": "find:R1:H3",
-   "type": "finding",
-   "label": "H3 falsified (n = 3, judge: Medium)",
-   "source": "notebook hypothesis_events R1 H3",
-   "order": 1030,
-   "evidence": {
-    "hypothesis_id": "H3",
-    "event": "H3 falsified (n = 3, judge: Medium)",
-    "n_evidence": 14,
-    "pass_rate": 0.07,
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 400 h.",
-    "note": ""
-   },
-   "round": 1,
-   "status": "falsified"
-  },
-  {
-   "id": "dec:R1:revision",
-   "type": "decision",
-   "label": "Literature stability prior relaxed after H3 was falsified; trusting lab data over textbook rules",
-   "source": "notebook R1 event",
-   "order": 1035,
-   "evidence": {
-    "event": "Literature stability prior relaxed after H3 was falsified; trusting lab data over textbook rules"
-   },
-   "round": 1
-  },
-  {
-   "id": "find:D:Cs0.1FA0.9Pb0.6Sn0.4I3",
-   "type": "finding",
-   "label": "Cs0.1FA0.9Pb0.6Sn0.4I3 not reproduced (replicate missed spec)",
-   "source": "notebook R1",
-   "order": 1040,
-   "evidence": {
-    "formula": "Cs0.1FA0.9Pb0.6Sn0.4I3",
-    "confidence": "Low",
-    "eg_ev": 1.269,
-    "t80_h": 973,
-    "n_measurements": 1,
-    "reason": "single measurement, replication queued"
-   },
-   "round": 1,
-   "status": "not reproduced"
-  },
-  {
-   "id": "find:D:Cs0.1FA0.9Pb0.7Sn0.3I3",
-   "type": "finding",
-   "label": "Cs0.1FA0.9Pb0.7Sn0.3I3 confirmed (replicated 3\u00d7, Eg spread 19 meV)",
-   "source": "notebook R1",
-   "order": 1040,
-   "evidence": {
-    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I3",
-    "confidence": "Low",
-    "eg_ev": 1.299,
-    "t80_h": 643,
-    "n_measurements": 1,
-    "reason": "single measurement, replication queued"
-   },
-   "round": 1,
-   "status": "confirmed"
-  },
-  {
-   "id": "find:D:Cs0.2FA0.8Pb0.7Sn0.3I3",
-   "type": "finding",
-   "label": "Cs0.2FA0.8Pb0.7Sn0.3I3 confirmed (replicated 2\u00d7, Eg spread 18 meV)",
-   "source": "notebook R1",
-   "order": 1040,
-   "evidence": {
-    "formula": "Cs0.2FA0.8Pb0.7Sn0.3I3",
-    "confidence": "Low",
-    "eg_ev": 1.315,
-    "t80_h": 693,
-    "n_measurements": 1,
-    "reason": "single measurement, replication queued"
-   },
-   "round": 1,
-   "status": "confirmed"
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
   },
   {
    "id": "hyp:H7",
    "type": "hypothesis",
-   "label": "H7: Sn content near 0.3 lowers the bandgap beyond the linear-mixing expectation.",
-   "source": "campaign hypothesis H7",
-   "order": 2000,
+   "label": "H7: None",
+   "source": "rec-0003",
+   "order": 2,
    "evidence": {
-    "statement": "Sn content near 0.3 lowers the bandgap beyond the linear-mixing expectation.",
-    "prediction": "bandgap (eV) < 1.41 eV for Sn 0.1\u20130.5, Br \u2264 0.1, FA \u2265 0.6",
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 1.41 eV.",
-    "origin": "data",
-    "elo": 1200.0,
-    "n_evidence": 16,
-    "pass_rate": 0.88,
-    "judge_confidence": "High",
-    "sources": [
-     "E001"
-    ],
-    "rationale": "Cs0.1FA0.9Pb0.7Sn0.3I3 measured Eg 1.30 eV vs prior Eg 1.49 eV (z = -2.3); ridge attribution points to Sn (weight 0.06).",
-    "region": {
-     "sn": [
-      0.1,
-      0.5
-     ],
-     "br": [
-      0.0,
-      0.1
-     ],
-     "fa": [
-      0.6,
-      1.0
-     ]
-    }
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
    },
-   "round": 2,
-   "status": "supported",
+   "status": "open",
    "agent_generated": true,
-   "label_note": "agent-generated hypothesis (rule-based, proposed from an anomaly in the data); unvalidated. Backend: rule-based scientist (offline)"
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "hyp:H8",
+   "type": "hypothesis",
+   "label": "H8: None",
+   "source": "rec-0003",
+   "order": 2,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "dec:rec-0004",
+   "type": "decision",
+   "label": "seed: Round 1, no measurements. Seed with the agent-generated H7 (low-Sn gap) and H8 (low-Sn, Cs-rich stability), which target the joint wi\u2026",
+   "source": "rec-0004",
+   "order": 3,
+   "evidence": {
+    "mode": "seed",
+    "rationale": null,
+    "budget_left": 60.0
+   }
+  },
+  {
+   "id": "exp:E001",
+   "type": "experiment",
+   "label": "Cs0.1FA0.9Pb0.8Sn0.2I3: Eg 1.365 eV, T80 886 h",
+   "source": "rec-0006",
+   "order": 5,
+   "evidence": {
+    "bandgap_ev": 1.365,
+    "t80_h": 886,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.1FA0.9Pb0.8Sn0.2I3",
+    "purpose": "Test H7: Low-Sn (15-30%), Br-free, MA-free Cs/FA films reach the target bandgap window (1.24-1.38 eV) while staying below the Sn-Pb bowing region that H2 covers."
+   }
+  },
+  {
+   "id": "exp:E002",
+   "type": "experiment",
+   "label": "Cs0.2FA0.8Pb0.8Sn0.2I3: Eg 1.39 eV, T80 900 h",
+   "source": "rec-0007",
+   "order": 6,
+   "evidence": {
+    "bandgap_ev": 1.39,
+    "t80_h": 900,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.2FA0.8Pb0.8Sn0.2I3",
+    "purpose": "Test H8: Cs-FA films with 10-30% Sn and Cs 0.15-0.3 have log10 T80 above 2.7 (T80 > 500 h), challenging H3."
+   }
+  },
+  {
+   "id": "exp:E003",
+   "type": "experiment",
+   "label": "Cs0.1FA0.9PbI3: Eg 1.502 eV, T80 1010 h",
+   "source": "rec-0008",
+   "order": 7,
+   "evidence": {
+    "bandgap_ev": 1.502,
+    "t80_h": 1010,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.0,
+    "formula": "Cs0.1FA0.9PbI3",
+    "purpose": "Test H5: Cs/FA double-cation Pb iodides are the stable baseline."
+   }
+  },
+  {
+   "id": "exp:E004",
+   "type": "experiment",
+   "label": "Cs0.1FA0.9Pb0.7Sn0.3I3: no film",
+   "source": "rec-0009",
+   "order": 8,
+   "evidence": {
+    "bandgap_ev": null,
+    "t80_h": null,
+    "ok": false,
+    "phase": "pinholes, incomplete coverage",
+    "cost": 1.5,
+    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I3",
+    "purpose": "Test H2: Sn-Pb mixing bows the bandgap below both end members."
+   }
+  },
+  {
+   "id": "find:rec-0010:0",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E001\", \"composition\": \"Cs0.1FA0.9Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.365 eV (pred 1.51\\u00b10.08); T80 885 h (pred 422 h); meets fu\u2026",
+   "source": "rec-0010",
+   "order": 9.0,
+   "evidence": {
+    "text": "{\"exp_id\": \"E001\", \"composition\": \"Cs0.1FA0.9Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.365 eV (pred 1.51\\u00b10.08); T80 885 h (pred 422 h); meets full spec\", \"surprise\": 1.7, \"meets_spec\": true, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0010:1",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E002\", \"composition\": \"Cs0.2FA0.8Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.390 eV (pred 1.52\\u00b10.08); T80 899 h (pred 422 h)\", \"surpri\u2026",
+   "source": "rec-0010",
+   "order": 9.01,
+   "evidence": {
+    "text": "{\"exp_id\": \"E002\", \"composition\": \"Cs0.2FA0.8Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.390 eV (pred 1.52\\u00b10.08); T80 899 h (pred 422 h)\", \"surprise\": 1.59, \"meets_spec\": false, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0010:2",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E003\", \"composition\": \"Cs0.1FA0.9PbI3\", \"finding\": \"Eg 1.502 eV (pred 1.53\\u00b10.08); T80 1009 h (pred 1000 h)\", \"surprise\": 0\u2026",
+   "source": "rec-0010",
+   "order": 9.02,
+   "evidence": {
+    "text": "{\"exp_id\": \"E003\", \"composition\": \"Cs0.1FA0.9PbI3\", \"finding\": \"Eg 1.502 eV (pred 1.53\\u00b10.08); T80 1009 h (pred 1000 h)\", \"surprise\": 0.36, \"meets_spec\": false, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0010:3",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E004\", \"composition\": \"Cs0.1FA0.9Pb0.7Sn0.3I3\", \"finding\": \"Negative result: pinholes, incomplete coverage. Model expected T80 \u2026",
+   "source": "rec-0010",
+   "order": 9.03,
+   "evidence": {
+    "text": "{\"exp_id\": \"E004\", \"composition\": \"Cs0.1FA0.9Pb0.7Sn0.3I3\", \"finding\": \"Negative result: pinholes, incomplete coverage. Model expected T80 \\u2248 260 h.\", \"surprise\": 0.0, \"meets_spec\": false, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "hyp:H9",
+   "type": "hypothesis",
+   "label": "H9: None",
+   "source": "rec-0012",
+   "order": 11,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "dec:rec-0013",
+   "type": "decision",
+   "label": "exploit: Round 2. E001 is a measured hit (1.365 eV, 886 h) that the prior had at p_hit 0.025, so the Sn penalty in the model is too heavy. \u2026",
+   "source": "rec-0013",
+   "order": 12,
+   "evidence": {
+    "mode": "exploit",
+    "rationale": null,
+    "budget_left": 54.5
+   }
+  },
+  {
+   "id": "exp:E005",
+   "type": "experiment",
+   "label": "Cs0.1FA0.9Pb0.8Sn0.2I3: Eg 1.347 eV, T80 804 h",
+   "source": "rec-0015",
+   "order": 14,
+   "evidence": {
+    "bandgap_ev": 1.347,
+    "t80_h": 804,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.1FA0.9Pb0.8Sn0.2I3",
+    "purpose": "Replicate candidate Cs0.1FA0.9Pb0.8Sn0.2I3"
+   }
+  },
+  {
+   "id": "exp:E006",
+   "type": "experiment",
+   "label": "Cs0.2FA0.8Pb0.7Sn0.3I3: Eg 1.313 eV, T80 808 h",
+   "source": "rec-0016",
+   "order": 15,
+   "evidence": {
+    "bandgap_ev": 1.313,
+    "t80_h": 808,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.2FA0.8Pb0.7Sn0.3I3",
+    "purpose": "Highest probability of meeting spec"
+   }
+  },
+  {
+   "id": "exp:E007",
+   "type": "experiment",
+   "label": "Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3: Eg 1.369 eV, T80 521 h",
+   "source": "rec-0017",
+   "order": 16,
+   "evidence": {
+    "bandgap_ev": 1.369,
+    "t80_h": 521,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3",
+    "purpose": "Highest probability of meeting spec"
+   }
+  },
+  {
+   "id": "find:rec-0018:0",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E005\", \"composition\": \"Cs0.1FA0.9Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.347 eV (pred 1.37\\u00b10.01); T80 804 h (pred 885 h); meets fu\u2026",
+   "source": "rec-0018",
+   "order": 17.0,
+   "evidence": {
+    "text": "{\"exp_id\": \"E005\", \"composition\": \"Cs0.1FA0.9Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.347 eV (pred 1.37\\u00b10.01); T80 804 h (pred 885 h); meets full spec\", \"surprise\": 0.82, \"meets_spec\": true, \"replicate\": true}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0018:1",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E006\", \"composition\": \"Cs0.2FA0.8Pb0.7Sn0.3I3\", \"finding\": \"Eg 1.313 eV (pred 1.37\\u00b10.03); T80 809 h (pred 564 h); meets fu\u2026",
+   "source": "rec-0018",
+   "order": 17.01,
+   "evidence": {
+    "text": "{\"exp_id\": \"E006\", \"composition\": \"Cs0.2FA0.8Pb0.7Sn0.3I3\", \"finding\": \"Eg 1.313 eV (pred 1.37\\u00b10.03); T80 809 h (pred 564 h); meets full spec\", \"surprise\": 1.4, \"meets_spec\": true, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0018:2",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E007\", \"composition\": \"Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.369 eV (pred 1.38\\u00b10.04); T80 521 h (pred 590 h); m\u2026",
+   "source": "rec-0018",
+   "order": 17.02,
+   "evidence": {
+    "text": "{\"exp_id\": \"E007\", \"composition\": \"Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.369 eV (pred 1.38\\u00b10.04); T80 521 h (pred 590 h); meets full spec\", \"surprise\": 0.32, \"meets_spec\": true, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "hyp:H10",
+   "type": "hypothesis",
+   "label": "H10: None",
+   "source": "rec-0020",
+   "order": 19,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "hyp:H11",
+   "type": "hypothesis",
+   "label": "H11: None",
+   "source": "rec-0020",
+   "order": 19,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "hyp:H12",
+   "type": "hypothesis",
+   "label": "H12: None",
+   "source": "rec-0020",
+   "order": 19,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "dec:rec-0021",
+   "type": "decision",
+   "label": "exploit: Round 3. Replicated hit confirmed (Cs0.1FA0.9Pb0.8Sn0.2I3). E006 (Sn 0.3) is an unreplicated hit that contradicts H3, so replicate\u2026",
+   "source": "rec-0021",
+   "order": 20,
+   "evidence": {
+    "mode": "exploit",
+    "rationale": null,
+    "budget_left": 50.0
+   }
+  },
+  {
+   "id": "exp:E008",
+   "type": "experiment",
+   "label": "Cs0.2FA0.8Pb0.7Sn0.3I3: Eg 1.308 eV, T80 621 h",
+   "source": "rec-0023",
+   "order": 22,
+   "evidence": {
+    "bandgap_ev": 1.308,
+    "t80_h": 621,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.2FA0.8Pb0.7Sn0.3I3",
+    "purpose": "Replicate candidate Cs0.2FA0.8Pb0.7Sn0.3I3"
+   }
+  },
+  {
+   "id": "exp:E009",
+   "type": "experiment",
+   "label": "Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3: Eg 1.353 eV, T80 578 h",
+   "source": "rec-0024",
+   "order": 23,
+   "evidence": {
+    "bandgap_ev": 1.353,
+    "t80_h": 578,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3",
+    "purpose": "Replicate candidate Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3"
+   }
+  },
+  {
+   "id": "exp:E010",
+   "type": "experiment",
+   "label": "Cs0.3FA0.7Pb0.7Sn0.3I3: Eg 1.318 eV, T80 409 h",
+   "source": "rec-0025",
+   "order": 24,
+   "evidence": {
+    "bandgap_ev": 1.318,
+    "t80_h": 409,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.3FA0.7Pb0.7Sn0.3I3",
+    "purpose": "Highest probability of meeting spec"
+   }
+  },
+  {
+   "id": "exp:E011",
+   "type": "experiment",
+   "label": "Cs0.2FA0.8Pb0.6Sn0.4I3: Eg 1.258 eV, T80 671 h",
+   "source": "rec-0026",
+   "order": 25,
+   "evidence": {
+    "bandgap_ev": 1.258,
+    "t80_h": 671,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.2FA0.8Pb0.6Sn0.4I3",
+    "purpose": "Highest probability of meeting spec"
+   }
+  },
+  {
+   "id": "exp:E012",
+   "type": "experiment",
+   "label": "Cs0.3FA0.7Pb0.6Sn0.4I3: Eg 1.29 eV, T80 274 h",
+   "source": "rec-0027",
+   "order": 26,
+   "evidence": {
+    "bandgap_ev": 1.29,
+    "t80_h": 274,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.3FA0.7Pb0.6Sn0.4I3",
+    "purpose": "Test H2: Sn-Pb mixing bows the bandgap below both end members."
+   }
+  },
+  {
+   "id": "find:rec-0028:0",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E008\", \"composition\": \"Cs0.2FA0.8Pb0.7Sn0.3I3\", \"finding\": \"Eg 1.308 eV (pred 1.32\\u00b10.02); T80 621 h (pred 780 h); meets fu\u2026",
+   "source": "rec-0028",
+   "order": 27.0,
+   "evidence": {
+    "text": "{\"exp_id\": \"E008\", \"composition\": \"Cs0.2FA0.8Pb0.7Sn0.3I3\", \"finding\": \"Eg 1.308 eV (pred 1.32\\u00b10.02); T80 621 h (pred 780 h); meets full spec\", \"surprise\": 0.79, \"meets_spec\": true, \"replicate\": true}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0028:H11",
+   "type": "finding",
+   "label": "H11 supported",
+   "source": "rec-0028",
+   "order": 27,
+   "evidence": {
+    "hypothesis_id": "H11"
+   },
+   "status": "supported"
+  },
+  {
+   "id": "find:rec-0028:H12",
+   "type": "finding",
+   "label": "H12 falsified",
+   "source": "rec-0028",
+   "order": 27,
+   "evidence": {
+    "hypothesis_id": "H12"
+   },
+   "status": "falsified"
+  },
+  {
+   "id": "find:rec-0028:H2",
+   "type": "finding",
+   "label": "H2 supported",
+   "source": "rec-0028",
+   "order": 27,
+   "evidence": {
+    "hypothesis_id": "H2"
+   },
+   "status": "supported"
+  },
+  {
+   "id": "find:rec-0028:H3",
+   "type": "finding",
+   "label": "H3 falsified",
+   "source": "rec-0028",
+   "order": 27,
+   "evidence": {
+    "hypothesis_id": "H3"
+   },
+   "status": "falsified"
+  },
+  {
+   "id": "find:rec-0028:H7",
+   "type": "finding",
+   "label": "H7 qualified",
+   "source": "rec-0028",
+   "order": 27,
+   "evidence": {
+    "hypothesis_id": "H7"
+   },
+   "status": "qualified"
+  },
+  {
+   "id": "find:rec-0028:relax",
+   "type": "finding",
+   "label": "Prior relaxed: {'prop': 'stability', 'after_hypothesis': 'H3', 'status': 'falsified'}",
+   "source": "rec-0028",
+   "order": 27,
+   "evidence": {
+    "text": "{'prop': 'stability', 'after_hypothesis': 'H3', 'status': 'falsified'}"
+   },
+   "status": "reopened"
+  },
+  {
+   "id": "find:rec-0028:1",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E009\", \"composition\": \"Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.353 eV (pred 1.37\\u00b10.02); T80 578 h (pred 527 h); m\u2026",
+   "source": "rec-0028",
+   "order": 27.01,
+   "evidence": {
+    "text": "{\"exp_id\": \"E009\", \"composition\": \"Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.353 eV (pred 1.37\\u00b10.02); T80 578 h (pred 527 h); meets full spec\", \"surprise\": 0.58, \"meets_spec\": true, \"replicate\": true}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0028:2",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E010\", \"composition\": \"Cs0.3FA0.7Pb0.7Sn0.3I3\", \"finding\": \"Eg 1.318 eV (pred 1.34\\u00b10.03); T80 409 h (pred 829 h)\", \"surpri\u2026",
+   "source": "rec-0028",
+   "order": 27.02,
+   "evidence": {
+    "text": "{\"exp_id\": \"E010\", \"composition\": \"Cs0.3FA0.7Pb0.7Sn0.3I3\", \"finding\": \"Eg 1.318 eV (pred 1.34\\u00b10.03); T80 409 h (pred 829 h)\", \"surprise\": 2.22, \"meets_spec\": false, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0028:3",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E011\", \"composition\": \"Cs0.2FA0.8Pb0.6Sn0.4I3\", \"finding\": \"Eg 1.258 eV (pred 1.27\\u00b10.02); T80 671 h (pred 584 h); meets fu\u2026",
+   "source": "rec-0028",
+   "order": 27.03,
+   "evidence": {
+    "text": "{\"exp_id\": \"E011\", \"composition\": \"Cs0.2FA0.8Pb0.6Sn0.4I3\", \"finding\": \"Eg 1.258 eV (pred 1.27\\u00b10.02); T80 671 h (pred 584 h); meets full spec\", \"surprise\": 0.49, \"meets_spec\": true, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0028:4",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E012\", \"composition\": \"Cs0.3FA0.7Pb0.6Sn0.4I3\", \"finding\": \"Eg 1.290 eV (pred 1.30\\u00b10.04); T80 274 h (pred 611 h)\", \"surpri\u2026",
+   "source": "rec-0028",
+   "order": 27.04,
+   "evidence": {
+    "text": "{\"exp_id\": \"E012\", \"composition\": \"Cs0.3FA0.7Pb0.6Sn0.4I3\", \"finding\": \"Eg 1.290 eV (pred 1.30\\u00b10.04); T80 274 h (pred 611 h)\", \"surprise\": 2.25, \"meets_spec\": false, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "hyp:H13",
+   "type": "hypothesis",
+   "label": "H13: None",
+   "source": "rec-0030",
+   "order": 29,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "hyp:H14",
+   "type": "hypothesis",
+   "label": "H14: None",
+   "source": "rec-0030",
+   "order": 29,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "dec:rec-0031",
+   "type": "decision",
+   "label": "exploit: Round 4, 42.5 units left. Three confirmed hits exist. Remaining uncertainty: (1) E011 (Sn 0.4, Cs 0.2, 1.258 eV/671 h) is single, \u2026",
+   "source": "rec-0031",
+   "order": 30,
+   "evidence": {
+    "mode": "exploit",
+    "rationale": null,
+    "budget_left": 42.5
+   }
+  },
+  {
+   "id": "exp:E013",
+   "type": "experiment",
+   "label": "Cs0.2FA0.8Pb0.6Sn0.4I3: Eg 1.304 eV, T80 641 h",
+   "source": "rec-0033",
+   "order": 32,
+   "evidence": {
+    "bandgap_ev": 1.304,
+    "t80_h": 641,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.2FA0.8Pb0.6Sn0.4I3",
+    "purpose": "Replicate candidate Cs0.2FA0.8Pb0.6Sn0.4I3"
+   }
+  },
+  {
+   "id": "exp:E014",
+   "type": "experiment",
+   "label": "Cs0.1FA0.9Pb0.6Sn0.4I3: Eg 1.268 eV, T80 832 h",
+   "source": "rec-0034",
+   "order": 33,
+   "evidence": {
+    "bandgap_ev": 1.268,
+    "t80_h": 832,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.1FA0.9Pb0.6Sn0.4I3",
+    "purpose": "Highest probability of meeting spec"
+   }
+  },
+  {
+   "id": "exp:E015",
+   "type": "experiment",
+   "label": "Cs0.1FA0.75MA0.15Pb0.8Sn0.2I3: Eg 1.369 eV, T80 548 h",
+   "source": "rec-0035",
+   "order": 34,
+   "evidence": {
+    "bandgap_ev": 1.369,
+    "t80_h": 548,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.1FA0.75MA0.15Pb0.8Sn0.2I3",
+    "purpose": "Highest probability of meeting spec"
+   }
+  },
+  {
+   "id": "exp:E016",
+   "type": "experiment",
+   "label": "Cs0.3FA0.7Pb0.7Sn0.3I3: Eg 1.321 eV, T80 322 h",
+   "source": "rec-0036",
+   "order": 35,
+   "evidence": {
+    "bandgap_ev": 1.321,
+    "t80_h": 322,
+    "ok": true,
+    "phase": "phase-pure perovskite (XRD)",
+    "cost": 1.5,
+    "formula": "Cs0.3FA0.7Pb0.7Sn0.3I3",
+    "purpose": "Replicate surprise in Cs0.3FA0.7Pb0.7Sn0.3I3"
+   }
+  },
+  {
+   "id": "find:rec-0037:0",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E013\", \"composition\": \"Cs0.2FA0.8Pb0.6Sn0.4I3\", \"finding\": \"Eg 1.304 eV (pred 1.26\\u00b10.01); T80 641 h (pred 602 h); meets fu\u2026",
+   "source": "rec-0037",
+   "order": 36.0,
+   "evidence": {
+    "text": "{\"exp_id\": \"E013\", \"composition\": \"Cs0.2FA0.8Pb0.6Sn0.4I3\", \"finding\": \"Eg 1.304 eV (pred 1.26\\u00b10.01); T80 641 h (pred 602 h); meets full spec\", \"surprise\": 1.63, \"meets_spec\": true, \"replicate\": true}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0037:H1",
+   "type": "finding",
+   "label": "H1 falsified",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H1"
+   },
+   "status": "falsified"
+  },
+  {
+   "id": "find:rec-0037:H10",
+   "type": "finding",
+   "label": "H10 qualified",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H10"
+   },
+   "status": "qualified"
+  },
+  {
+   "id": "find:rec-0037:H11",
+   "type": "finding",
+   "label": "H11 supported",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H11"
+   },
+   "status": "supported"
+  },
+  {
+   "id": "find:rec-0037:H12",
+   "type": "finding",
+   "label": "H12 falsified",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H12"
+   },
+   "status": "falsified"
+  },
+  {
+   "id": "find:rec-0037:H13",
+   "type": "finding",
+   "label": "H13 supported",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H13"
+   },
+   "status": "supported"
+  },
+  {
+   "id": "find:rec-0037:H14",
+   "type": "finding",
+   "label": "H14 supported",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H14"
+   },
+   "status": "supported"
+  },
+  {
+   "id": "find:rec-0037:H2",
+   "type": "finding",
+   "label": "H2 supported",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H2"
+   },
+   "status": "supported"
+  },
+  {
+   "id": "find:rec-0037:H3",
+   "type": "finding",
+   "label": "H3 falsified",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H3"
+   },
+   "status": "falsified"
+  },
+  {
+   "id": "find:rec-0037:H7",
+   "type": "finding",
+   "label": "H7 qualified",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "hypothesis_id": "H7"
+   },
+   "status": "qualified"
+  },
+  {
+   "id": "find:rec-0037:relax",
+   "type": "finding",
+   "label": "Prior relaxed: {'prop': 'bandgap', 'after_hypothesis': 'H1', 'status': 'falsified'}",
+   "source": "rec-0037",
+   "order": 36,
+   "evidence": {
+    "text": "{'prop': 'bandgap', 'after_hypothesis': 'H1', 'status': 'falsified'}"
+   },
+   "status": "reopened"
+  },
+  {
+   "id": "find:rec-0037:1",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E014\", \"composition\": \"Cs0.1FA0.9Pb0.6Sn0.4I3\", \"finding\": \"Eg 1.268 eV (pred 1.26\\u00b10.02); T80 832 h (pred 596 h); meets fu\u2026",
+   "source": "rec-0037",
+   "order": 36.01,
+   "evidence": {
+    "text": "{\"exp_id\": \"E014\", \"composition\": \"Cs0.1FA0.9Pb0.6Sn0.4I3\", \"finding\": \"Eg 1.268 eV (pred 1.26\\u00b10.02); T80 832 h (pred 596 h); meets full spec\", \"surprise\": 0.82, \"meets_spec\": true, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0037:2",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E015\", \"composition\": \"Cs0.1FA0.75MA0.15Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.369 eV (pred 1.37\\u00b10.01); T80 548 h (pred 577 h); m\u2026",
+   "source": "rec-0037",
+   "order": 36.02,
+   "evidence": {
+    "text": "{\"exp_id\": \"E015\", \"composition\": \"Cs0.1FA0.75MA0.15Pb0.8Sn0.2I3\", \"finding\": \"Eg 1.369 eV (pred 1.37\\u00b10.01); T80 548 h (pred 577 h); meets full spec\", \"surprise\": 0.15, \"meets_spec\": true, \"replicate\": false}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "find:rec-0037:3",
+   "type": "finding",
+   "label": "{\"exp_id\": \"E016\", \"composition\": \"Cs0.3FA0.7Pb0.7Sn0.3I3\", \"finding\": \"Eg 1.321 eV (pred 1.33\\u00b10.01); T80 322 h (pred 420 h)\", \"surpri\u2026",
+   "source": "rec-0037",
+   "order": 36.03,
+   "evidence": {
+    "text": "{\"exp_id\": \"E016\", \"composition\": \"Cs0.3FA0.7Pb0.7Sn0.3I3\", \"finding\": \"Eg 1.321 eV (pred 1.33\\u00b10.01); T80 322 h (pred 420 h)\", \"surprise\": 0.83, \"meets_spec\": false, \"replicate\": true}"
+   },
+   "status": "finding"
+  },
+  {
+   "id": "hyp:H15",
+   "type": "hypothesis",
+   "label": "H15: None",
+   "source": "rec-0039",
+   "order": 38,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "hyp:H16",
+   "type": "hypothesis",
+   "label": "H16: None",
+   "source": "rec-0039",
+   "order": 38,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "hyp:H17",
+   "type": "hypothesis",
+   "label": "H17: None",
+   "source": "rec-0039",
+   "order": 38,
+   "evidence": {
+    "region": null,
+    "prediction": null,
+    "kill_condition": null,
+    "citation": null,
+    "source": null
+   },
+   "status": "open",
+   "agent_generated": true,
+   "label_note": "agent-generated hypothesis (model-written); unvalidated"
+  },
+  {
+   "id": "dec:rec-0040",
+   "type": "decision",
+   "label": "stop: Round 5, 36.5 units left. Several confirmed hits exist, so spend on (1) replicating E014 (Cs0.1 Sn0.4, 832 h, best T80), (2) the wind\u2026",
+   "source": "rec-0040",
+   "order": 39,
+   "evidence": {
+    "mode": "stop",
+    "rationale": null,
+    "budget_left": 36.5
+   }
+  },
+  {
+   "id": "dec:R1",
+   "type": "decision",
+   "label": "R1 seed: No data yet, so slots test the goal-relevant literature hypotheses (H6, H5, H7, H8, H2); H4 parked because their regions cannot me\u2026",
+   "source": "notebook decisions round 1",
+   "order": 1001,
+   "evidence": {
+    "mode": "seed",
+    "rationale": "No data yet, so slots test the goal-relevant literature hypotheses (H6, H5, H7, H8, H2); H4 parked because their regions cannot meet the spec. || planner: Round 1, no measurements. Seed with the agent-generated H7 (low-Sn gap) and H8 (low-Sn, Cs-rich stability), which target the joint window. Include a Pb-only Cs/FA baseline (H5) as a cheap control, since Pb films cost 1.0 versus 1.5 for Sn. Critic caveats noted: Cs is unconstrained in H7 and Sn/Cs are confounded in H8, so I will vary Cs across slots.",
+    "slots": [
+     "Test H6: MA-majority films are thermally unstable.",
+     "Test H5: Cs/FA double-cation Pb iodides are the stable baseline.",
+     "Test H7: Low-Sn (15-30%), Br-free, MA-free Cs/FA films reach the target bandgap window (1.24-1.38 eV) while staying below the Sn-Pb bowing region that H2 covers.",
+     "Test H8: Cs-FA films with 10-30% Sn and Cs 0.15-0.3 have log10 T80 above 2.7 (T80 > 500 h), challenging H3.",
+     "Test H2: Sn-Pb mixing bows the bandgap below both end members."
+    ]
+   },
+   "round": 1
   },
   {
    "id": "dec:R2",
    "type": "decision",
-   "label": "R2 exploit: Replicate 2 spec-meeting film(s) before claiming a discovery; re-run the surprising Cs0.1FA0.9Pb0.7Sn0.3I3 result (z = -2.3) to\u2026",
+   "label": "R2 exploit: Replicate 1 spec-meeting film(s) before claiming a discovery; model now gives P(hit) up to 42%, so most films go to exploitatio\u2026",
    "source": "notebook decisions round 2",
    "order": 2001,
    "evidence": {
     "mode": "exploit",
-    "rationale": "Replicate 2 spec-meeting film(s) before claiming a discovery; re-run the surprising Cs0.1FA0.9Pb0.7Sn0.3I3 result (z = -2.3) to rule out noise; model now gives P(hit) up to 74%, so most films go to exploitation.",
+    "rationale": "Replicate 1 spec-meeting film(s) before claiming a discovery; model now gives P(hit) up to 42%, so most films go to exploitation. || planner: Round 2. E001 is a measured hit (1.365 eV, 886 h) that the prior had at p_hit 0.025, so the Sn penalty in the model is too heavy. Exploit around E001: neighbours with Sn 0.2-0.3 and Cs <=0.1 to map the gap window (H9), plus a replicate of E001 for discovery status. Cost per Sn film is 1.5, with 54.5 units left.",
     "slots": [
-     {
-      "kind": "replicate",
-      "purpose": "Replicate candidate Cs0.1FA0.9Pb0.7Sn0.3I3",
-      "hypothesis": null
-     },
-     {
-      "kind": "replicate",
-      "purpose": "Replicate candidate Cs0.1FA0.9Pb0.6Sn0.4I3",
-      "hypothesis": null
-     },
-     {
-      "kind": "replicate",
-      "purpose": "Replicate surprise in Cs0.1FA0.9Pb0.7Sn0.3I3",
-      "hypothesis": null
-     },
-     {
-      "kind": "test",
-      "purpose": "Test H1: Bandgap mixes linearly (Vegard's law), so half-Sn iodides sit midway between end members.",
-      "hypothesis": "H1"
-     },
-     {
-      "kind": "exploit",
-      "purpose": "Highest probability of meeting spec",
-      "hypothesis": null
-     }
+     "Replicate candidate Cs0.1FA0.9Pb0.8Sn0.2I3",
+     "Test H2: Sn-Pb mixing bows the bandgap below both end members.",
+     "Highest probability of meeting spec",
+     "Highest probability of meeting spec",
+     "Highest probability of meeting spec"
     ]
    },
    "round": 2
   },
   {
-   "id": "exp:E006",
-   "type": "experiment",
-   "label": "E006 Cs0.1FA0.9Pb0.7Sn0.3I3: Eg 1.284 eV, T80 840 h (meets spec)",
-   "source": "notebook experiments E006",
-   "order": 2010,
-   "evidence": {
-    "notebook_id": "E006",
-    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I3",
-    "purpose": "Replicate candidate Cs0.1FA0.9Pb0.7Sn0.3I3",
-    "kind": "replicate",
-    "bandgap_ev": 1.284,
-    "t80_h": 840,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.302,
-     "t80_h": 740,
-     "p_hit": 0.858
-    },
-    "surprise": 0.73,
-    "finding": "Eg 1.284 eV (pred 1.30\u00b10.01); T80 839 h (pred 740 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 2,
-   "hit": true
-  },
-  {
-   "id": "exp:E007",
-   "type": "experiment",
-   "label": "E007 Cs0.1FA0.9Pb0.6Sn0.4I3: Eg 1.231 eV, T80 631 h",
-   "source": "notebook experiments E007",
-   "order": 2011,
-   "evidence": {
-    "notebook_id": "E007",
-    "formula": "Cs0.1FA0.9Pb0.6Sn0.4I3",
-    "purpose": "Replicate candidate Cs0.1FA0.9Pb0.6Sn0.4I3",
-    "kind": "replicate",
-    "bandgap_ev": 1.231,
-    "t80_h": 631,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.269,
-     "t80_h": 721,
-     "p_hit": 0.825
-    },
-    "surprise": 1.57,
-    "finding": "Eg 1.231 eV (pred 1.27\u00b10.01); T80 631 h (pred 721 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 2,
-   "hit": false
-  },
-  {
-   "id": "exp:E008",
-   "type": "experiment",
-   "label": "E008 Cs0.1FA0.9Pb0.7Sn0.3I3: Eg 1.280 eV, T80 707 h (meets spec)",
-   "source": "notebook experiments E008",
-   "order": 2012,
-   "evidence": {
-    "notebook_id": "E008",
-    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I3",
-    "purpose": "Replicate surprise in Cs0.1FA0.9Pb0.7Sn0.3I3",
-    "kind": "replicate",
-    "bandgap_ev": 1.28,
-    "t80_h": 707,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.302,
-     "t80_h": 740,
-     "p_hit": 0.858
-    },
-    "surprise": 0.9,
-    "finding": "Eg 1.280 eV (pred 1.30\u00b10.01); T80 706 h (pred 740 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 2,
-   "hit": true
-  },
-  {
-   "id": "exp:E009",
-   "type": "experiment",
-   "label": "E009 Cs0.2FA0.8Pb0.6Sn0.4I3: Eg 1.293 eV, T80 393 h",
-   "source": "notebook experiments E009",
-   "order": 2013,
-   "evidence": {
-    "notebook_id": "E009",
-    "formula": "Cs0.2FA0.8Pb0.6Sn0.4I3",
-    "purpose": "Test H1: Bandgap mixes linearly (Vegard's law), so half-Sn iodides sit midway between end members.",
-    "kind": "test",
-    "bandgap_ev": 1.293,
-    "t80_h": 393,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.282,
-     "t80_h": 618,
-     "p_hit": 0.67
-    },
-    "surprise": 0.87,
-    "finding": "Eg 1.293 eV (pred 1.28\u00b10.02); T80 394 h (pred 618 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": "H1"
-   },
-   "round": 2,
-   "hit": false
-  },
-  {
-   "id": "exp:E010",
-   "type": "experiment",
-   "label": "E010 Cs0.1FA0.9Pb0.8Sn0.2I3: Eg 1.346 eV, T80 843 h (meets spec)",
-   "source": "notebook experiments E010",
-   "order": 2014,
-   "evidence": {
-    "notebook_id": "E010",
-    "formula": "Cs0.1FA0.9Pb0.8Sn0.2I3",
-    "purpose": "Highest probability of meeting spec",
-    "kind": "exploit",
-    "bandgap_ev": 1.346,
-    "t80_h": 843,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.355,
-     "t80_h": 739,
-     "p_hit": 0.739
-    },
-    "surprise": 0.32,
-    "finding": "Eg 1.346 eV (pred 1.35\u00b10.02); T80 843 h (pred 739 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 2,
-   "hit": true
-  },
-  {
-   "id": "find:R2:H1",
-   "type": "finding",
-   "label": "H1 falsified (n = 3, judge: Medium)",
-   "source": "notebook hypothesis_events R2 H1",
-   "order": 2030,
-   "evidence": {
-    "hypothesis_id": "H1",
-    "event": "H1 falsified (n = 3, judge: Medium)",
-    "n_evidence": 3,
-    "pass_rate": 0.0,
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region fall outside 1.40 eV\u20131.56 eV.",
-    "note": ""
-   },
-   "round": 2,
-   "status": "falsified"
-  },
-  {
-   "id": "find:R2:H7",
-   "type": "finding",
-   "label": "H7 supported (n = 8, judge: High)",
-   "source": "notebook hypothesis_events R2 H7",
-   "order": 2030,
-   "evidence": {
-    "hypothesis_id": "H7",
-    "event": "H7 supported (n = 8, judge: High)",
-    "n_evidence": 16,
-    "pass_rate": 0.88,
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 1.41 eV.",
-    "note": ""
-   },
-   "round": 2,
-   "status": "supported"
-  },
-  {
-   "id": "dec:R2:revision",
-   "type": "decision",
-   "label": "Literature bandgap prior relaxed after H1 was falsified; trusting lab data over textbook rules",
-   "source": "notebook R2 event",
-   "order": 2035,
-   "evidence": {
-    "event": "Literature bandgap prior relaxed after H1 was falsified; trusting lab data over textbook rules"
-   },
-   "round": 2
-  },
-  {
-   "id": "find:D:Cs0.1FA0.9Pb0.8Sn0.2I3",
-   "type": "finding",
-   "label": "Cs0.1FA0.9Pb0.8Sn0.2I3 confirmed (replicated 2\u00d7, Eg spread 22 meV)",
-   "source": "notebook R2",
-   "order": 2040,
-   "evidence": {
-    "formula": "Cs0.1FA0.9Pb0.8Sn0.2I3",
-    "confidence": "Low",
-    "eg_ev": 1.346,
-    "t80_h": 843,
-    "n_measurements": 1,
-    "reason": "single measurement, replication queued"
-   },
-   "round": 2,
-   "status": "confirmed"
-  },
-  {
    "id": "dec:R3",
    "type": "decision",
-   "label": "R3 exploit: Replicate 2 spec-meeting film(s) before claiming a discovery; re-run the surprising Cs0.2FA0.8Pb0.7Sn0.3I3 result (z = -2.3) to\u2026",
+   "label": "R3 exploit: Replicate 2 spec-meeting film(s) before claiming a discovery; model now gives P(hit) up to 83%, so most films go to exploitatio\u2026",
    "source": "notebook decisions round 3",
    "order": 3001,
    "evidence": {
     "mode": "exploit",
-    "rationale": "Replicate 2 spec-meeting film(s) before claiming a discovery; re-run the surprising Cs0.2FA0.8Pb0.7Sn0.3I3 result (z = -2.3) to rule out noise; model now gives P(hit) up to 89%, so most films go to exploitation.",
+    "rationale": "Replicate 2 spec-meeting film(s) before claiming a discovery; model now gives P(hit) up to 83%, so most films go to exploitation. || planner: Round 3. Replicated hit confirmed (Cs0.1FA0.9Pb0.8Sn0.2I3). E006 (Sn 0.3) is an unreplicated hit that contradicts H3, so replicate it and probe H10/H11 at Sn 0.3-0.5 with Cs 0.1-0.3. Sn films cost 1.5, with 50 units left, so I can afford a broad mapping round. Keep the MA question (H12) lower priority.",
     "slots": [
-     {
-      "kind": "replicate",
-      "purpose": "Replicate candidate Cs0.2FA0.8Pb0.7Sn0.3I3",
-      "hypothesis": null
-     },
-     {
-      "kind": "replicate",
-      "purpose": "Replicate candidate Cs0.1FA0.9Pb0.8Sn0.2I3",
-      "hypothesis": null
-     },
-     {
-      "kind": "replicate",
-      "purpose": "Replicate surprise in Cs0.2FA0.8Pb0.7Sn0.3I3",
-      "hypothesis": null
-     },
-     {
-      "kind": "exploit",
-      "purpose": "Highest probability of meeting spec",
-      "hypothesis": null
-     },
-     {
-      "kind": "exploit",
-      "purpose": "Highest probability of meeting spec",
-      "hypothesis": null
-     }
+     "Replicate candidate Cs0.2FA0.8Pb0.7Sn0.3I3",
+     "Replicate candidate Cs0.05FA0.8MA0.15Pb0.8Sn0.2I3",
+     "Test H2: Sn-Pb mixing bows the bandgap below both end members.",
+     "Highest probability of meeting spec",
+     "Highest probability of meeting spec"
     ]
    },
    "round": 3
   },
   {
-   "id": "exp:E011",
-   "type": "experiment",
-   "label": "E011 Cs0.2FA0.8Pb0.7Sn0.3I3: Eg 1.297 eV, T80 601 h (meets spec)",
-   "source": "notebook experiments E011",
-   "order": 3010,
-   "evidence": {
-    "notebook_id": "E011",
-    "formula": "Cs0.2FA0.8Pb0.7Sn0.3I3",
-    "purpose": "Replicate candidate Cs0.2FA0.8Pb0.7Sn0.3I3",
-    "kind": "replicate",
-    "bandgap_ev": 1.297,
-    "t80_h": 601,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.316,
-     "t80_h": 616,
-     "p_hit": 0.786
-    },
-    "surprise": 0.69,
-    "finding": "Eg 1.297 eV (pred 1.32\u00b10.02); T80 601 h (pred 616 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 3,
-   "hit": true
-  },
-  {
-   "id": "exp:E012",
-   "type": "experiment",
-   "label": "E012 Cs0.1FA0.9Pb0.8Sn0.2I3: Eg 1.368 eV, T80 889 h (meets spec)",
-   "source": "notebook experiments E012",
-   "order": 3011,
-   "evidence": {
-    "notebook_id": "E012",
-    "formula": "Cs0.1FA0.9Pb0.8Sn0.2I3",
-    "purpose": "Replicate candidate Cs0.1FA0.9Pb0.8Sn0.2I3",
-    "kind": "replicate",
-    "bandgap_ev": 1.368,
-    "t80_h": 889,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.348,
-     "t80_h": 829,
-     "p_hit": 0.932
-    },
-    "surprise": 0.74,
-    "finding": "Eg 1.368 eV (pred 1.35\u00b10.02); T80 889 h (pred 829 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 3,
-   "hit": true
-  },
-  {
-   "id": "exp:E013",
-   "type": "experiment",
-   "label": "E013 Cs0.2FA0.8Pb0.7Sn0.3I3: Eg 1.327 eV, T80 448 h",
-   "source": "notebook experiments E013",
-   "order": 3012,
-   "evidence": {
-    "notebook_id": "E013",
-    "formula": "Cs0.2FA0.8Pb0.7Sn0.3I3",
-    "purpose": "Replicate surprise in Cs0.2FA0.8Pb0.7Sn0.3I3",
-    "kind": "replicate",
-    "bandgap_ev": 1.327,
-    "t80_h": 448,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.316,
-     "t80_h": 616,
-     "p_hit": 0.786
-    },
-    "surprise": 0.84,
-    "finding": "Eg 1.327 eV (pred 1.32\u00b10.02); T80 448 h (pred 616 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 3,
-   "hit": false
-  },
-  {
-   "id": "exp:E014",
-   "type": "experiment",
-   "label": "E014 Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3: Eg 1.361 eV, T80 1420 h (meets spec)",
-   "source": "notebook experiments E014",
-   "order": 3013,
-   "evidence": {
-    "notebook_id": "E014",
-    "formula": "Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3",
-    "purpose": "Highest probability of meeting spec",
-    "kind": "exploit",
-    "bandgap_ev": 1.361,
-    "t80_h": 1420,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.308,
-     "t80_h": 738,
-     "p_hit": 0.893
-    },
-    "surprise": 1.61,
-    "finding": "Eg 1.361 eV (pred 1.31\u00b10.03); T80 1419 h (pred 738 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 3,
-   "hit": true
-  },
-  {
-   "id": "exp:E015",
-   "type": "experiment",
-   "label": "E015 Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3: Eg 1.421 eV, T80 1095 h",
-   "source": "notebook experiments E015",
-   "order": 3014,
-   "evidence": {
-    "notebook_id": "E015",
-    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3",
-    "purpose": "Highest probability of meeting spec",
-    "kind": "exploit",
-    "bandgap_ev": 1.421,
-    "t80_h": 1095,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.341,
-     "t80_h": 844,
-     "p_hit": 0.889
-    },
-    "surprise": 2.35,
-    "finding": "Eg 1.421 eV (pred 1.34\u00b10.03); T80 1094 h (pred 844 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 3,
-   "hit": false
-  },
-  {
-   "id": "find:E015:surprise",
+   "id": "find:R3:H11",
    "type": "finding",
-   "label": "Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3: surprise in bandgap (z = +2.4)",
-   "source": "notebook experiments E015",
-   "order": 3024,
+   "label": "H11 supported (n=5, pass=1.0)",
+   "source": "notebook hypothesis_events R3",
+   "order": 3030,
    "evidence": {
-    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3",
-    "flag": "surprise in bandgap (z = +2.4)",
-    "z_eg": 2.35,
-    "z_lt": 0.65,
-    "predicted": {
-     "eg": 1.341,
-     "t80_h": 844,
-     "p_hit": 0.889
-    },
-    "measured": "Eg 1.421 eV, T80 1095 h"
+    "hypothesis_id": "H11",
+    "detail": "n=5, pass=1.0"
    },
    "round": 3,
-   "status": "surprise"
+   "status": "supported"
+  },
+  {
+   "id": "find:R3:H12",
+   "type": "finding",
+   "label": "H12 falsified (n=8, pass=0.11400342413176201)",
+   "source": "notebook hypothesis_events R3",
+   "order": 3030,
+   "evidence": {
+    "hypothesis_id": "H12",
+    "detail": "n=8, pass=0.11400342413176201"
+   },
+   "round": 3,
+   "status": "falsified"
   },
   {
    "id": "find:R3:H2",
    "type": "finding",
-   "label": "H2 qualified (n = 11, judge: Medium)",
-   "source": "notebook hypothesis_events R3 H2",
+   "label": "H2 supported (n=5, pass=1.0)",
+   "source": "notebook hypothesis_events R3",
    "order": 3030,
    "evidence": {
     "hypothesis_id": "H2",
-    "event": "H2 qualified (n = 11, judge: Medium)",
-    "n_evidence": 14,
-    "pass_rate": 0.71,
-    "kill_condition": "False if \u2265\u2154 of \u22653 films in the region measure >= 1.36 eV.",
-    "note": "holds with exceptions"
+    "detail": "n=5, pass=1.0"
+   },
+   "round": 3,
+   "status": "supported"
+  },
+  {
+   "id": "find:R3:H3",
+   "type": "finding",
+   "label": "H3 falsified (n=5, pass=0.2)",
+   "source": "notebook hypothesis_events R3",
+   "order": 3030,
+   "evidence": {
+    "hypothesis_id": "H3",
+    "detail": "n=5, pass=0.2"
+   },
+   "round": 3,
+   "status": "falsified"
+  },
+  {
+   "id": "find:R3:H7",
+   "type": "finding",
+   "label": "H7 qualified (n=6, pass=0.8333333333333334)",
+   "source": "notebook hypothesis_events R3",
+   "order": 3030,
+   "evidence": {
+    "hypothesis_id": "H7",
+    "detail": "n=6, pass=0.8333333333333334"
    },
    "round": 3,
    "status": "qualified"
   },
   {
-   "id": "find:D:Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3",
-   "type": "finding",
-   "label": "Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3 confirmed (replicated 2\u00d7, Eg spread 5 meV)",
-   "source": "notebook R3",
-   "order": 3040,
-   "evidence": {
-    "formula": "Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3",
-    "confidence": "Low",
-    "eg_ev": 1.361,
-    "t80_h": 1420,
-    "n_measurements": 1,
-    "reason": "single measurement, replication queued"
-   },
-   "round": 3,
-   "status": "confirmed"
-  },
-  {
    "id": "dec:R4",
    "type": "decision",
-   "label": "R4 exploit: Replicate 1 spec-meeting film(s) before claiming a discovery; re-run the surprising Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3 result (z = 2\u2026",
+   "label": "R4 exploit: Replicate 1 spec-meeting film(s) before claiming a discovery; re-run the surprising Cs0.3FA0.7Pb0.7Sn0.3I3 result (z = -2.2) to\u2026",
    "source": "notebook decisions round 4",
    "order": 4001,
    "evidence": {
     "mode": "exploit",
-    "rationale": "Replicate 1 spec-meeting film(s) before claiming a discovery; re-run the surprising Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3 result (z = 2.4) to rule out noise; model now gives P(hit) up to 86%, so most films go to exploitation.",
+    "rationale": "Replicate 1 spec-meeting film(s) before claiming a discovery; re-run the surprising Cs0.3FA0.7Pb0.7Sn0.3I3 result (z = -2.2) to rule out noise; model now gives P(hit) up to 52%, so most films go to exploitation. || planner: Round 4, 42.5 units left. Three confirmed hits exist. Remaining uncertainty: (1) E011 (Sn 0.4, Cs 0.2, 1.258 eV/671 h) is single, so replicate it. (2) H13 Cs cliff between 0.2 and 0.3, so test Cs 0.15-0.25 at Sn 0.3-0.4. (3) H14 gap at Sn 0.5-0.6 with Cs 0.1-0.2 to find the lower gap edge at 1.24 eV. Prefer Cs<=0.2 designs and avoid Cs 0.3.",
     "slots": [
-     {
-      "kind": "replicate",
-      "purpose": "Replicate candidate Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3",
-      "hypothesis": null
-     },
-     {
-      "kind": "replicate",
-      "purpose": "Replicate surprise in Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3",
-      "hypothesis": null
-     },
-     {
-      "kind": "test",
-      "purpose": "Test H5: Cs/FA double-cation Pb iodides are the stable baseline.",
-      "hypothesis": "H5"
-     },
-     {
-      "kind": "exploit",
-      "purpose": "Highest probability of meeting spec",
-      "hypothesis": null
-     },
-     {
-      "kind": "exploit",
-      "purpose": "Highest probability of meeting spec",
-      "hypothesis": null
-     }
+     "Replicate candidate Cs0.2FA0.8Pb0.6Sn0.4I3",
+     "Replicate surprise in Cs0.3FA0.7Pb0.7Sn0.3I3",
+     "Test H6: MA-majority films are thermally unstable.",
+     "Highest probability of meeting spec",
+     "Highest probability of meeting spec"
     ]
    },
    "round": 4
   },
   {
-   "id": "exp:E016",
-   "type": "experiment",
-   "label": "E016 Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3: Eg 1.365 eV, T80 923 h (meets spec)",
-   "source": "notebook experiments E016",
-   "order": 4010,
-   "evidence": {
-    "notebook_id": "E016",
-    "formula": "Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3",
-    "purpose": "Replicate candidate Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3",
-    "kind": "replicate",
-    "bandgap_ev": 1.365,
-    "t80_h": 923,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.362,
-     "t80_h": 1109,
-     "p_hit": 0.814
-    },
-    "surprise": 0.5,
-    "finding": "Eg 1.365 eV (pred 1.36\u00b10.02); T80 923 h (pred 1109 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 4,
-   "hit": true
-  },
-  {
-   "id": "exp:E017",
-   "type": "experiment",
-   "label": "E017 Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3: Eg 1.413 eV, T80 1665 h",
-   "source": "notebook experiments E017",
-   "order": 4011,
-   "evidence": {
-    "notebook_id": "E017",
-    "formula": "Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3",
-    "purpose": "Replicate surprise in Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3",
-    "kind": "replicate",
-    "bandgap_ev": 1.413,
-    "t80_h": 1665,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.405,
-     "t80_h": 1109,
-     "p_hit": 0.113
-    },
-    "surprise": 1.11,
-    "finding": "Eg 1.413 eV (pred 1.40\u00b10.02); T80 1663 h (pred 1109 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 4,
-   "hit": false
-  },
-  {
-   "id": "exp:E018",
-   "type": "experiment",
-   "label": "E018 Cs0.3FA0.7PbI2.7Br0.3: Eg 1.608 eV, T80 392 h",
-   "source": "notebook experiments E018",
-   "order": 4012,
-   "evidence": {
-    "notebook_id": "E018",
-    "formula": "Cs0.3FA0.7PbI2.7Br0.3",
-    "purpose": "Test H5: Cs/FA double-cation Pb iodides are the stable baseline.",
-    "kind": "test",
-    "bandgap_ev": 1.608,
-    "t80_h": 392,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.0,
-    "predicted": {
-     "eg": 1.502,
-     "t80_h": 709,
-     "p_hit": 0.052
-    },
-    "surprise": 1.23,
-    "finding": "Eg 1.608 eV (pred 1.50\u00b10.08); T80 392 h (pred 709 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": "H5"
-   },
-   "round": 4,
-   "hit": false
-  },
-  {
-   "id": "exp:E019",
-   "type": "experiment",
-   "label": "E019 Cs0.2FA0.8Pb0.8Sn0.2I3: Eg 1.389 eV, T80 849 h",
-   "source": "notebook experiments E019",
-   "order": 4013,
-   "evidence": {
-    "notebook_id": "E019",
-    "formula": "Cs0.2FA0.8Pb0.8Sn0.2I3",
-    "purpose": "Highest probability of meeting spec",
-    "kind": "exploit",
-    "bandgap_ev": 1.389,
-    "t80_h": 849,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.367,
-     "t80_h": 684,
-     "p_hit": 0.566
-    },
-    "surprise": 0.6,
-    "finding": "Eg 1.389 eV (pred 1.37\u00b10.03); T80 849 h (pred 684 h)",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 4,
-   "hit": false
-  },
-  {
-   "id": "exp:E020",
-   "type": "experiment",
-   "label": "E020 Cs0.1FA0.9Pb0.4Sn0.6I2.7Cl0.3: Eg 1.340 eV, T80 1232 h (meets spec)",
-   "source": "notebook experiments E020",
-   "order": 4014,
-   "evidence": {
-    "notebook_id": "E020",
-    "formula": "Cs0.1FA0.9Pb0.4Sn0.6I2.7Cl0.3",
-    "purpose": "Highest probability of meeting spec",
-    "kind": "exploit",
-    "bandgap_ev": 1.34,
-    "t80_h": 1232,
-    "ok": true,
-    "phase": "phase-pure perovskite (XRD)",
-    "cost": 1.5,
-    "predicted": {
-     "eg": 1.34,
-     "t80_h": 644,
-     "p_hit": 0.539
-    },
-    "surprise": 1.27,
-    "finding": "Eg 1.340 eV (pred 1.34\u00b10.05); T80 1233 h (pred 644 h); meets full spec",
-    "safety": {
-     "approved": true,
-     "label": "glovebox + toxic-metal waste stream"
-    },
-    "hypothesis": null
-   },
-   "round": 4,
-   "hit": true
-  },
-  {
-   "id": "find:D:Cs0.1FA0.9Pb0.4Sn0.6I2.7Cl0.3",
+   "id": "find:R4:H1",
    "type": "finding",
-   "label": "Cs0.1FA0.9Pb0.4Sn0.6I2.7Cl0.3 candidate (single measurement, replication queued)",
-   "source": "notebook R4",
-   "order": 4040,
+   "label": "H1 falsified (n=4, pass=0.0)",
+   "source": "notebook hypothesis_events R4",
+   "order": 4030,
    "evidence": {
-    "formula": "Cs0.1FA0.9Pb0.4Sn0.6I2.7Cl0.3",
-    "confidence": "Low",
-    "eg_ev": 1.34,
-    "t80_h": 1232,
-    "n_measurements": 1,
-    "reason": "single measurement, replication queued"
+    "hypothesis_id": "H1",
+    "detail": "n=4, pass=0.0"
    },
    "round": 4,
-   "status": "candidate"
+   "status": "falsified"
+  },
+  {
+   "id": "find:R4:H10",
+   "type": "finding",
+   "label": "H10 qualified (n=8, pass=0.625)",
+   "source": "notebook hypothesis_events R4",
+   "order": 4030,
+   "evidence": {
+    "hypothesis_id": "H10",
+    "detail": "n=8, pass=0.625"
+   },
+   "round": 4,
+   "status": "qualified"
+  },
+  {
+   "id": "find:R4:H13",
+   "type": "finding",
+   "label": "H13 supported (n=8, pass=0.33164190771824487)",
+   "source": "notebook hypothesis_events R4",
+   "order": 4030,
+   "evidence": {
+    "hypothesis_id": "H13",
+    "detail": "n=8, pass=0.33164190771824487"
+   },
+   "round": 4,
+   "status": "supported"
+  },
+  {
+   "id": "find:R4:H14",
+   "type": "finding",
+   "label": "H14 supported (n=3, pass=1.0)",
+   "source": "notebook hypothesis_events R4",
+   "order": 4030,
+   "evidence": {
+    "hypothesis_id": "H14",
+    "detail": "n=3, pass=1.0"
+   },
+   "round": 4,
+   "status": "supported"
   },
   {
    "id": "dec:R5",
    "type": "decision",
-   "label": "R5 stop: 4 confirmed discoveries meet the goal; stopping to save 31.0 units of budget.",
+   "label": "R5 stop: 4 confirmed discoveries meet the goal; stopping to save 36.5 units of budget. || planner: Round 5, 36.5 units left. Several confir\u2026",
    "source": "notebook decisions round 5",
    "order": 5001,
    "evidence": {
     "mode": "stop",
-    "rationale": "4 confirmed discoveries meet the goal; stopping to save 31.0 units of budget.",
+    "rationale": "4 confirmed discoveries meet the goal; stopping to save 36.5 units of budget. || planner: Round 5, 36.5 units left. Several confirmed hits exist, so spend on (1) replicating E014 (Cs0.1 Sn0.4, 832 h, best T80), (2) the window's lower edge via Sn 0.5 at Cs 0.1 (H15), (3) the Br lever for gap centring (H17). Avoid Cs 0.3. Sn films cost 1.5.",
     "slots": []
    },
    "round": 5
@@ -1470,88 +1306,116 @@
  ],
  "edges": [
   {
-   "src": "hyp:H1",
-   "dst": "q:1",
-   "type": "addresses",
-   "inferred": false,
-   "basis": "hypothesis proposed for this goal"
+   "src": "dec:R1",
+   "dst": "exp:E001",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H2",
-   "dst": "q:1",
-   "type": "addresses",
-   "inferred": false,
-   "basis": "hypothesis proposed for this goal"
+   "src": "dec:R1",
+   "dst": "exp:E002",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H2",
-   "dst": "cit:L2",
-   "type": "cites",
-   "inferred": false,
-   "basis": "hypothesis lists this literature claim as its source"
+   "src": "dec:R1",
+   "dst": "exp:E003",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H2",
-   "dst": "cit:L3",
-   "type": "cites",
-   "inferred": false,
-   "basis": "hypothesis lists this literature claim as its source"
+   "src": "dec:R1",
+   "dst": "exp:E004",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H3",
-   "dst": "q:1",
-   "type": "addresses",
-   "inferred": false,
-   "basis": "hypothesis proposed for this goal"
+   "src": "dec:R2",
+   "dst": "exp:E005",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H3",
-   "dst": "cit:L4",
-   "type": "cites",
-   "inferred": false,
-   "basis": "hypothesis lists this literature claim as its source"
+   "src": "dec:R2",
+   "dst": "exp:E006",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H4",
-   "dst": "q:1",
-   "type": "addresses",
-   "inferred": false,
-   "basis": "hypothesis proposed for this goal"
+   "src": "dec:R2",
+   "dst": "exp:E007",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H4",
-   "dst": "cit:L5",
-   "type": "cites",
-   "inferred": false,
-   "basis": "hypothesis lists this literature claim as its source"
+   "src": "dec:R3",
+   "dst": "exp:E008",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H5",
-   "dst": "q:1",
-   "type": "addresses",
-   "inferred": false,
-   "basis": "hypothesis proposed for this goal"
+   "src": "dec:R3",
+   "dst": "exp:E009",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H5",
-   "dst": "cit:L6",
-   "type": "cites",
-   "inferred": false,
-   "basis": "hypothesis lists this literature claim as its source"
+   "src": "dec:R3",
+   "dst": "exp:E010",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H6",
-   "dst": "q:1",
-   "type": "addresses",
-   "inferred": false,
-   "basis": "hypothesis proposed for this goal"
+   "src": "dec:R3",
+   "dst": "exp:E011",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
-   "src": "hyp:H6",
-   "dst": "cit:L7",
-   "type": "cites",
-   "inferred": false,
-   "basis": "hypothesis lists this literature claim as its source"
+   "src": "dec:R3",
+   "dst": "exp:E012",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
+  },
+  {
+   "src": "dec:R4",
+   "dst": "exp:E013",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
+  },
+  {
+   "src": "dec:R4",
+   "dst": "exp:E014",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
+  },
+  {
+   "src": "dec:R4",
+   "dst": "exp:E015",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
+  },
+  {
+   "src": "dec:R4",
+   "dst": "exp:E016",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: same round as the decision"
   },
   {
    "src": "hyp:H7",
@@ -1561,676 +1425,648 @@
    "basis": "hypothesis proposed for this goal"
   },
   {
-   "src": "hyp:H1",
-   "dst": "dec:R1",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: literature hypothesis available at round 1"
+   "src": "hyp:H8",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "hyp:H9",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "hyp:H10",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "hyp:H11",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "hyp:H12",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "find:R3:H11",
+   "dst": "hyp:H11",
+   "type": "supports",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
+  },
+  {
+   "src": "find:R3:H12",
+   "dst": "hyp:H12",
+   "type": "refutes",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
   },
   {
    "src": "hyp:H2",
-   "dst": "dec:R1",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: literature hypothesis available at round 1"
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "find:R3:H2",
+   "dst": "hyp:H2",
+   "type": "supports",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
   },
   {
    "src": "hyp:H3",
-   "dst": "dec:R1",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: literature hypothesis available at round 1"
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "find:R3:H3",
+   "dst": "hyp:H3",
+   "type": "refutes",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
+  },
+  {
+   "src": "find:R3:H7",
+   "dst": "hyp:H7",
+   "type": "supports",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
+  },
+  {
+   "src": "hyp:H13",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "hyp:H14",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "hyp:H1",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "find:R4:H1",
+   "dst": "hyp:H1",
+   "type": "refutes",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
+  },
+  {
+   "src": "find:R4:H10",
+   "dst": "hyp:H10",
+   "type": "supports",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
+  },
+  {
+   "src": "find:R4:H13",
+   "dst": "hyp:H13",
+   "type": "supports",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
+  },
+  {
+   "src": "find:R4:H14",
+   "dst": "hyp:H14",
+   "type": "supports",
+   "inferred": false,
+   "basis": "notebook hypothesis event"
+  },
+  {
+   "src": "hyp:H15",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "hyp:H16",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
+  },
+  {
+   "src": "hyp:H17",
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
   },
   {
    "src": "hyp:H4",
-   "dst": "dec:R1",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: literature hypothesis available at round 1"
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
   },
   {
    "src": "hyp:H5",
-   "dst": "dec:R1",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: literature hypothesis available at round 1"
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
   },
   {
    "src": "hyp:H6",
-   "dst": "dec:R1",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: literature hypothesis available at round 1"
+   "dst": "q:1",
+   "type": "addresses",
+   "inferred": false,
+   "basis": "hypothesis proposed for this goal"
   },
   {
-   "src": "dec:R1",
+   "src": "dec:rec-0004",
    "dst": "exp:E001",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
    "src": "exp:E001",
-   "dst": "hyp:H2",
+   "dst": "hyp:H7",
    "type": "tests",
    "inferred": false,
-   "basis": "slot names the hypothesis"
+   "basis": "experiment record names the hypothesis"
   },
   {
-   "src": "exp:E001",
-   "dst": "find:E001:surprise",
-   "type": "yields",
-   "inferred": false,
-   "basis": "surprise flagged on this measurement"
-  },
-  {
-   "src": "dec:R1",
+   "src": "dec:rec-0004",
    "dst": "exp:E002",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
    "src": "exp:E002",
-   "dst": "hyp:H1",
+   "dst": "hyp:H8",
    "type": "tests",
    "inferred": false,
-   "basis": "slot names the hypothesis"
+   "basis": "experiment record names the hypothesis"
   },
   {
-   "src": "exp:E002",
-   "dst": "find:E002:surprise",
-   "type": "yields",
-   "inferred": false,
-   "basis": "surprise flagged on this measurement"
-  },
-  {
-   "src": "dec:R1",
+   "src": "dec:rec-0004",
    "dst": "exp:E003",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
    "src": "exp:E003",
    "dst": "hyp:H5",
    "type": "tests",
    "inferred": false,
-   "basis": "slot names the hypothesis"
+   "basis": "experiment record names the hypothesis"
   },
   {
-   "src": "dec:R1",
+   "src": "dec:rec-0004",
    "dst": "exp:E004",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
    "src": "exp:E004",
-   "dst": "hyp:H3",
+   "dst": "hyp:H2",
    "type": "tests",
    "inferred": false,
-   "basis": "slot names the hypothesis"
+   "basis": "experiment record names the hypothesis"
   },
   {
-   "src": "exp:E004",
-   "dst": "find:E004:surprise",
-   "type": "yields",
-   "inferred": false,
-   "basis": "surprise flagged on this measurement"
+   "src": "find:rec-0010:0",
+   "dst": "dec:rec-0013",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "dec:R1",
+   "src": "find:rec-0010:1",
+   "dst": "dec:rec-0013",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0010:2",
+   "dst": "dec:rec-0013",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0010:3",
+   "dst": "dec:rec-0013",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "dec:rec-0013",
    "dst": "exp:E005",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
-  },
-  {
-   "src": "exp:E005",
-   "dst": "hyp:H6",
-   "type": "tests",
-   "inferred": false,
-   "basis": "slot names the hypothesis"
-  },
-  {
-   "src": "find:R1:H2",
-   "dst": "hyp:H2",
-   "type": "supports",
-   "inferred": false,
-   "basis": "judge/evaluator verdict logged at this round"
-  },
-  {
-   "src": "exp:E001",
-   "dst": "find:R1:H2",
-   "type": "yields",
-   "inferred": false,
-   "basis": "experiment was run to test this hypothesis"
-  },
-  {
-   "src": "exp:E002",
-   "dst": "find:R1:H2",
-   "type": "yields",
    "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "exp:E004",
-   "dst": "find:R1:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "find:R1:H3",
-   "dst": "hyp:H3",
-   "type": "refutes",
-   "inferred": false,
-   "basis": "judge/evaluator verdict logged at this round"
-  },
-  {
-   "src": "exp:E001",
-   "dst": "find:R1:H3",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E002",
-   "dst": "find:R1:H3",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E004",
-   "dst": "find:R1:H3",
-   "type": "yields",
-   "inferred": false,
-   "basis": "experiment was run to test this hypothesis"
-  },
-  {
-   "src": "find:R1:H3",
-   "dst": "dec:R1:revision",
-   "type": "caused_decision",
-   "inferred": false,
-   "basis": "event text names the hypothesis"
-  },
-  {
-   "src": "find:R1:H3",
-   "dst": "hyp:H3",
-   "type": "reopens",
-   "inferred": false,
-   "basis": "literature prior relaxed after this verdict"
-  },
-  {
-   "src": "find:E001:surprise",
-   "dst": "dec:R2",
-   "type": "caused_decision",
-   "inferred": false,
-   "basis": "decision text mentions Cs0.1FA0.9Pb0.7Sn0.3I3"
-  },
-  {
-   "src": "find:E002:surprise",
-   "dst": "dec:R2",
-   "type": "caused_decision",
-   "inferred": false,
-   "basis": "decision text mentions Cs0.1FA0.9Pb0.6Sn0.4I3"
-  },
-  {
-   "src": "find:E004:surprise",
-   "dst": "dec:R2",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: finding from the previous round; the decision rule's inputs are not logged per finding"
-  },
-  {
-   "src": "find:R1:H2",
-   "dst": "dec:R2",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: finding from the previous round; the decision rule's inputs are not logged per finding"
-  },
-  {
-   "src": "find:R1:H3",
-   "dst": "dec:R2",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: finding from the previous round; the decision rule's inputs are not logged per finding"
-  },
-  {
-   "src": "find:D:Cs0.1FA0.9Pb0.7Sn0.3I3",
-   "dst": "dec:R2",
-   "type": "caused_decision",
-   "inferred": false,
-   "basis": "decision text mentions Cs0.1FA0.9Pb0.7Sn0.3I3"
-  },
-  {
-   "src": "find:D:Cs0.1FA0.9Pb0.6Sn0.4I3",
-   "dst": "dec:R2",
-   "type": "caused_decision",
-   "inferred": false,
-   "basis": "decision text mentions Cs0.1FA0.9Pb0.6Sn0.4I3"
-  },
-  {
-   "src": "find:D:Cs0.2FA0.8Pb0.7Sn0.3I3",
-   "dst": "dec:R2",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: finding from the previous round; the decision rule's inputs are not logged per finding"
-  },
-  {
-   "src": "dec:R2",
+   "src": "dec:rec-0013",
    "dst": "exp:E006",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "dec:R2",
+   "src": "dec:rec-0013",
    "dst": "exp:E007",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "dec:R2",
+   "src": "find:rec-0018:0",
+   "dst": "dec:rec-0021",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0018:1",
+   "dst": "dec:rec-0021",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0018:2",
+   "dst": "dec:rec-0021",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "dec:rec-0021",
    "dst": "exp:E008",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "dec:R2",
+   "src": "dec:rec-0021",
    "dst": "exp:E009",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "exp:E009",
-   "dst": "hyp:H1",
-   "type": "tests",
-   "inferred": false,
-   "basis": "slot names the hypothesis"
-  },
-  {
-   "src": "dec:R2",
+   "src": "dec:rec-0021",
    "dst": "exp:E010",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
-  },
-  {
-   "src": "find:R2:H1",
-   "dst": "hyp:H1",
-   "type": "refutes",
-   "inferred": false,
-   "basis": "judge/evaluator verdict logged at this round"
-  },
-  {
-   "src": "exp:E002",
-   "dst": "find:R2:H1",
-   "type": "yields",
-   "inferred": false,
-   "basis": "experiment was run to test this hypothesis"
-  },
-  {
-   "src": "exp:E007",
-   "dst": "find:R2:H1",
-   "type": "yields",
    "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "exp:E009",
-   "dst": "find:R2:H1",
-   "type": "yields",
-   "inferred": false,
-   "basis": "experiment was run to test this hypothesis"
-  },
-  {
-   "src": "find:R2:H7",
-   "dst": "hyp:H7",
-   "type": "supports",
-   "inferred": false,
-   "basis": "judge/evaluator verdict logged at this round"
-  },
-  {
-   "src": "exp:E001",
-   "dst": "find:R2:H7",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E002",
-   "dst": "find:R2:H7",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E004",
-   "dst": "find:R2:H7",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E006",
-   "dst": "find:R2:H7",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E007",
-   "dst": "find:R2:H7",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E008",
-   "dst": "find:R2:H7",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E009",
-   "dst": "find:R2:H7",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E010",
-   "dst": "find:R2:H7",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "find:R2:H1",
-   "dst": "dec:R2:revision",
-   "type": "caused_decision",
-   "inferred": false,
-   "basis": "event text names the hypothesis"
-  },
-  {
-   "src": "find:R2:H1",
-   "dst": "hyp:H1",
-   "type": "reopens",
-   "inferred": false,
-   "basis": "literature prior relaxed after this verdict"
-  },
-  {
-   "src": "find:E001:surprise",
-   "dst": "hyp:H7",
-   "type": "reopens",
-   "inferred": false,
-   "basis": "hypothesis lists this experiment as its source"
-  },
-  {
-   "src": "find:R2:H1",
-   "dst": "dec:R3",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: finding from the previous round; the decision rule's inputs are not logged per finding"
-  },
-  {
-   "src": "find:R2:H7",
-   "dst": "dec:R3",
-   "type": "caused_decision",
-   "inferred": true,
-   "basis": "temporal: finding from the previous round; the decision rule's inputs are not logged per finding"
-  },
-  {
-   "src": "find:D:Cs0.1FA0.9Pb0.8Sn0.2I3",
-   "dst": "dec:R3",
-   "type": "caused_decision",
-   "inferred": false,
-   "basis": "decision text mentions Cs0.1FA0.9Pb0.8Sn0.2I3"
-  },
-  {
-   "src": "dec:R3",
+   "src": "dec:rec-0021",
    "dst": "exp:E011",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "dec:R3",
+   "src": "dec:rec-0021",
    "dst": "exp:E012",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "dec:R3",
-   "dst": "exp:E013",
-   "type": "led_to",
+   "src": "exp:E012",
+   "dst": "hyp:H2",
+   "type": "tests",
    "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "basis": "experiment record names the hypothesis"
   },
   {
-   "src": "dec:R3",
-   "dst": "exp:E014",
-   "type": "led_to",
+   "src": "find:rec-0028:H11",
+   "dst": "hyp:H11",
+   "type": "supports",
    "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "dec:R3",
-   "dst": "exp:E015",
-   "type": "led_to",
+   "src": "find:rec-0028:H12",
+   "dst": "hyp:H12",
+   "type": "refutes",
    "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "exp:E015",
-   "dst": "find:E015:surprise",
-   "type": "yields",
-   "inferred": false,
-   "basis": "surprise flagged on this measurement"
-  },
-  {
-   "src": "find:R3:H2",
+   "src": "find:rec-0028:H2",
    "dst": "hyp:H2",
    "type": "supports",
    "inferred": false,
-   "basis": "judge/evaluator verdict logged at this round; holds with exceptions"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "exp:E001",
-   "dst": "find:R3:H2",
-   "type": "yields",
+   "src": "find:rec-0028:H3",
+   "dst": "hyp:H3",
+   "type": "refutes",
    "inferred": false,
-   "basis": "experiment was run to test this hypothesis"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "exp:E002",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E004",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E006",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E007",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E008",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E009",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E011",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E013",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E014",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "exp:E015",
-   "dst": "find:R3:H2",
-   "type": "yields",
-   "inferred": true,
-   "basis": "experiment composition falls inside the hypothesis region (evaluator uses such films)"
-  },
-  {
-   "src": "find:E015:surprise",
-   "dst": "dec:R4",
-   "type": "caused_decision",
+   "src": "find:rec-0028:H7",
+   "dst": "hyp:H7",
+   "type": "supports",
    "inferred": false,
-   "basis": "decision text mentions Cs0.1FA0.9Pb0.7Sn0.3I2.7Cl0.3"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "find:R3:H2",
-   "dst": "dec:R4",
+   "src": "find:rec-0028:0",
+   "dst": "dec:rec-0031",
    "type": "caused_decision",
    "inferred": true,
-   "basis": "temporal: finding from the previous round; the decision rule's inputs are not logged per finding"
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "find:D:Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3",
-   "dst": "dec:R4",
+   "src": "find:rec-0028:1",
+   "dst": "dec:rec-0031",
    "type": "caused_decision",
-   "inferred": false,
-   "basis": "decision text mentions Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3"
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "dec:R4",
+   "src": "find:rec-0028:2",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0028:3",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0028:4",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0028:H11",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0028:H12",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0028:H2",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0028:H3",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0028:H7",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0028:relax",
+   "dst": "dec:rec-0031",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "dec:rec-0031",
+   "dst": "exp:E013",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
+  },
+  {
+   "src": "dec:rec-0031",
+   "dst": "exp:E014",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
+  },
+  {
+   "src": "dec:rec-0031",
+   "dst": "exp:E015",
+   "type": "led_to",
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
+  },
+  {
+   "src": "dec:rec-0031",
    "dst": "exp:E016",
    "type": "led_to",
-   "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "inferred": true,
+   "basis": "temporal: ran after this decision"
   },
   {
-   "src": "dec:R4",
-   "dst": "exp:E017",
-   "type": "led_to",
+   "src": "find:rec-0037:H1",
+   "dst": "hyp:H1",
+   "type": "refutes",
    "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "dec:R4",
-   "dst": "exp:E018",
-   "type": "led_to",
+   "src": "find:rec-0037:H10",
+   "dst": "hyp:H10",
+   "type": "supports",
    "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "exp:E018",
-   "dst": "hyp:H5",
-   "type": "tests",
+   "src": "find:rec-0037:H11",
+   "dst": "hyp:H11",
+   "type": "supports",
    "inferred": false,
-   "basis": "slot names the hypothesis"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "dec:R4",
-   "dst": "exp:E019",
-   "type": "led_to",
+   "src": "find:rec-0037:H12",
+   "dst": "hyp:H12",
+   "type": "refutes",
    "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "dec:R4",
-   "dst": "exp:E020",
-   "type": "led_to",
+   "src": "find:rec-0037:H13",
+   "dst": "hyp:H13",
+   "type": "supports",
    "inferred": false,
-   "basis": "experiment ran in this decision's round"
+   "basis": "analysis verdict update"
   },
   {
-   "src": "find:D:Cs0.1FA0.9Pb0.4Sn0.6I2.7Cl0.3",
-   "dst": "dec:R5",
+   "src": "find:rec-0037:H14",
+   "dst": "hyp:H14",
+   "type": "supports",
+   "inferred": false,
+   "basis": "analysis verdict update"
+  },
+  {
+   "src": "find:rec-0037:H2",
+   "dst": "hyp:H2",
+   "type": "supports",
+   "inferred": false,
+   "basis": "analysis verdict update"
+  },
+  {
+   "src": "find:rec-0037:H3",
+   "dst": "hyp:H3",
+   "type": "refutes",
+   "inferred": false,
+   "basis": "analysis verdict update"
+  },
+  {
+   "src": "find:rec-0037:H7",
+   "dst": "hyp:H7",
+   "type": "supports",
+   "inferred": false,
+   "basis": "analysis verdict update"
+  },
+  {
+   "src": "find:rec-0037:0",
+   "dst": "dec:rec-0040",
    "type": "caused_decision",
    "inferred": true,
-   "basis": "temporal: finding from the previous round; the decision rule's inputs are not logged per finding"
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "exp:E001",
-   "dst": "find:D:Cs0.1FA0.9Pb0.7Sn0.3I3",
-   "type": "yields",
-   "inferred": false,
-   "basis": "film of this composition"
+   "src": "find:rec-0037:1",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "exp:E002",
-   "dst": "find:D:Cs0.1FA0.9Pb0.6Sn0.4I3",
-   "type": "yields",
-   "inferred": false,
-   "basis": "film of this composition"
+   "src": "find:rec-0037:2",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "exp:E004",
-   "dst": "find:D:Cs0.2FA0.8Pb0.7Sn0.3I3",
-   "type": "yields",
-   "inferred": false,
-   "basis": "film of this composition"
+   "src": "find:rec-0037:3",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "exp:E010",
-   "dst": "find:D:Cs0.1FA0.9Pb0.8Sn0.2I3",
-   "type": "yields",
-   "inferred": false,
-   "basis": "film of this composition"
+   "src": "find:rec-0037:H1",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "exp:E014",
-   "dst": "find:D:Cs0.1FA0.9Pb0.6Sn0.4I2.7Cl0.3",
-   "type": "yields",
-   "inferred": false,
-   "basis": "film of this composition"
+   "src": "find:rec-0037:H10",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
   },
   {
-   "src": "exp:E020",
-   "dst": "find:D:Cs0.1FA0.9Pb0.4Sn0.6I2.7Cl0.3",
-   "type": "yields",
-   "inferred": false,
-   "basis": "film of this composition"
+   "src": "find:rec-0037:H11",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0037:H12",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0037:H13",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0037:H14",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0037:H2",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0037:H3",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0037:H7",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
+  },
+  {
+   "src": "find:rec-0037:relax",
+   "dst": "dec:rec-0040",
+   "type": "caused_decision",
+   "inferred": true,
+   "basis": "temporal: finding recorded before this decision"
   }
  ]
 }
