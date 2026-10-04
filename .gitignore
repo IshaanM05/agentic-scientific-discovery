@@ -10,3 +10,4 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .claude/
+docs/cloud_prompts/

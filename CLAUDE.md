@@ -1,5 +1,7 @@
 # Project: agentic-scientific-discovery (Hack-Nation Challenge 3)
 
+> Parallel cloud workers (W1-W5): read `docs/CLOUD_WORKER_CONTEXT.md` first, then `docs/LABLOOP_INTEGRATION.md`. Branch from `integration/labloop`, not `dev/agentic-loop`; those two documents override the Git section below.
+
 Deadline: Sun Oct 4, 9:00 AM ET. Public repo. No secrets in git. No claim without a measurement.
 
 ## Orientation (read in this order, stop as soon as you have what you need)
