@@ -3966,6 +3966,426 @@ claims:
   source: runs/ll_compare.json
   key: baseline/2000/summary/hits@20/max
   tol: 0
+- id: final.demo.w12.f.units
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 22.0
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/units_spent
+  tol: 0.05
+- id: final.demo.w12.f.films
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 15
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/films
+  tol: 0
+- id: final.demo.w12.f.hits
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/hits@60
+  tol: 0
+- id: final.demo.w12.f.first
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 2.5
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/first_hit_units
+  tol: 0.05
+- id: final.demo.w12.f.h20
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/hits@20
+  tol: 0
+- id: final.demo.w12.b.units
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 46.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/units_spent
+  tol: 0.05
+- id: final.demo.w12.b.films
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 31
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/films
+  tol: 0
+- id: final.demo.w12.b.hits
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/hits@60
+  tol: 0
+- id: final.demo.w12.b.world
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/true_hits_in_world
+  tol: 0
+- id: final.demo.w12.b.first
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 10.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/first_hit_units
+  tol: 0.05
+- id: final.demo.w12.b.basefirst
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6.4
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/first_hit_units/mean
+  tol: 0.05
+- id: final.demo.w12.b.base60
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 7.8
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/hits@60/mean
+  tol: 0.05
+- id: final.demo.w12.c.units
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 26.5
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/units_spent
+  tol: 0.05
+- id: final.demo.w12.c.films
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 18
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/films
+  tol: 0
+- id: final.demo.w12.c.hits
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/hits@60
+  tol: 0
+- id: final.demo.w12.c.world
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 28
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/true_hits_in_world
+  tol: 0
+- id: final.demo.w12.c.first
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 4.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/first_hit_units
+  tol: 0.05
+- id: final.demo.w12.c.h20
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 5
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/hits@20
+  tol: 0
+- id: final.demo.w12.c.baseh20
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 3.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@20/mean
+  tol: 0.05
+- id: final.demo.w12.c.base60
+  doc: docs/DEMO_SCRIPT.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 15.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@60/mean
+  tol: 0.05
+- id: final.pitch.w12.f.units
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 22.0
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/units_spent
+  tol: 0.05
+- id: final.pitch.w12.f.films
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 15
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/films
+  tol: 0
+- id: final.pitch.w12.f.hits
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/hits@60
+  tol: 0
+- id: final.pitch.w12.f.first
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 2.5
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/first_hit_units
+  tol: 0.05
+- id: final.pitch.w12.f.h20
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/hits@20
+  tol: 0
+- id: final.pitch.w12.b.units
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 46.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/units_spent
+  tol: 0.05
+- id: final.pitch.w12.b.films
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 31
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/films
+  tol: 0
+- id: final.pitch.w12.b.hits
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/hits@60
+  tol: 0
+- id: final.pitch.w12.b.world
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/true_hits_in_world
+  tol: 0
+- id: final.pitch.w12.b.first
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 10.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/first_hit_units
+  tol: 0.05
+- id: final.pitch.w12.b.basefirst
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6.4
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/first_hit_units/mean
+  tol: 0.05
+- id: final.pitch.w12.b.base60
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 7.8
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/hits@60/mean
+  tol: 0.05
+- id: final.pitch.w12.c.units
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 26.5
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/units_spent
+  tol: 0.05
+- id: final.pitch.w12.c.films
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 18
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/films
+  tol: 0
+- id: final.pitch.w12.c.hits
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/hits@60
+  tol: 0
+- id: final.pitch.w12.c.world
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 28
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/true_hits_in_world
+  tol: 0
+- id: final.pitch.w12.c.first
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 4.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/first_hit_units
+  tol: 0.05
+- id: final.pitch.w12.c.h20
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 5
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/hits@20
+  tol: 0
+- id: final.pitch.w12.c.baseh20
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 3.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@20/mean
+  tol: 0.05
+- id: final.pitch.w12.c.base60
+  doc: docs/PITCH.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 15.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@60/mean
+  tol: 0.05
+- id: final.judge.w12.f.units
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 22.0
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/units_spent
+  tol: 0.05
+- id: final.judge.w12.f.films
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 15
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/films
+  tol: 0
+- id: final.judge.w12.f.hits
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/hits@60
+  tol: 0
+- id: final.judge.w12.f.first
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 2.5
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/first_hit_units
+  tol: 0.05
+- id: final.judge.w12.f.h20
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6
+  source: runs/ll_compare_w2000_full.json
+  key: omnigent_runs/0/hits@20
+  tol: 0
+- id: final.judge.w12.b.units
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 46.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/units_spent
+  tol: 0.05
+- id: final.judge.w12.b.films
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 31
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/films
+  tol: 0
+- id: final.judge.w12.b.hits
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/hits@60
+  tol: 0
+- id: final.judge.w12.b.world
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/true_hits_in_world
+  tol: 0
+- id: final.judge.w12.b.first
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 10.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/1/first_hit_units
+  tol: 0.05
+- id: final.judge.w12.b.basefirst
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 6.4
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/first_hit_units/mean
+  tol: 0.05
+- id: final.judge.w12.b.base60
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 7.8
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/hits@60/mean
+  tol: 0.05
+- id: final.judge.w12.c.units
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 26.5
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/units_spent
+  tol: 0.05
+- id: final.judge.w12.c.films
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 18
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/films
+  tol: 0
+- id: final.judge.w12.c.hits
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 8
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/hits@60
+  tol: 0
+- id: final.judge.w12.c.world
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 28
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/true_hits_in_world
+  tol: 0
+- id: final.judge.w12.c.first
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 4.0
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/first_hit_units
+  tol: 0.05
+- id: final.judge.w12.c.h20
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 5
+  source: runs/ll_compare.json
+  key: omnigent_runs/2/hits@20
+  tol: 0
+- id: final.judge.w12.c.baseh20
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 3.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@20/mean
+  tol: 0.05
+- id: final.judge.w12.c.base60
+  doc: docs/JUDGE_GUIDE.md
+  text: "the completed world-2000 run `runs/ll-w2000-full` (LabLoop stop rule at 22.0 of 60 units, 15 films) found 6 distinct hits, the first at 2.5 units, 6 by 20 units; world 2001 `runs/ll-w2001` (the planner ended the run at 46.0 of 60 units, 31 films) found 8 of the world's 8 true hits, the first at 10.0 units vs 6.4 for the baseline (baseline mean 7.8 of 8 at 60 units); world 2002 `runs/ll-w2002` (LabLoop stop rule at 26.5 of 60 units, 18 films) found 8 of 28, the first at 4.0 units and 5 by 20 units vs 3.4, but the baseline reaches 15.4 at 60 units"
+  value: 15.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@60/mean
+  tol: 0.05
 
 unsourced:
 - id: readme.tests.count

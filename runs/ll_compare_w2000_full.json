@@ -364,52 +364,18 @@
  },
  "omnigent_runs": [
   {
-   "hits@20": 5,
+   "hits@20": 6,
    "hits@40": 6,
    "hits@60": 6,
-   "first_hit_units": 1.5,
-   "discoveries_replicated": 4,
-   "hypotheses_refuted": 3,
-   "adapt_events": 5,
-   "true_hits_in_world": 16,
-   "units_spent": 23.5,
-   "films": 16,
-   "run": "ll-w2000",
-   "world": 2000,
-   "seed": 0,
-   "budget": 60.0,
-   "skipped_experiment_records": 0
-  },
-  {
-   "hits@20": 2,
-   "hits@40": 8,
-   "hits@60": 8,
-   "first_hit_units": 10.0,
+   "first_hit_units": 2.5,
    "discoveries_replicated": 3,
-   "hypotheses_refuted": 2,
-   "adapt_events": 3,
-   "true_hits_in_world": 8,
-   "units_spent": 46.0,
-   "films": 31,
-   "run": "ll-w2001",
-   "world": 2001,
-   "seed": 0,
-   "budget": 60.0,
-   "skipped_experiment_records": 0
-  },
-  {
-   "hits@20": 5,
-   "hits@40": 8,
-   "hits@60": 8,
-   "first_hit_units": 4.0,
-   "discoveries_replicated": 4,
-   "hypotheses_refuted": 2,
-   "adapt_events": 4,
-   "true_hits_in_world": 28,
-   "units_spent": 26.5,
-   "films": 18,
-   "run": "ll-w2002",
-   "world": 2002,
+   "hypotheses_refuted": 1,
+   "adapt_events": 2,
+   "true_hits_in_world": 16,
+   "units_spent": 22.0,
+   "films": 15,
+   "run": "ll-w2000-full",
+   "world": 2000,
    "seed": 0,
    "budget": 60.0,
    "skipped_experiment_records": 0
@@ -419,48 +385,48 @@
  "source": "live runs",
  "omnigent_summary": {
   "hits@20": {
-   "mean": 4.0,
-   "min": 2,
-   "max": 5,
-   "n": 3
+   "mean": 6.0,
+   "min": 6,
+   "max": 6,
+   "n": 1
   },
   "hits@40": {
-   "mean": 7.33,
+   "mean": 6.0,
    "min": 6,
-   "max": 8,
-   "n": 3
+   "max": 6,
+   "n": 1
   },
   "hits@60": {
-   "mean": 7.33,
+   "mean": 6.0,
    "min": 6,
-   "max": 8,
-   "n": 3
+   "max": 6,
+   "n": 1
   },
   "first_hit_units": {
-   "mean": 5.17,
-   "min": 1.5,
-   "max": 10.0,
-   "n": 3
+   "mean": 2.5,
+   "min": 2.5,
+   "max": 2.5,
+   "n": 1
   },
   "discoveries_replicated": {
-   "mean": 3.67,
+   "mean": 3.0,
    "min": 3,
-   "max": 4,
-   "n": 3
+   "max": 3,
+   "n": 1
   },
   "hypotheses_refuted": {
-   "mean": 2.33,
-   "min": 2,
-   "max": 3,
-   "n": 3
+   "mean": 1.0,
+   "min": 1,
+   "max": 1,
+   "n": 1
   },
   "adapt_events": {
-   "mean": 4.0,
-   "min": 3,
-   "max": 5,
-   "n": 3
+   "mean": 2.0,
+   "min": 2,
+   "max": 2,
+   "n": 1
   }
  },
- "note": "Omnigent n is small; no significance claimed.",
+ "note": "Derived from runs/ll-w2000-full/record.jsonl (copied to a temporary ll-w2000 directory so ll_compare.py could read it); the run label was edited to ll-w2000-full. Worlds 2001 and 2002 are absent from this file by construction.",
  "caveat": "Team-designed simulator; synthetic worlds; rule-based scientist is the baseline."
 }
