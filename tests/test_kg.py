@@ -150,7 +150,7 @@ def test_tools_fresh_process_round_trip(tmp_path):
     assert any(e["type"] == "supports" and e["inferred"] is False for e in n["edges"])  # basis is a real record id
     s = run_py("import json;from asd.kg_tools import kg_query;print(json.dumps(kg_query('summary')))", env)
     assert s["counts"]["finding"] == 2
-    assert (rd / "kg.jsonl").exists() and json.loads((rd / "record.jsonl").read_text().splitlines()[-1])["kind"] == "kg_update"
+    assert (rd / "kg.jsonl").exists() and json.loads((rd / "record.jsonl").read_text(encoding="utf-8").splitlines()[-1])["kind"] == "kg_update"
 
 
 def test_tools_reject_bad_input_and_hidden_truth(tmp_path, monkeypatch):
@@ -182,12 +182,12 @@ def test_make_kg_embeds_idempotently(tmp_path):
     sys.path.insert(0, str(ROOT / "scripts"))
     import make_kg
     html = tmp_path / "kg.html"
-    html.write_text((ROOT / "docs" / "kg.html").read_text())
+    html.write_text((ROOT / "docs" / "kg.html").read_text(encoding="utf-8"), encoding="utf-8")
     for _ in range(2):
         make_kg.main(["--steel-run", str(steel_fixture(tmp_path / "s")), "--labloop-run", str(tmp_path / "none"),
                       "--budget", "15", "--out-dir", str(tmp_path), "--html", str(html)])
-    text = html.read_text()
+    text = html.read_text(encoding="utf-8")
     assert text.count('id="kg-steel"') == 1 and text.count('id="kg-labloop"') == 1
-    lab = json.loads((tmp_path / "kg_labloop.json").read_text())
+    lab = json.loads((tmp_path / "kg_labloop.json").read_text(encoding="utf-8"))
     assert "OFFLINE" in lab["meta"]["note"]
     assert not any(k in text.lower() for k in FORBIDDEN)

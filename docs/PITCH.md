@@ -8,7 +8,7 @@
 3. **LabLoop, unseen worlds 2000-2002:** hits and units to first hit, Omnigent team vs rule-based baseline **[TO FILL: `docs/RESULTS_LABLOOP.md`, n and CI included]**.
 
 ## Slide 1: Result and limits (speak 0:00-1:00)
-**Title:** Agent team finds ultra-strong steels faster than BO, honestly bounded
+**Title:** An agent team that designs, runs and revises its own experiments, measured against baselines and honestly bounded
 - Left: bar chart from `docs/headline.png`: blind prior+GP 8.75, BO 6.85, OFAT 6.40 hits in 60 experiments (20 seeds, CI shown).
 - Right: "Loop, run live by Omnigent: question, evidence, hypothesis, experiment, result, updated decision, next experiment."
 - **Limits box (on the slide):** memorisation flag SET: no claim that LLM knowledge accelerates discovery. Public benchmark, 312 rows, replayed oracle. Judge and arena checks weak (n=12; p=0.21). Simulator for LabLoop is team-designed.

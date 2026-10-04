@@ -34,7 +34,7 @@ def build_labloop(run_dir, world, seed, budget):
 
 
 def embed(html_path, graphs):
-    text = html_path.read_text()
+    text = html_path.read_text(encoding="utf-8")
     blocks = "\n".join(f'<script type="application/json" id="kg-{k}">'
                        + json.dumps(v, separators=(",", ":")).replace("</", "<\\/") + "</script>"
                        for k, v in graphs.items())
@@ -43,7 +43,7 @@ def embed(html_path, graphs):
         text = re.sub(re.escape(START) + r".*?" + re.escape(END), lambda m: new, text, flags=re.S)
     else:
         text = text.replace("</body>", new + "\n</body>")
-    html_path.write_text(text)
+    html_path.write_text(text, encoding="utf-8")
 
 
 def main(argv=None):

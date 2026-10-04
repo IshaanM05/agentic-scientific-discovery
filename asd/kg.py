@@ -86,7 +86,7 @@ def check_clean(obj, path="$"):
 def _jsonl(p: Path):
     out = []
     if p.exists():
-        for line in p.read_text().splitlines():
+        for line in p.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 try:
                     out.append(json.loads(line))
@@ -97,7 +97,7 @@ def _jsonl(p: Path):
 
 def _json(p: Path):
     try:
-        return json.loads(p.read_text()) if p.exists() else {}
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
     except json.JSONDecodeError:
         return {}
 
@@ -482,9 +482,10 @@ def build_labloop_record(rec: list[dict], g: Graph | None = None) -> Graph:
             res = e.get("result") or e
             nid = "exp:" + str(e.get("id") or e.get("slot_id") or rid)
             bg, t80 = res.get("bandgap_ev"), res.get("t80_h")
-            g.node(nid, "experiment", f"{e.get('formula', nid)}: " + (f"Eg {bg} eV, T80 {t80} h" if bg else "no film"),
+            fml = e.get("formula") or (e.get("composition") if isinstance(e.get("composition"), str) else None)
+            g.node(nid, "experiment", f"{fml or nid}: " + (f"Eg {bg} eV, T80 {t80} h" if bg else "no film"),
                    source=rid, order=i, evidence={k2: res.get(k2) for k2 in ("bandgap_ev", "t80_h", "ok", "phase", "cost")}
-                   | {"formula": e.get("formula"), "purpose": e.get("purpose")})
+                   | {"formula": fml, "purpose": e.get("purpose")})
             if last_dec:
                 g.edge(last_dec, nid, "led_to", True, "temporal: ran after this decision")
             h = e.get("hypothesis")
