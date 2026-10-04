@@ -110,3 +110,9 @@ Scout spend this cycle est ~$1.2.
 - OK: LICENSE is MIT; diagram names exist in planner.yaml/asd/tools.py/policies.py; Responsible use has no overclaim; references match knowledge/papers, incomplete ones marked; E1/E2 wording consistent (no acceleration claim, weak swap, e2-live gaps); checklist statuses truthful (human items pending-human).
 - EDIT 1: README line 5 "37 offline tests" -> "40 offline tests".
 - EDIT 2: README diagram box POL is titled "asd/policies.py" but cost_budget is an Omnigent builtin (omnigent.policies.builtins.cost); relabel it "cost_budget (omnigent builtin)" or retitle the subgraph "Policies: planner.yaml". Optional: add call_cap.
+
+## 2026-10-04 Review: w4/labloop-multifidelity (778f498) -> APPROVE
+- 7 new files, 0 modified (agents/labloop_planner.yaml untouched). Clean merge.
+- Recomputed from runs/ll_mf_benchmark.json (20 worlds x 10 seeds): 13.40 vs 12.57 hits@60, paired +0.83, bootstrap CI [0.32, 1.40] (doc 1.41, rounding), 12/20 worlds better, first hit 12.96 vs 15.76 = 2.80 earlier. Matches.
+- RESULTS_MULTIFIDELITY.md: +3.92 vs labloop appears in the table only and is labeled confounded in Reading; headline claim is mf vs sf_eig. OK.
+- No truth fields in result JSON (hits/first/counts only); no secrets in new files. Tests: 57 passed.
