@@ -172,6 +172,22 @@ Repeat the matched comparison on a materials dataset published after the model's
 ### Validation needed before real use
 Re-run on a dataset the model cannot have seen (post-cutoff or private); temperature-0 or multi-sample probes; larger probe set; more seeds for named arms; a real or higher-fidelity oracle; domain-expert review of recommendations and safety constraints; independent replication of the approval-hold test.
 
+## LabLoop test bed
+Two test beds, deliberately different. **Steel strength** (above) uses real public data, but the data has been public since 2018, so an LLM may recall it (memorisation flag set; no LLM-knowledge acceleration claim). **LabLoop** (`labloop/`, a teammate's work; `docs/LABLOOP_README.md`, contract in `docs/LABLOOP_INTEGRATION.md`) is a simulated halide-perovskite lab: 2,772 compositions, hidden physics redrawn per world id, target bandgap 1.24-1.38 eV with T80 >= 500 h, and a textbook prior under which no film qualifies. On unseen worlds recall is impossible. **The simulator was designed by our team and the worlds are synthetic: it is a benchmark, not evidence about real devices.** Omnigent orchestration of LabLoop is the integration goal; live Omnigent runs on it are not yet measured.
+
+## LabLoop results
+All offline, deterministic, no model calls (`scripts/ll_benchmark.py`, `ll_calibrate.py`, `ll_misspec.py`, `ll_compare.py`; outputs `runs/ll_*.json`). Full tables and caveats: `docs/RESULTS_LABLOOP.md`.
+
+![LabLoop headline](docs/ll_headline.png)
+
+- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it. All 8 rows of the teammate's README table reproduce exactly.
+- **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64] (conservative; misses true hits it never replicated).
+- **Arena vs hidden truth:** Spearman(Elo, true share of region meeting spec) per-run mean 0.39 [0.28, 0.50]; random ordering about 0 (218 hypotheses, 20 runs; Elo is a proxy for relevance, not truth).
+- **Prior misspecification:** belief revision adds +1.15 hits [+0.15, +2.40] when the prior is fully wrong, but costs hits when the prior is right (-2.60 [-3.55, -1.65]).
+- **Golden worlds 2000-2002:** rule-based baseline recorded; the Omnigent comparison awaits live runs (the script reports missing records and is tested on a synthetic fixture).
+
+Related work, each read by abstract only: Olympus (2021, benchmarking framework for noisy optimization and experiment planning), Atlas (Digital Discovery 2025, Bayesian optimization for self-driving labs), Rainbow (Nature Communications 2025, perovskite nanocrystal self-driving lab).
+
 ## References
 Systems we built on or compare to (details in `knowledge/papers/`):
 - SciAgents: Ghafarollahi and Buehler (MIT), arXiv:2409.05556. Multi-agent hypothesis generation from an ontological knowledge graph; runs no experiments. Compared in Positioning and the arena. Only the first third of the paper was read.
