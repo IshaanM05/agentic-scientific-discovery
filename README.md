@@ -169,6 +169,12 @@ Repeat the matched comparison on a materials dataset published after the model's
 ### Validation needed before real use
 Re-run on a dataset the model cannot have seen (post-cutoff or private); temperature-0 or multi-sample probes; larger probe set; more seeds for named arms; a real or higher-fidelity oracle; domain-expert review of recommendations and safety constraints; independent replication of the approval-hold test.
 
+## LabLoop test bed
+A second test bed, `labloop/`: a simulated halide-perovskite lab (2,772 compositions, hidden physics, target bandgap 1.24-1.38 eV and T80 >= 500 h) in which the textbook prior says no film qualifies. Because the worlds are generated from a seed, no LLM can have memorised them, which addresses the memorisation caveat of the steel test bed. It was written by a teammate (details: `docs/LABLOOP_README.md`; integration contract: `docs/LABLOOP_INTEGRATION.md`). The simulator is team-designed and synthetic: it is a benchmark, not evidence about real devices.
+
+## LabLoop results
+Rerun by us (`python scripts/ll_benchmark.py`, unseen worlds 1000-1019, 20 seeds, budget 60 units): the rule-based LabLoop scientist finds 9.9 hits on average vs 8.2 for Bayesian optimisation alone, with a first hit at a median of 6.5 vs 30.5 units; all eight README rows reproduce exactly. No confidence interval on the 9.9 vs 8.2 gap yet. Golden-world baselines (2000-2002) and the Omnigent comparison script are in `scripts/ll_compare.py`; Omnigent runs on LabLoop are not yet measured. Details and caveats: `docs/RESULTS_LABLOOP.md`.
+
 ## References
 Systems we built on or compare to (details in `knowledge/papers/`):
 - SciAgents: Ghafarollahi and Buehler (MIT), arXiv:2409.05556. Multi-agent hypothesis generation from an ontological knowledge graph; runs no experiments. Compared in Positioning and the arena. Only the first third of the paper was read.
