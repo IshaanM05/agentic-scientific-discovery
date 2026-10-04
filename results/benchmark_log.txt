@@ -1,0 +1,31 @@
+[bench] blind set: 240 targets; computing/caching outcomes ...
+[bench] B1-checklist   thr=0.60: acc=0.729 mean cost=3.45 mean tests=2.58
+[bench] B1-checklist   thr=0.70: acc=0.787 mean cost=4.54 mean tests=3.35
+[bench] B1-checklist   thr=0.80: acc=0.838 mean cost=6.07 mean tests=4.25
+[bench] B1-checklist   thr=0.90: acc=0.846 mean cost=6.62 mean tests=4.62
+[bench] B1-checklist   thr=0.95: acc=0.846 mean cost=6.88 mean tests=4.88
+[bench] B1-checklist   thr=0.98: acc=0.846 mean cost=7.00 mean tests=5.00
+[bench] B2-random      thr=0.60: acc=0.721 mean cost=4.50 mean tests=2.52
+[bench] B2-random      thr=0.70: acc=0.783 mean cost=5.64 mean tests=3.19
+[bench] B2-random      thr=0.80: acc=0.863 mean cost=6.88 mean tests=3.90
+[bench] B2-random      thr=0.90: acc=0.871 mean cost=7.51 mean tests=4.33
+[bench] B2-random      thr=0.95: acc=0.883 mean cost=8.10 mean tests=4.62
+[bench] B2-random      thr=0.98: acc=0.896 mean cost=8.38 mean tests=4.84
+[bench] B3-planner     thr=0.60: acc=0.771 mean cost=2.21 mean tests=2.13
+[bench] B3-planner     thr=0.70: acc=0.808 mean cost=2.80 mean tests=2.46
+[bench] B3-planner     thr=0.80: acc=0.883 mean cost=3.93 mean tests=3.26
+[bench] B3-planner     thr=0.90: acc=0.883 mean cost=5.56 mean tests=4.14
+[bench] B3-planner     thr=0.95: acc=0.892 mean cost=6.73 mean tests=4.47
+[bench] B3-planner     thr=0.98: acc=0.892 mean cost=6.82 mean tests=4.53
+[bench] P-house-team   thr=0.60: acc=0.808 mean cost=2.78 mean tests=2.40
+[bench] P-house-team   thr=0.70: acc=0.846 mean cost=3.49 mean tests=2.77
+[bench] P-house-team   thr=0.80: acc=0.900 mean cost=4.63 mean tests=3.41
+[bench] P-house-team   thr=0.90: acc=0.917 mean cost=6.62 mean tests=4.31
+[bench] P-house-team   thr=0.95: acc=0.917 mean cost=6.97 mean tests=4.50
+[bench] P-house-team   thr=0.98: acc=0.917 mean cost=7.08 mean tests=4.57
+[bench] A-no-foreman   thr=0.90: acc=0.896 mean cost=6.27
+[bench] A-no-house     thr=0.90: acc=0.900 mean cost=6.45
+[bench] A-no-cameron   thr=0.90: acc=0.917 mean cost=6.62
+[bench] A-no-parallel  thr=0.90: acc=0.925 mean cost=6.50
+[bench] A-adaptive     thr=0.90: acc=0.912 mean cost=6.39
+[bench] done in 237s -> C:\Users\HP Victus\Downloads\GH\princeton-plainsboro\results\benchmark

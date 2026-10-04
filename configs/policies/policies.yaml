@@ -1,0 +1,41 @@
+# Lab policies (design 8.1). Each entry is an Omnigent function policy:
+#   handler(event) -> {"result": ALLOW|DENY|ASK, "reason": ..., "state_updates": [...]} | None
+# They are attached per agent in omnigent/princeton_plainsboro/**/config.yaml (guardrails.policies)
+# and evaluated with identical semantics by plainsboro.policies.PolicyEngine in the local runtime.
+
+policies:
+  budget_cap:
+    path: plainsboro.policies.budget_cap
+    arguments: {max_tests: 5, cost_units_max: 10.0}
+    attached_to: [chase]
+    rule: "No more than max_tests tests / cost_units_max per target; exceeding -> ASK (human approves an extension)."
+  test_allowlist:
+    path: plainsboro.policies.test_allowlist
+    attached_to: [chase]
+    rule: "Only registry tests may run, and only Chase runs them -> otherwise DENY."
+  no_label_access:
+    path: plainsboro.policies.no_label_access
+    attached_to: [house]
+    rule: "Any tool touching dispositions / fpflags / gatekeeper_* by a non-evaluator -> DENY."
+  no_target_specific_lookup:
+    path: plainsboro.policies.no_target_specific_lookup
+    arguments: {benchmark_mode: true}
+    attached_to: [cameron]
+    rule: "Literature queries naming the target (KOI/Kepler/KIC/TOI/TIC/EPIC or the anonymized ID) -> DENY in benchmark mode."
+  no_external_writes:
+    path: plainsboro.policies.no_external_writes
+    attached_to: [house]
+    rule: "post_to_archive / submit_to_catalog / send_email / http_post / request_telescope_time -> DENY."
+  human_approval_required:
+    path: plainsboro.policies.human_approval_required
+    attached_to: [house]
+    rule: "propose_followup and override_posterior -> ASK; verdicts claiming 'confirmed'/'validated' -> DENY."
+  provenance_required:
+    path: plainsboro.policies.provenance_required
+    attached_to: [house]
+    rule: "issue_verdict must cite run_ids or evidence_ids -> otherwise DENY."
+  low_confidence_needs_human:
+    path: plainsboro.policies.low_confidence_needs_human
+    arguments: {threshold: 0.9}
+    attached_to: [house]
+    rule: "A verdict below the threshold must carry needs_human=true (cost_of_wrong_label_logged)."

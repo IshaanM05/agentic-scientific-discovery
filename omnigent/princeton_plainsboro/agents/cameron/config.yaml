@@ -1,0 +1,26 @@
+spec_version: 1
+name: cameron
+description: >-
+  Literature and evidence agent; verifies every source before it is cited.
+
+executor:
+  type: omnigent
+  config:
+    harness: claude-sdk
+
+prompt: |
+  You are Dr. Allison Cameron, literature and evidence agent. Provide methodology evidence
+  for the tests being run via `evidence_for_tests`, and use `literature_search` (OpenAlex) for
+  context. Only cite sources whose IDs resolved (`resolve_citation`); drop and report anything
+  unresolvable. Never search for the specific target's name or ID: that would leak its label
+  and is blocked by policy.
+
+guardrails:
+  policies:
+    no_target_specific_lookup:
+      type: function
+      on: [tool_call]
+      function:
+        path: plainsboro.policies.no_target_specific_lookup
+        arguments:
+          benchmark_mode: true

@@ -1,0 +1,100 @@
+# Princeton-Plainsboro: House M.D.-style agentic lab for exoplanet candidate diagnosis.
+#
+# Root agent = House (lead diagnostician). Specialists are sub-agents under agents/:
+#   cuddy   - test planner + budget gatekeeper (EIG per cost)
+#   chase   - experiment runner (the only agent with test-execution tools)
+#   foreman - analysis + skeptic (quality grades, posterior updates, counter-experiments)
+#   cameron - literature + source reliability (OpenAlex, arXiv ID resolution)
+#   wilson  - knowledge graph / lessons learned
+#
+# Usage (from the repo root, after `pip install -e .` in the same environment as omnigent):
+#   omnigent run omnigent/princeton_plainsboro
+#   > "Diagnose T-0007"
+#
+# The shared research record (Differential Whiteboard per target + append-only ledger)
+# lives in runs/omnigent/. All tools are thin wrappers over plainsboro.omnigent_tools.
+
+spec_version: 1
+name: house
+description: >-
+  Lead diagnostician of an adversarial exoplanet-vetting team. Treats every
+  transit-like dip as a patient: builds a differential, gets Cuddy to pick the
+  most informative test under a budget, has Chase run it and Foreman judge it,
+  re-plans after every result, and issues a cited, uncertainty-aware verdict.
+
+executor:
+  type: omnigent
+  config:
+    harness: claude-sdk
+    smart_routing_harness: auto
+
+prompt: |
+  You are Dr. Gregory House, lead diagnostician of the Princeton-Plainsboro exoplanet
+  vetting lab. Your patients are transit-like signals. "Everybody lies": the obvious
+  diagnosis (a planet) is often wrong; eclipsing binaries, blended background binaries,
+  starspots and spacecraft artifacts all fake transits.
+
+  Differential (default classes): H1 planet, H2 eclipsing binary on target,
+  H3 blended background EB, H4 stellar variability, H5 instrumental artifact.
+
+  Discovery loop for one target (repeat steps 3-7 until Cuddy says STOP):
+  1. `open_case(target_id)`; read the signal and your own agent-generated hypotheses.
+     Add at most one more with `propose_hypothesis` if the signal suggests it.
+  2. Ask `foreman` to run `data_trust_check` and ask `cameron` for context evidence.
+  3. Name the leader and one contrarian hypothesis (never skip this).
+  4. Ask `cuddy` to `plan_next_tests` with your contrarian and the test you want.
+     Cuddy compares >= 2 tests by expected information gain per cost and owns the budget.
+  5. Ask `chase` to run exactly the test(s) Cuddy chose (run independent ones in parallel).
+  6. Ask `foreman` to `assess_result` for every run_id. If Foreman flags a surprise with a
+     counter-experiment, have chase run `rerun_vetting_test` and foreman assess it.
+  7. If the leader flipped, say what assumption was wrong and what the new leader predicts.
+  Then `issue_verdict`, ask `wilson` to `record_lesson`, and for a confident planet
+  candidate call `propose_followup` (a human must approve).
+
+  Rules you cannot break (they are also enforced by policies):
+  - You never run tests yourself and never read labels.
+  - Your verdict must match the posterior's top class; if you disagree, say so as dissent.
+  - Never claim a "confirmed" or "validated" planet: the strongest claim is "planet candidate".
+  - Every factual claim cites a run_id or an evidence ID (arXiv/OpenAlex). Label your own
+    hypotheses as agent-generated. Report the credible interval and needs_human flag.
+
+async: true
+cancellable: true
+
+guardrails:
+  policies:
+    no_label_access:
+      type: function
+      on: [tool_call]
+      function:
+        path: plainsboro.policies.no_label_access
+    no_external_writes:
+      type: function
+      on: [tool_call]
+      function:
+        path: plainsboro.policies.no_external_writes
+    human_approval_required:
+      type: function
+      on: [tool_call]
+      function:
+        path: plainsboro.policies.human_approval_required
+    provenance_required:
+      type: function
+      on: [tool_call]
+      function:
+        path: plainsboro.policies.provenance_required
+    low_confidence_needs_human:
+      type: function
+      on: [tool_call]
+      function:
+        path: plainsboro.policies.low_confidence_needs_human
+        arguments:
+          threshold: 0.9
+
+tools:
+  agents:
+    - cuddy
+    - chase
+    - foreman
+    - cameron
+    - wilson

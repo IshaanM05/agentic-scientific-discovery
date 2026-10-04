@@ -1,0 +1,7 @@
+{
+ "label_reads_by_caller": {
+  "evaluator": 8160,
+  "wilson_adaptive": 240
+ },
+ "note": "agents never read labels; only the evaluator, oracle and Wilson adaptive mode"
+}

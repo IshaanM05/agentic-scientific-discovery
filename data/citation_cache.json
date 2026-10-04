@@ -1,0 +1,42 @@
+{
+ "arxiv:1512.06149": {
+  "resolved": true,
+  "title": "Planetary Candidates Observed by Kepler. VII. The First Fully Uniform Catalog Based on The Entire 48 Month Dataset (Q1-Q17 DR24)",
+  "source": "arxiv-api"
+ },
+ "arxiv:1710.06758": {
+  "resolved": true,
+  "title": "Planetary Candidates Observed by Kepler. VIII. A Fully Automated Catalog With Measured Completeness and Reliability Based on Data Release 25",
+  "source": "arxiv-api"
+ },
+ "arxiv:astro-ph/0206228": {
+  "resolved": true,
+  "title": "On the Unique Solution of Planet and Star Parameters from an Extrasolar Planet Transit Light Curve",
+  "source": "arxiv-api"
+ },
+ "arxiv:1303.0052": {
+  "resolved": true,
+  "title": "Identification of Background False Positives from Kepler Data",
+  "source": "arxiv-api"
+ },
+ "arxiv:1402.5694": {
+  "resolved": true,
+  "title": "Rotation Periods of 34,030 Kepler Main-Sequence Stars: The Full Autocorrelation Sample",
+  "source": "arxiv-api"
+ },
+ "arxiv:1712.05044": {
+  "resolved": true,
+  "title": "Identifying Exoplanets with Deep Learning: A Five Planet Resonant Chain around Kepler-80 and an Eighth Planet around Kepler-90",
+  "source": "arxiv-api"
+ },
+ "arxiv:astro-ph/0206099": {
+  "resolved": true,
+  "title": "A box-fitting algorithm in the search for periodic transits",
+  "source": "arxiv-api"
+ },
+ "arxiv:1406.0151": {
+  "resolved": true,
+  "title": "The Transiting Exoplanet Survey Satellite",
+  "source": "arxiv-api"
+ }
+}
