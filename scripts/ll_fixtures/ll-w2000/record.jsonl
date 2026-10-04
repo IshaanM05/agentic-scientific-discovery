@@ -1,0 +1,54 @@
+{"kind": "ll_start", "world": 2000, "seed": 0, "budget": 60.0, "synthetic": true}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.278, "log_t80": 2.865}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.323, "log_t80": 2.992}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.0, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.502, "log_t80": 3.004}, "cost": 1.0}
+{"kind": "experiment", "composition": {"cs": 0.0, "fa": 0.5, "ma": 0.5, "sn": 0.1, "br": 0.0, "cl": 0.0}, "result": {"ok": false, "bandgap_ev": null, "log_t80": null}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.307, "log_t80": 2.739}, "cost": 1.5}
+{"kind": "analysis", "updates": [{"id": "H2", "verdict": "supported"}, {"id": "H3", "verdict": "falsified"}], "prior_relaxations": ["Literature stability prior relaxed after H3 was falsified; trusting lab data over textbook rules"]}
+{"kind": "judge_verdict", "discoveries": []}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.266, "log_t80": 2.991}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.317, "log_t80": 2.906}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.262, "log_t80": 2.876}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.275, "log_t80": 2.73}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.3, "fa": 0.7, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.318, "log_t80": 2.612}, "cost": 1.5}
+{"kind": "analysis", "updates": [{"id": "H1", "verdict": "falsified"}, {"id": "H7", "verdict": "supported"}], "prior_relaxations": ["Literature bandgap prior relaxed after H1 was falsified; trusting lab data over textbook rules"]}
+{"kind": "judge_verdict", "discoveries": [{"verdict": "replicated"}, {"verdict": "replicated"}]}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.296, "log_t80": 2.922}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.281, "log_t80": 2.644}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.342, "log_t80": 2.902}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.363, "log_t80": 3.15}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.406, "log_t80": 3.176}, "cost": 1.5}
+{"kind": "analysis", "updates": [{"id": "H2", "verdict": "qualified"}], "prior_relaxations": []}
+{"kind": "judge_verdict", "discoveries": [{"verdict": "replicated"}]}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.357, "log_t80": 2.967}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.376, "log_t80": 2.879}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.6, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.353, "log_t80": 2.718}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.2, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.386, "log_t80": 2.798}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.0, "fa": 1.0, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.318, "log_t80": 2.042}, "cost": 1.5}
+{"kind": "judge_verdict", "discoveries": [{"verdict": "replicated"}]}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.4, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.372, "log_t80": 3.106}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.6, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.338, "log_t80": 2.829}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.0, "fa": 1.0, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.3, "log_t80": 2.303}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.5, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.247, "log_t80": 2.967}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.75, "ma": 0.15, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.311, "log_t80": 2.647}, "cost": 1.5}
+{"kind": "analysis", "updates": [{"id": "H11", "verdict": "supported"}, {"id": "H12", "verdict": "falsified"}], "prior_relaxations": []}
+{"kind": "judge_verdict", "discoveries": [{"verdict": "replicated"}, {"verdict": "replicated"}]}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.5, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.231, "log_t80": 2.669}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.5, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.347, "log_t80": 2.697}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.05, "fa": 0.8, "ma": 0.15, "sn": 0.4, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.351, "log_t80": 2.791}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.75, "ma": 0.15, "sn": 0.5, "br": 0.0, "cl": 0.1}, "result": {"ok": false, "bandgap_ev": null, "log_t80": null}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.05, "fa": 0.8, "ma": 0.15, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": false, "bandgap_ev": null, "log_t80": null}, "cost": 1.5}
+{"kind": "judge_verdict", "discoveries": []}
+{"kind": "experiment", "composition": {"cs": 0.05, "fa": 0.8, "ma": 0.15, "sn": 0.4, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.372, "log_t80": 2.654}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.5, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.358, "log_t80": 3.155}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.2, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.356, "log_t80": 2.794}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.5, "fa": 0.5, "ma": 0.0, "sn": 0.3, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.33, "log_t80": 2.484}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.2, "fa": 0.8, "ma": 0.0, "sn": 0.3, "br": 0.1, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.339, "log_t80": 2.528}, "cost": 1.5}
+{"kind": "judge_verdict", "discoveries": []}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.5, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.345, "log_t80": 3.143}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.2, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.32, "log_t80": 3.06}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.75, "ma": 0.15, "sn": 0.4, "br": 0.0, "cl": 0.1}, "result": {"ok": true, "bandgap_ev": 1.371, "log_t80": 2.678}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.1, "fa": 0.9, "ma": 0.0, "sn": 0.3, "br": 0.1, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.315, "log_t80": 2.492}, "cost": 1.5}
+{"kind": "experiment", "composition": {"cs": 0.05, "fa": 0.8, "ma": 0.15, "sn": 0.2, "br": 0.0, "cl": 0.0}, "result": {"ok": true, "bandgap_ev": 1.351, "log_t80": 2.716}, "cost": 1.5}
+{"kind": "judge_verdict", "discoveries": [{"verdict": "replicated"}, {"verdict": "replicated"}]}
+{"kind": "judge_verdict", "discoveries": []}
