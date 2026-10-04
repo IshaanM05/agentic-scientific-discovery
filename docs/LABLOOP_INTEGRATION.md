@@ -55,3 +55,16 @@ Tests (offline, no model): a fresh-process round trip (state saved, reloaded and
 
 ## Lead (step 3)
 After each branch is pushed: Scout review (Sonnet, brief) -> merge into `integration/labloop` -> tests -> local live Omnigent tests with the subscription token -> golden end-to-end runs on worlds 2000-2002 (`runs/ll-w2000` etc.) -> W2's compare script -> README and demo script update.
+
+## RUNBOOK (W1): live Omnigent test of LabLoop, run locally by the lead
+Not run in the cloud (no model credentials). Offline check first: `python -m pytest tests/test_labloop_tools.py -q` (needs Python 3.12 + `pip install -r requirements.txt` for the omnigent loader test).
+1. `scripts/live.ps1` already sets PYTHONPATH (needed so `asd` and `labloop` import in tool processes), the env passthrough, the LC_ASD_* mirror and a fresh local server. Set only the run dir and id: `$env:ASD_RUN_DIR="runs/ll-w2000"; $env:ASD_RUN_ID="ll-w2000"` (ASD_SEED/ASD_BUDGET are ignored here; `ll_start` takes world, seed, budget).
+2. Run: `powershell -File scripts/live.ps1 agents/labloop_planner.yaml "Call ll_start(world=2000, seed=0, budget=60) and run the full LabLoop loop to stop or budget. Follow your prompt."` (add `-Interactive` to answer policy ASKs y/n).
+3. Do not run from a shell where ASD_RUN_DIR points at an existing steel run: the steel tools and LabLoop tools use different files, but keep dirs separate (`runs/ll-*`).
+4. Watch `runs/ll-w2000/record.jsonl` (kinds: ll_start, literature, arena_round, pi_decision, design, experiment, analysis, judge_verdict). Look for "ADAPT:" lines, rejected proposals with reasons, and `human-approval ASK` prompts (approve or deny in the Omnigent UI).
+5. Repeat with a fresh dir for worlds 2001 and 2002 (never reuse a run dir; `ll_start` refuses a different world or seed in an existing dir).
+6. If a sub-agent says it lacks a tool, tools are declared per sub-agent in the YAML (inherit does not work); fix the YAML, not the prompt.
+7. Check no leaks: `grep -E "eg_true|lt_true|true_hit" runs/ll-w2000/*` must print nothing.
+8. Cost caps: policy `cost_budget` (USD 8 hard, ask at 5), `ll_budget` (60 units), `call_cap` (500 calls). Raise only with the lead's approval.
+9. Records are the evidence: do not edit them; W2's `scripts/ll_compare.py` reads `runs/ll-*/record.jsonl`.
+10. Caveat to repeat in every write-up: LabLoop is a team-built simulator with synthetic hidden physics (benchmark, not real devices); n of live runs is small.
