@@ -1,0 +1,3502 @@
+# Claims audit input. Each claim ties a number printed in a document to a committed result file.
+# Fields: id, doc, text (exact text in the doc), value (number as printed), source (file under runs/,
+# results/, data/), key (JSON path, "/" separated, numeric = list index, "#len" = length) or pattern
+# (regex, group 1 = number; count: true = number of matches), tol (absolute), optional op (lt/le/gt/ge),
+# scale, branch (source committed only on that branch). Run: python scripts/check_claims.py
+# Generated once from the documents; edit by hand afterwards. `unsourced` lists numbers with no committed source.
+scan:
+- README.md
+- docs/RESULTS_LABLOOP.md
+- docs/LABLOOP_README.md
+- docs/DEMO_SCRIPT.md
+notes:
+- 'No sourced number differs from its committed source file: 0 mismatches among the claims below.'
+- README.md says "40 offline tests pass"; pytest on integration/labloop collects 47 (41 passed, 5 skipped, 1 failed with the known omnigent import error in a sandbox). The count is not stored in any result file, so it is listed as unsourced, not checked.
+- docs/LABLOOP_README.md prints pure BO hits by 60 as 8.2 while runs/benchmark_unseen.json and docs/RESULTS_LABLOOP.md give 8.25 (a rounding of 8.25, so the claim passes at tolerance 0.051); the 9.9 vs 8.2 headline gap is 1.65 in the data.
+- The README LabLoop sections and docs/RESULTS_LABLOOP.md exist only on branch w2/labloop-results; on integration/labloop those claims report SKIP, not OK. Re-run the checker after merging w2 (any SKIP then means a document or source went missing; use --strict).
+- Several README sentences restate numbers that appear earlier (for example the 22.2 s approval hold three times); each occurrence is its own claim, so an edit to one copy is caught.
+claims:
+- id: readme.status.blind_mean
+  doc: README.md
+  text: 8.75 hits in 60 experiments
+  value: 8.75
+  source: runs/t009/blind20_summary.json
+  key: mean
+  tol: 0.0
+- id: readme.status.ofat_mean
+  doc: README.md
+  text: 6.40 (OFAT)
+  value: 6.4
+  source: runs/t009/blind20_summary.json
+  key: ofat/mean
+  tol: 0.0
+- id: readme.status.bo_mean
+  doc: README.md
+  text: 6.85 (BO)
+  value: 6.85
+  source: runs/t009/blind20_summary.json
+  key: bo/mean
+  tol: 0.0
+- id: readme.status.seeds
+  doc: README.md
+  text: (OFAT) and 6.85 (BO) over 20 seeds
+  value: 20
+  source: runs/t009/blind20_summary.json
+  key: llm_blind/#len
+  tol: 0.0
+- id: readme.status.blind_vs_bo_lo
+  doc: README.md
+  text: paired CI vs BO [+0.90, +2.95]
+  value: 0.9
+  source: runs/t009/blind20_summary.json
+  key: bo/boot95/0
+  tol: 0.005
+- id: readme.status.blind_vs_bo_hi
+  doc: README.md
+  text: paired CI vs BO [+0.90, +2.95]
+  value: 2.95
+  source: runs/t009/blind20_summary.json
+  key: bo/boot95/1
+  tol: 0.005
+- id: readme.status.cf_mean
+  doc: README.md
+  text: (8.10 hits, CI vs BO [+0.20, +2.30])
+  value: 8.1
+  source: results/e1_counterfactual.json
+  key: arms/cfnamed/mean_hits60
+  tol: 0.005
+- id: readme.status.cf_vs_bo_lo
+  doc: README.md
+  text: (8.10 hits, CI vs BO [+0.20, +2.30])
+  value: 0.2
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/boot95/0
+  tol: 0.005
+- id: readme.status.cf_vs_bo_hi
+  doc: README.md
+  text: (8.10 hits, CI vs BO [+0.20, +2.30])
+  value: 2.3
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/boot95/1
+  tol: 0.005
+- id: readme.table.arena_p
+  doc: README.md
+  text: ranking not better than chance (p = 0.21)
+  value: 0.21
+  source: results/arena_calibration.json
+  key: perm_p_one_sided
+  tol: 0.005
+- id: readme.table.judge_n
+  doc: README.md
+  text: n = 12; near-arithmetic check
+  value: 12
+  source: results/judge_calibration.json
+  key: n
+  tol: 0.0
+- id: readme.table.approval_hold_s
+  doc: README.md
+  text: call held 22.2 s until a human clicked Approve
+  value: 22.2
+  source: runs/t011-repl30/APPROVAL_EVIDENCE.md
+  tol: 0.05
+  pattern: 'Measured hold: ([\d.]+) s'
+- id: readme.result.ofat_5seed
+  doc: README.md
+  text: from 6.6 (OFAT, best non-LLM baseline)
+  value: 6.6
+  source: runs/t009/summary.json
+  key: base/ofat/hits60_mean
+  tol: 0.05
+- id: readme.result.named_bo_5seed
+  doc: README.md
+  text: to 8.2 (prior + GP)
+  value: 8.2
+  source: runs/t009/summary.json
+  key: named/llm_bo/hits60_mean
+  tol: 0.05
+- id: readme.result.named_greedy_5seed
+  doc: README.md
+  text: 13.2 (prior-only ranking)
+  value: 13.2
+  source: runs/t009/summary.json
+  key: named/llm_greedy/hits60_mean
+  tol: 0.05
+- id: readme.result.probe_mae_guided
+  doc: README.md
+  text: MAE 189 vs generic 255 MPa
+  value: 189
+  source: runs/t009/probe.json
+  key: metrics/P2/mae
+  tol: 0.5
+- id: readme.result.probe_mae_generic
+  doc: README.md
+  text: MAE 189 vs generic 255 MPa
+  value: 255
+  source: runs/t009/probe.json
+  key: metrics/P1/mae
+  tol: 0.5
+- id: readme.result.probe_near_exact
+  doc: README.md
+  text: 3/20 near-exact
+  value: 3
+  source: runs/t009/probe.json
+  key: metrics/P2/near_exact
+  tol: 0.0
+- id: readme.result.probe_rows
+  doc: README.md
+  text: 3/20 near-exact
+  value: 20
+  source: runs/t009/probe.json
+  key: n_rows
+  tol: 0.0
+- id: readme.result.blind_bo_5seed
+  doc: README.md
+  text: kept the prior+GP gain (8.4)
+  value: 8.4
+  source: runs/t009/summary.json
+  key: blind/llm_bo/hits60_mean
+  tol: 0.05
+- id: readme.result.blind_greedy_5seed
+  doc: README.md
+  text: not the prior-only gain (8.2, one seed with 0 hits)
+  value: 8.2
+  source: runs/t009/summary.json
+  key: blind/llm_greedy/hits60_mean
+  tol: 0.05
+- id: readme.result.blind_greedy_zero_seed
+  doc: README.md
+  text: one seed with 0 hits
+  value: 0
+  source: runs/t009/summary.json
+  key: blind/llm_greedy/hits60/0
+  tol: 0.0
+- id: readme.result.first_pick_named
+  doc: README.md
+  text: named first picks hit 5/5 vs blind 2/5
+  value: 5
+  source: runs/t009/summary.json
+  key: named/llm_bo/first_pick_hit
+  tol: 0.0
+- id: readme.result.first_pick_blind
+  doc: README.md
+  text: named first picks hit 5/5 vs blind 2/5
+  value: 2
+  source: runs/t009/summary.json
+  key: blind/llm_bo/first_pick_hit
+  tol: 0.0
+- id: readme.result.named_seeds
+  doc: README.md
+  text: n=5 seeds; no significance claimed
+  value: 5
+  source: runs/t009/summary.json
+  key: named/llm_bo/hits60/#len
+  tol: 0.0
+- id: readme.blind20.mean
+  doc: README.md
+  text: blind llm_bo mean hits@60 is 8.75 vs OFAT 6.40
+  value: 8.75
+  source: runs/t009/blind20_summary.json
+  key: mean
+  tol: 0.0
+- id: readme.blind20.ofat_mean
+  doc: README.md
+  text: 8.75 vs OFAT 6.40
+  value: 6.4
+  source: runs/t009/blind20_summary.json
+  key: ofat/mean
+  tol: 0.0
+- id: readme.blind20.ofat_wins
+  doc: README.md
+  text: 19 wins/0 ties/1 loss
+  value: 19
+  source: runs/t009/blind20_summary.json
+  key: ofat/wins
+  tol: 0.0
+- id: readme.blind20.ofat_ties
+  doc: README.md
+  text: 19 wins/0 ties/1 loss
+  value: 0
+  source: runs/t009/blind20_summary.json
+  key: ofat/ties
+  tol: 0.0
+- id: readme.blind20.ofat_losses
+  doc: README.md
+  text: 19 wins/0 ties/1 loss
+  value: 1
+  source: runs/t009/blind20_summary.json
+  key: ofat/losses
+  tol: 0.0
+- id: readme.blind20.ofat_diff
+  doc: README.md
+  text: mean paired difference +2.35
+  value: 2.35
+  source: runs/t009/blind20_summary.json
+  key: ofat/mean_diff
+  tol: 0.005
+- id: readme.blind20.ofat_ci_lo
+  doc: README.md
+  text: bootstrap 95% CI [+1.75, +3.00]
+  value: 1.75
+  source: runs/t009/blind20_summary.json
+  key: ofat/boot95/0
+  tol: 0.005
+- id: readme.blind20.ofat_ci_hi
+  doc: README.md
+  text: bootstrap 95% CI [+1.75, +3.00]
+  value: 3.0
+  source: runs/t009/blind20_summary.json
+  key: ofat/boot95/1
+  tol: 0.005
+- id: readme.blind20.ofat_sign_p
+  doc: README.md
+  text: sign test p<0.001
+  value: 0.001
+  source: runs/t009/blind20_summary.json
+  key: ofat/sign_p
+  tol: 0.0
+  op: lt
+- id: readme.blind20.bo_mean
+  doc: README.md
+  text: and vs BO 6.85 (15/3/2
+  value: 6.85
+  source: runs/t009/blind20_summary.json
+  key: bo/mean
+  tol: 0.005
+- id: readme.blind20.bo_wins
+  doc: README.md
+  text: (15/3/2, +1.90, CI [+0.90, +2.95], p=0.002)
+  value: 15
+  source: runs/t009/blind20_summary.json
+  key: bo/wins
+  tol: 0.0
+- id: readme.blind20.bo_ties
+  doc: README.md
+  text: (15/3/2, +1.90, CI [+0.90, +2.95], p=0.002)
+  value: 3
+  source: runs/t009/blind20_summary.json
+  key: bo/ties
+  tol: 0.0
+- id: readme.blind20.bo_losses
+  doc: README.md
+  text: (15/3/2, +1.90, CI [+0.90, +2.95], p=0.002)
+  value: 2
+  source: runs/t009/blind20_summary.json
+  key: bo/losses
+  tol: 0.0
+- id: readme.blind20.bo_diff
+  doc: README.md
+  text: (15/3/2, +1.90, CI [+0.90, +2.95], p=0.002)
+  value: 1.9
+  source: runs/t009/blind20_summary.json
+  key: bo/mean_diff
+  tol: 0.005
+- id: readme.blind20.bo_ci_lo
+  doc: README.md
+  text: (15/3/2, +1.90, CI [+0.90, +2.95], p=0.002)
+  value: 0.9
+  source: runs/t009/blind20_summary.json
+  key: bo/boot95/0
+  tol: 0.005
+- id: readme.blind20.bo_ci_hi
+  doc: README.md
+  text: (15/3/2, +1.90, CI [+0.90, +2.95], p=0.002)
+  value: 2.95
+  source: runs/t009/blind20_summary.json
+  key: bo/boot95/1
+  tol: 0.005
+- id: readme.blind20.bo_sign_p
+  doc: README.md
+  text: (15/3/2, +1.90, CI [+0.90, +2.95], p=0.002)
+  value: 0.002
+  source: runs/t009/blind20_summary.json
+  key: bo/sign_p
+  tol: 0.0005
+- id: readme.headline.seeds
+  doc: README.md
+  text: OFAT/BO/blind llm_bo n=20 seeds
+  value: 20
+  source: runs/t009/blind20_summary.json
+  key: llm_blind/#len
+  tol: 0.0
+- id: readme.e1.cfnamed
+  doc: README.md
+  text: '| value | 8.10 | 8.75 | 6.40 | 6.85 |'
+  value: 8.1
+  source: results/e1_counterfactual.json
+  key: arms/cfnamed/mean_hits60
+  tol: 0.005
+- id: readme.e1.blind
+  doc: README.md
+  text: '| value | 8.10 | 8.75 | 6.40 | 6.85 |'
+  value: 8.75
+  source: results/e1_counterfactual.json
+  key: arms/blind/mean_hits60
+  tol: 0.005
+- id: readme.e1.ofat
+  doc: README.md
+  text: '| value | 8.10 | 8.75 | 6.40 | 6.85 |'
+  value: 6.4
+  source: results/e1_counterfactual.json
+  key: arms/ofat/mean_hits60
+  tol: 0.005
+- id: readme.e1.bo
+  doc: README.md
+  text: '| value | 8.10 | 8.75 | 6.40 | 6.85 |'
+  value: 6.85
+  source: results/e1_counterfactual.json
+  key: arms/bo/mean_hits60
+  tol: 0.005
+- id: readme.e1.vs_ofat.wins
+  doc: README.md
+  text: 'Counterfactual vs OFAT: W/T/L 14/4/2, mean diff +1.70, bootstrap 95% CI [+0.80, +2.55].'
+  value: 14
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_ofat/wins
+  tol: 0.005
+- id: readme.e1.vs_ofat.ties
+  doc: README.md
+  text: 'Counterfactual vs OFAT: W/T/L 14/4/2, mean diff +1.70, bootstrap 95% CI [+0.80, +2.55].'
+  value: 4
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_ofat/ties
+  tol: 0.005
+- id: readme.e1.vs_ofat.losses
+  doc: README.md
+  text: 'Counterfactual vs OFAT: W/T/L 14/4/2, mean diff +1.70, bootstrap 95% CI [+0.80, +2.55].'
+  value: 2
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_ofat/losses
+  tol: 0.005
+- id: readme.e1.vs_ofat.mean_diff
+  doc: README.md
+  text: 'Counterfactual vs OFAT: W/T/L 14/4/2, mean diff +1.70, bootstrap 95% CI [+0.80, +2.55].'
+  value: 1.7
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_ofat/mean_diff
+  tol: 0.005
+- id: readme.e1.vs_ofat.ci_lo
+  doc: README.md
+  text: 'Counterfactual vs OFAT: W/T/L 14/4/2, mean diff +1.70, bootstrap 95% CI [+0.80, +2.55].'
+  value: 0.8
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_ofat/boot95/0
+  tol: 0.005
+- id: readme.e1.vs_ofat.ci_hi
+  doc: README.md
+  text: 'Counterfactual vs OFAT: W/T/L 14/4/2, mean diff +1.70, bootstrap 95% CI [+0.80, +2.55].'
+  value: 2.55
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_ofat/boot95/1
+  tol: 0.005
+- id: readme.e1.vs_bo.wins
+  doc: README.md
+  text: 'Vs BO (the better baseline): 11/3/6, +1.25, CI [+0.20, +2.30].'
+  value: 11
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/wins
+  tol: 0.005
+- id: readme.e1.vs_bo.ties
+  doc: README.md
+  text: 'Vs BO (the better baseline): 11/3/6, +1.25, CI [+0.20, +2.30].'
+  value: 3
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/ties
+  tol: 0.005
+- id: readme.e1.vs_bo.losses
+  doc: README.md
+  text: 'Vs BO (the better baseline): 11/3/6, +1.25, CI [+0.20, +2.30].'
+  value: 6
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/losses
+  tol: 0.005
+- id: readme.e1.vs_bo.mean_diff
+  doc: README.md
+  text: 'Vs BO (the better baseline): 11/3/6, +1.25, CI [+0.20, +2.30].'
+  value: 1.25
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/mean_diff
+  tol: 0.005
+- id: readme.e1.vs_bo.ci_lo
+  doc: README.md
+  text: 'Vs BO (the better baseline): 11/3/6, +1.25, CI [+0.20, +2.30].'
+  value: 0.2
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/boot95/0
+  tol: 0.005
+- id: readme.e1.vs_bo.ci_hi
+  doc: README.md
+  text: 'Vs BO (the better baseline): 11/3/6, +1.25, CI [+0.20, +2.30].'
+  value: 2.3
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/boot95/1
+  tol: 0.005
+- id: readme.e1.to_k1.cfnamed
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 11.7
+  source: results/e1_counterfactual.json
+  key: arms/cfnamed/to_k_mean/1
+  tol: 0.05
+- id: readme.e1.to_k3.cfnamed
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 18.6
+  source: results/e1_counterfactual.json
+  key: arms/cfnamed/to_k_mean/3
+  tol: 0.05
+- id: readme.e1.to_k5.cfnamed
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 26.5
+  source: results/e1_counterfactual.json
+  key: arms/cfnamed/to_k_mean/5
+  tol: 0.05
+- id: readme.e1.to_k1.blind
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 11.1
+  source: results/e1_counterfactual.json
+  key: arms/blind/to_k_mean/1
+  tol: 0.05
+- id: readme.e1.to_k3.blind
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 18.4
+  source: results/e1_counterfactual.json
+  key: arms/blind/to_k_mean/3
+  tol: 0.05
+- id: readme.e1.to_k5.blind
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 27.4
+  source: results/e1_counterfactual.json
+  key: arms/blind/to_k_mean/5
+  tol: 0.05
+- id: readme.e1.to_k1.ofat
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 15.6
+  source: results/e1_counterfactual.json
+  key: arms/ofat/to_k_mean/1
+  tol: 0.05
+- id: readme.e1.to_k3.ofat
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 27.0
+  source: results/e1_counterfactual.json
+  key: arms/ofat/to_k_mean/3
+  tol: 0.05
+- id: readme.e1.to_k5.ofat
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 41.1
+  source: results/e1_counterfactual.json
+  key: arms/ofat/to_k_mean/5
+  tol: 0.05
+- id: readme.e1.to_k1.bo
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 18.0
+  source: results/e1_counterfactual.json
+  key: arms/bo/to_k_mean/1
+  tol: 0.05
+- id: readme.e1.to_k3.bo
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 25.4
+  source: results/e1_counterfactual.json
+  key: arms/bo/to_k_mean/3
+  tol: 0.05
+- id: readme.e1.to_k5.bo
+  doc: README.md
+  text: 'Mean experiments to 1/3/5 hits: cfnamed 11.7/18.6/26.5, blind 11.1/18.4/27.4, OFAT 15.6/27.0/41.1, BO 18.0/25.4/42.2.'
+  value: 42.2
+  source: results/e1_counterfactual.json
+  key: arms/bo/to_k_mean/5
+  tol: 0.05
+- id: readme.e1.trust_last_cf
+  doc: README.md
+  text: is 0.48 at the last step for the counterfactual arm
+  value: 0.48
+  source: results/e1_counterfactual.json
+  key: trust_final_mean/cfnamed
+  tol: 0.005
+- id: readme.e1.trust_last_blind
+  doc: README.md
+  text: vs 0.35 for blind
+  value: 0.35
+  source: results/e1_counterfactual.json
+  key: trust_final_mean/blind
+  tol: 0.005
+- id: readme.e1.trust_all_cf
+  doc: README.md
+  text: (0.56 vs 0.43 averaged over steps)
+  value: 0.56
+  source: results/e1_counterfactual.json
+  key: trust_mean_all_steps/cfnamed
+  tol: 0.005
+- id: readme.e1.trust_all_blind
+  doc: README.md
+  text: (0.56 vs 0.43 averaged over steps)
+  value: 0.43
+  source: results/e1_counterfactual.json
+  key: trust_mean_all_steps/blind
+  tol: 0.005
+- id: readme.e1.budget
+  doc: README.md
+  text: Seeds 0-19, B=60
+  value: 60
+  source: results/e1_counterfactual.json
+  key: budget
+  tol: 0.0
+- id: readme.arena.n_hyp
+  doc: README.md
+  text: Generator (Sonnet 5.5) proposes 5 schema-validated hypotheses
+  value: 5
+  source: results/arena_calibration.json
+  key: n_hypotheses
+  tol: 0.0
+- id: readme.arena.testable
+  doc: README.md
+  text: 5/5 testable, 4/5 within 25 percent
+  value: 5
+  source: results/arena_calibration.json
+  key: n_testable
+  tol: 0.0
+- id: readme.arena.within25
+  doc: README.md
+  text: 5/5 testable, 4/5 within 25 percent
+  value: 4
+  source: results/arena_calibration.json
+  key: within_25pct
+  tol: 0.0
+- id: readme.arena.spearman
+  doc: README.md
+  text: Spearman(Elo, realized accuracy) = 0.56
+  value: 0.56
+  source: results/arena_calibration.json
+  key: spearman
+  tol: 0.005
+- id: readme.arena.perm
+  doc: README.md
+  text: against 5000 random rankings one-sided p = 0.21
+  value: 5000
+  source: results/arena_calibration.json
+  key: n_permutations
+  tol: 0.0
+- id: readme.arena.p
+  doc: README.md
+  text: against 5000 random rankings one-sided p = 0.21
+  value: 0.21
+  source: results/arena_calibration.json
+  key: perm_p_one_sided
+  tol: 0.005
+- id: readme.arena.region_min
+  doc: README.md
+  text: (regions of 7 to 66 steels)
+  value: 7
+  source: results/arena_calibration.json
+  key: items/3/n_rows
+  tol: 0.0
+- id: readme.arena.region_max
+  doc: README.md
+  text: (regions of 7 to 66 steels)
+  value: 66
+  source: results/arena_calibration.json
+  key: items/0/n_rows
+  tol: 0.0
+- id: readme.arena.novelty_already
+  doc: README.md
+  text: (1 "already reported", 4 "partly reported", 0 "no match found"
+  value: 1
+  source: runs/arena/hypotheses.jsonl
+  tol: 0.0
+  pattern: '"verdict": "already reported'
+  count: true
+- id: readme.arena.novelty_partly
+  doc: README.md
+  text: (1 "already reported", 4 "partly reported", 0 "no match found"
+  value: 4
+  source: runs/arena/hypotheses.jsonl
+  tol: 0.0
+  pattern: '"verdict": "partly reported'
+  count: true
+- id: readme.arena.novelty_none
+  doc: README.md
+  text: (1 "already reported", 4 "partly reported", 0 "no match found"
+  value: 0
+  source: runs/arena/hypotheses.jsonl
+  tol: 0.0
+  pattern: '"verdict": "no match found'
+  count: true
+- id: readme.judge.n
+  doc: README.md
+  text: n=12 conclusions (runs t011, live1, live2)
+  value: 12
+  source: results/judge_calibration.json
+  key: n
+  tol: 0.0
+- id: readme.judge.accuracy
+  doc: README.md
+  text: accuracy 1.00
+  value: 1.0
+  source: results/judge_calibration.json
+  key: accuracy
+  tol: 0.005
+- id: readme.judge.brier
+  doc: README.md
+  text: Brier 0.060
+  value: 0.06
+  source: results/judge_calibration.json
+  key: brier
+  tol: 0.0005
+- id: readme.judge.stated_low
+  doc: README.md
+  text: (low=0.25, medium=0.5, high=0.85)
+  value: 0.25
+  source: results/judge_calibration.json
+  key: reliability/low/mean_stated
+  tol: 0.0005
+- id: readme.judge.stated_medium
+  doc: README.md
+  text: (low=0.25, medium=0.5, high=0.85)
+  value: 0.5
+  source: results/judge_calibration.json
+  key: reliability/medium/mean_stated
+  tol: 0.0005
+- id: readme.judge.stated_high
+  doc: README.md
+  text: (low=0.25, medium=0.5, high=0.85)
+  value: 0.85
+  source: results/judge_calibration.json
+  key: reliability/high/mean_stated
+  tol: 0.0005
+- id: readme.judge.bin_low
+  doc: README.md
+  text: bins low 0, medium 2, high 10
+  value: 0
+  source: results/judge_calibration.json
+  key: reliability/low/count
+  tol: 0.0
+- id: readme.judge.bin_medium
+  doc: README.md
+  text: bins low 0, medium 2, high 10
+  value: 2
+  source: results/judge_calibration.json
+  key: reliability/medium/count
+  tol: 0.0
+- id: readme.judge.bin_high
+  doc: README.md
+  text: bins low 0, medium 2, high 10
+  value: 10
+  source: results/judge_calibration.json
+  key: reliability/high/count
+  tol: 0.0
+- id: readme.e2.seed
+  doc: README.md
+  text: '`runs/e2-live` (seed 7, budget 8, headless'
+  value: 7
+  source: runs/e2-live/meta.json
+  key: seed
+  tol: 0.0
+- id: readme.e2.budget
+  doc: README.md
+  text: '`runs/e2-live` (seed 7, budget 8, headless'
+  value: 8
+  source: runs/e2-live/meta.json
+  key: budget
+  tol: 0.0
+- id: readme.e2.experiments
+  doc: README.md
+  text: It ran 4 experiments with 0 hits
+  value: 4
+  source: runs/e2-live/ledger.jsonl
+  key: '#len'
+  tol: 0.0
+- id: readme.e2.hits
+  doc: README.md
+  text: It ran 4 experiments with 0 hits
+  value: 0
+  source: runs/e2-live/ledger.jsonl
+  tol: 0.0
+  pattern: '"is_hit": true'
+  count: true
+- id: readme.pool.rows
+  doc: README.md
+  text: 312 steels, MIT
+  value: 312
+  source: data/steel_strength.json.gz
+  key: data/#len
+  tol: 0.0
+- id: demo.approval_hold_s
+  doc: docs/DEMO_SCRIPT.md
+  text: the approval hold lasted 22.2 s until a human clicked Approve
+  value: 22.2
+  source: runs/t011-repl30/APPROVAL_EVIDENCE.md
+  tol: 0.05
+  pattern: 'Measured hold: ([\d.]+) s'
+- id: demo.blind_mean
+  doc: docs/DEMO_SCRIPT.md
+  text: found 8.75 hits in 60 experiments vs 6.85 for Bayesian optimisation
+  value: 8.75
+  source: runs/t009/blind20_summary.json
+  key: mean
+  tol: 0.0
+- id: demo.bo_mean
+  doc: docs/DEMO_SCRIPT.md
+  text: found 8.75 hits in 60 experiments vs 6.85 for Bayesian optimisation
+  value: 6.85
+  source: runs/t009/blind20_summary.json
+  key: bo/mean
+  tol: 0.005
+- id: demo.ci_lo
+  doc: docs/DEMO_SCRIPT.md
+  text: paired 95% CI +0.90 to +2.95
+  value: 0.9
+  source: runs/t009/blind20_summary.json
+  key: bo/boot95/0
+  tol: 0.005
+- id: demo.ci_hi
+  doc: docs/DEMO_SCRIPT.md
+  text: paired 95% CI +0.90 to +2.95
+  value: 2.95
+  source: runs/t009/blind20_summary.json
+  key: bo/boot95/1
+  tol: 0.005
+- id: demo.arena_p
+  doc: docs/DEMO_SCRIPT.md
+  text: arena p=0.21
+  value: 0.21
+  source: results/arena_calibration.json
+  key: perm_p_one_sided
+  tol: 0.005
+- id: demo.e2.c000
+  doc: docs/DEMO_SCRIPT.md
+  text: c000 = 1382.2 and c068 = 1661.2 MPa
+  value: 1382.2
+  source: runs/e2-live/ledger.jsonl
+  key: 0/value
+  tol: 0.05
+- id: demo.e2.c068
+  doc: docs/DEMO_SCRIPT.md
+  text: c000 = 1382.2 and c068 = 1661.2 MPa
+  value: 1661.2
+  source: runs/e2-live/ledger.jsonl
+  key: 1/value
+  tol: 0.05
+- id: demo.e2.c174
+  doc: docs/DEMO_SCRIPT.md
+  text: c174 = 1144.8 and c014 = 1199.0
+  value: 1144.8
+  source: runs/e2-live/ledger.jsonl
+  key: 2/value
+  tol: 0.05
+- id: demo.e2.c014
+  doc: docs/DEMO_SCRIPT.md
+  text: c174 = 1144.8 and c014 = 1199.0
+  value: 1199.0
+  source: runs/e2-live/ledger.jsonl
+  key: 3/value
+  tol: 0.05
+- id: demo.e2.hits
+  doc: docs/DEMO_SCRIPT.md
+  text: 0 hits in 4
+  value: 0
+  source: runs/e2-live/ledger.jsonl
+  tol: 0.0
+  pattern: '"is_hit": true'
+  count: true
+- id: demo.e2.seed
+  doc: docs/DEMO_SCRIPT.md
+  text: one live Omnigent run, seed 7, budget 8
+  value: 7
+  source: runs/e2-live/meta.json
+  key: seed
+  tol: 0.0
+- id: demo.e2.budget
+  doc: docs/DEMO_SCRIPT.md
+  text: one live Omnigent run, seed 7, budget 8
+  value: 8
+  source: runs/e2-live/meta.json
+  key: budget
+  tol: 0.0
+- id: demo.steel.hits
+  doc: docs/DEMO_SCRIPT.md
+  text: (yield >= 2000 MPa, 15 of 312)
+  value: 312
+  source: data/steel_strength.json.gz
+  key: data/#len
+  tol: 0.0
+- id: labloop.readme.random.hits60
+  doc: docs/LABLOOP_README.md
+  text: '| Random | not reached | not reached | 0.1 | 1% |'
+  value: 0.1
+  source: runs/benchmark_unseen.json
+  key: strategies/Random/mean/60
+  tol: 0.051
+- id: labloop.readme.random.share
+  doc: docs/LABLOOP_README.md
+  text: '| Random | not reached | not reached | 0.1 | 1% |'
+  value: 1
+  source: runs/benchmark_unseen.json
+  key: strategies/Random/found_frac
+  tol: 0.5
+  scale: 100
+- id: labloop.readme.one_factor_at_a_time.first_hit
+  doc: docs/LABLOOP_README.md
+  text: '| One factor at a time | 6 | not reached | 2.9 | 20% |'
+  value: 6
+  source: runs/benchmark_unseen.json
+  key: strategies/Grad-student OFAT/first_hit_median
+  tol: 0.05
+- id: labloop.readme.one_factor_at_a_time.hits60
+  doc: docs/LABLOOP_README.md
+  text: '| One factor at a time | 6 | not reached | 2.9 | 20% |'
+  value: 2.9
+  source: runs/benchmark_unseen.json
+  key: strategies/Grad-student OFAT/mean/60
+  tol: 0.051
+- id: labloop.readme.one_factor_at_a_time.share
+  doc: docs/LABLOOP_README.md
+  text: '| One factor at a time | 6 | not reached | 2.9 | 20% |'
+  value: 20
+  source: runs/benchmark_unseen.json
+  key: strategies/Grad-student OFAT/found_frac
+  tol: 0.5
+  scale: 100
+- id: labloop.readme.llm-style_no_bo.first_hit
+  doc: docs/LABLOOP_README.md
+  text: '| LLM-style, no BO | 6.5 | 34 | 2.9 | 22% |'
+  value: 6.5
+  source: runs/benchmark_unseen.json
+  key: strategies/LLM-style (no BO)/first_hit_median
+  tol: 0.05
+- id: labloop.readme.llm-style_no_bo.third_hit
+  doc: docs/LABLOOP_README.md
+  text: '| LLM-style, no BO | 6.5 | 34 | 2.9 | 22% |'
+  value: 34
+  source: runs/benchmark_unseen.json
+  key: strategies/LLM-style (no BO)/three_hits_median
+  tol: 0.05
+- id: labloop.readme.llm-style_no_bo.hits60
+  doc: docs/LABLOOP_README.md
+  text: '| LLM-style, no BO | 6.5 | 34 | 2.9 | 22% |'
+  value: 2.9
+  source: runs/benchmark_unseen.json
+  key: strategies/LLM-style (no BO)/mean/60
+  tol: 0.051
+- id: labloop.readme.llm-style_no_bo.share
+  doc: docs/LABLOOP_README.md
+  text: '| LLM-style, no BO | 6.5 | 34 | 2.9 | 22% |'
+  value: 22
+  source: runs/benchmark_unseen.json
+  key: strategies/LLM-style (no BO)/found_frac
+  tol: 0.5
+  scale: 100
+- id: labloop.readme.bayesian_optimisation_only.first_hit
+  doc: docs/LABLOOP_README.md
+  text: '| Bayesian optimisation only | 30.5 | 37 | 8.2 | 56% |'
+  value: 30.5
+  source: runs/benchmark_unseen.json
+  key: strategies/Pure BO (no literature)/first_hit_median
+  tol: 0.05
+- id: labloop.readme.bayesian_optimisation_only.third_hit
+  doc: docs/LABLOOP_README.md
+  text: '| Bayesian optimisation only | 30.5 | 37 | 8.2 | 56% |'
+  value: 37
+  source: runs/benchmark_unseen.json
+  key: strategies/Pure BO (no literature)/three_hits_median
+  tol: 0.05
+- id: labloop.readme.bayesian_optimisation_only.hits60
+  doc: docs/LABLOOP_README.md
+  text: '| Bayesian optimisation only | 30.5 | 37 | 8.2 | 56% |'
+  value: 8.2
+  source: runs/benchmark_unseen.json
+  key: strategies/Pure BO (no literature)/mean/60
+  tol: 0.051
+- id: labloop.readme.bayesian_optimisation_only.share
+  doc: docs/LABLOOP_README.md
+  text: '| Bayesian optimisation only | 30.5 | 37 | 8.2 | 56% |'
+  value: 56
+  source: runs/benchmark_unseen.json
+  key: strategies/Pure BO (no literature)/found_frac
+  tol: 0.5
+  scale: 100
+- id: labloop.readme.labloop.first_hit
+  doc: docs/LABLOOP_README.md
+  text: '| **LabLoop** | **6.5** | **24** | **9.9** | **67%** |'
+  value: 6.5
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop (full)/first_hit_median
+  tol: 0.05
+- id: labloop.readme.labloop.third_hit
+  doc: docs/LABLOOP_README.md
+  text: '| **LabLoop** | **6.5** | **24** | **9.9** | **67%** |'
+  value: 24
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop (full)/three_hits_median
+  tol: 0.05
+- id: labloop.readme.labloop.hits60
+  doc: docs/LABLOOP_README.md
+  text: '| **LabLoop** | **6.5** | **24** | **9.9** | **67%** |'
+  value: 9.9
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop (full)/mean/60
+  tol: 0.051
+- id: labloop.readme.labloop.share
+  doc: docs/LABLOOP_README.md
+  text: '| **LabLoop** | **6.5** | **24** | **9.9** | **67%** |'
+  value: 67
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop (full)/found_frac
+  tol: 0.5
+  scale: 100
+- id: labloop.readme.labloop_minus_arena.first_hit
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − arena | 11.5 | 24 | 9.2 | 58% |'
+  value: 11.5
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − arena/first_hit_median
+  tol: 0.05
+- id: labloop.readme.labloop_minus_arena.third_hit
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − arena | 11.5 | 24 | 9.2 | 58% |'
+  value: 24
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − arena/three_hits_median
+  tol: 0.05
+- id: labloop.readme.labloop_minus_arena.hits60
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − arena | 11.5 | 24 | 9.2 | 58% |'
+  value: 9.2
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − arena/mean/60
+  tol: 0.051
+- id: labloop.readme.labloop_minus_arena.share
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − arena | 11.5 | 24 | 9.2 | 58% |'
+  value: 58
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − arena/found_frac
+  tol: 0.5
+  scale: 100
+- id: labloop.readme.labloop_minus_negative_memory.first_hit
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − negative memory | 6.5 | 21 | 9.6 | 65% |'
+  value: 6.5
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − negative memory/first_hit_median
+  tol: 0.05
+- id: labloop.readme.labloop_minus_negative_memory.third_hit
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − negative memory | 6.5 | 21 | 9.6 | 65% |'
+  value: 21
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − negative memory/three_hits_median
+  tol: 0.05
+- id: labloop.readme.labloop_minus_negative_memory.hits60
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − negative memory | 6.5 | 21 | 9.6 | 65% |'
+  value: 9.6
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − negative memory/mean/60
+  tol: 0.051
+- id: labloop.readme.labloop_minus_negative_memory.share
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − negative memory | 6.5 | 21 | 9.6 | 65% |'
+  value: 65
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − negative memory/found_frac
+  tol: 0.5
+  scale: 100
+- id: labloop.readme.labloop_minus_literature_prior.first_hit
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − literature prior | 16.5 | 28.5 | 10.4 | 68% |'
+  value: 16.5
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − literature prior/first_hit_median
+  tol: 0.05
+- id: labloop.readme.labloop_minus_literature_prior.third_hit
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − literature prior | 16.5 | 28.5 | 10.4 | 68% |'
+  value: 28.5
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − literature prior/three_hits_median
+  tol: 0.05
+- id: labloop.readme.labloop_minus_literature_prior.hits60
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − literature prior | 16.5 | 28.5 | 10.4 | 68% |'
+  value: 10.4
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − literature prior/mean/60
+  tol: 0.051
+- id: labloop.readme.labloop_minus_literature_prior.share
+  doc: docs/LABLOOP_README.md
+  text: '| LabLoop − literature prior | 16.5 | 28.5 | 10.4 | 68% |'
+  value: 68
+  source: runs/benchmark_unseen.json
+  key: strategies/LabLoop − literature prior/found_frac
+  tol: 0.5
+  scale: 100
+- id: labloop.demo.first_hit
+  doc: docs/LABLOOP_README.md
+  text: 'On the demo landscape: first hit after 7 units vs 26.5 for BO alone, 56 for
+
+    one-factor-at-a-time and ~336 expected for random screening; 91% of hits found.'
+  value: 7
+  source: runs/benchmark.json
+  key: strategies/LabLoop (full)/first_hit_median
+  tol: 0.05
+- id: labloop.demo.bo_first
+  doc: docs/LABLOOP_README.md
+  text: 'On the demo landscape: first hit after 7 units vs 26.5 for BO alone, 56 for
+
+    one-factor-at-a-time and ~336 expected for random screening; 91% of hits found.'
+  value: 26.5
+  source: runs/benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_median
+  tol: 0.05
+- id: labloop.demo.ofat_first
+  doc: docs/LABLOOP_README.md
+  text: 'On the demo landscape: first hit after 7 units vs 26.5 for BO alone, 56 for
+
+    one-factor-at-a-time and ~336 expected for random screening; 91% of hits found.'
+  value: 56
+  source: runs/benchmark.json
+  key: strategies/Grad-student OFAT/first_hit_median
+  tol: 0.05
+- id: labloop.demo.random_first
+  doc: docs/LABLOOP_README.md
+  text: 'On the demo landscape: first hit after 7 units vs 26.5 for BO alone, 56 for
+
+    one-factor-at-a-time and ~336 expected for random screening; 91% of hits found.'
+  value: 336
+  source: runs/benchmark.json
+  key: random_expected_budget/1
+  tol: 0.5
+- id: labloop.demo.found
+  doc: docs/LABLOOP_README.md
+  text: 'On the demo landscape: first hit after 7 units vs 26.5 for BO alone, 56 for
+
+    one-factor-at-a-time and ~336 expected for random screening; 91% of hits found.'
+  value: 91
+  source: runs/benchmark.json
+  key: strategies/LabLoop (full)/found_frac
+  tol: 0.5
+  scale: 100
+- id: results.steel.blind_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Blinded arm (unnamed, permuted, scaled features): 8.75 vs 6.40 hits (OFAT) on 20 seeds, paired CI [1.75, 3.00]'
+  value: 8.75
+  source: runs/t009/blind20_summary.json
+  key: mean
+  tol: 0.0
+- id: results.steel.ofat_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Blinded arm (unnamed, permuted, scaled features): 8.75 vs 6.40 hits (OFAT) on 20 seeds, paired CI [1.75, 3.00]'
+  value: 6.4
+  source: runs/t009/blind20_summary.json
+  key: ofat/mean
+  tol: 0.005
+- id: results.steel.ci_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Blinded arm (unnamed, permuted, scaled features): 8.75 vs 6.40 hits (OFAT) on 20 seeds, paired CI [1.75, 3.00]'
+  value: 1.75
+  source: runs/t009/blind20_summary.json
+  key: ofat/boot95/0
+  tol: 0.005
+- id: results.steel.ci_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Blinded arm (unnamed, permuted, scaled features): 8.75 vs 6.40 hits (OFAT) on 20 seeds, paired CI [1.75, 3.00]'
+  value: 3.0
+  source: runs/t009/blind20_summary.json
+  key: ofat/boot95/1
+  tol: 0.005
+- id: results.steel.arena_n
+  doc: docs/RESULTS_LABLOOP.md
+  text: the n=5, rho 0.56, p=0.21 arena check
+  value: 0.56
+  source: results/arena_calibration.json
+  key: spearman
+  tol: 0.005
+- id: results.steel.arena_p
+  doc: docs/RESULTS_LABLOOP.md
+  text: the n=5, rho 0.56, p=0.21 arena check
+  value: 0.21
+  source: results/arena_calibration.json
+  key: perm_p_one_sided
+  tol: 0.005
+- id: results.bench.random.hits60_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Random | 0.15 [0.00, 0.30] | >60 (3/20) | >60 (0/20) |'
+  value: 0.15
+  source: runs/ll_benchmark.json
+  key: strategies/Random/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.random.hits60_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Random | 0.15 [0.00, 0.30] | >60 (3/20) | >60 (0/20) |'
+  value: 0.0
+  source: runs/ll_benchmark.json
+  key: strategies/Random/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.random.hits60_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Random | 0.15 [0.00, 0.30] | >60 (3/20) | >60 (0/20) |'
+  value: 0.3
+  source: runs/ll_benchmark.json
+  key: strategies/Random/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.random.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Random | 0.15 [0.00, 0.30] | >60 (3/20) | >60 (0/20) |'
+  value: 3
+  source: runs/ll_benchmark.json
+  key: strategies/Random/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.random.third_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Random | 0.15 [0.00, 0.30] | >60 (3/20) | >60 (0/20) |'
+  value: 0
+  source: runs/ll_benchmark.json
+  key: strategies/Random/third_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.ofat.hits60_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| One factor at a time | 2.85 [1.85, 3.90] | 6.0 [4.0, 56.5] (15/20) | >60 (10/20) |'
+  value: 2.85
+  source: runs/ll_benchmark.json
+  key: strategies/Grad-student OFAT/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.ofat.hits60_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| One factor at a time | 2.85 [1.85, 3.90] | 6.0 [4.0, 56.5] (15/20) | >60 (10/20) |'
+  value: 1.85
+  source: runs/ll_benchmark.json
+  key: strategies/Grad-student OFAT/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.ofat.hits60_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| One factor at a time | 2.85 [1.85, 3.90] | 6.0 [4.0, 56.5] (15/20) | >60 (10/20) |'
+  value: 3.9
+  source: runs/ll_benchmark.json
+  key: strategies/Grad-student OFAT/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.ofat.first_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| One factor at a time | 2.85 [1.85, 3.90] | 6.0 [4.0, 56.5] (15/20) | >60 (10/20) |'
+  value: 6.0
+  source: runs/ll_benchmark.json
+  key: strategies/Grad-student OFAT/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.ofat.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| One factor at a time | 2.85 [1.85, 3.90] | 6.0 [4.0, 56.5] (15/20) | >60 (10/20) |'
+  value: 4.0
+  source: runs/ll_benchmark.json
+  key: strategies/Grad-student OFAT/first_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.ofat.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| One factor at a time | 2.85 [1.85, 3.90] | 6.0 [4.0, 56.5] (15/20) | >60 (10/20) |'
+  value: 56.5
+  source: runs/ll_benchmark.json
+  key: strategies/Grad-student OFAT/first_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.ofat.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| One factor at a time | 2.85 [1.85, 3.90] | 6.0 [4.0, 56.5] (15/20) | >60 (10/20) |'
+  value: 15
+  source: runs/ll_benchmark.json
+  key: strategies/Grad-student OFAT/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.ofat.third_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| One factor at a time | 2.85 [1.85, 3.90] | 6.0 [4.0, 56.5] (15/20) | >60 (10/20) |'
+  value: 10
+  source: runs/ll_benchmark.json
+  key: strategies/Grad-student OFAT/third_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.llm-style.hits60_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 2.9
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.llm-style.hits60_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 2.0
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.llm-style.hits60_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 3.8
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.llm-style.first_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 6.5
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.llm-style.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 3.5
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/first_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.llm-style.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 10.0
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/first_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.llm-style.third_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 34.0
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/third_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.llm-style.third_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 21.0
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/third_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.llm-style.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 16
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.llm-style.third_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LLM-style, no BO | 2.90 [2.00, 3.80] | 6.5 [3.5, 10.0] (16/20) | 34.0 [21.0, >60] (11/20) |'
+  value: 11
+  source: runs/ll_benchmark.json
+  key: strategies/LLM-style (no BO)/third_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.hits60_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 8.25
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.hits60_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 6.65
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.hits60_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 9.75
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.first_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 30.5
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 22.5
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 34.0
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.third_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 37.0
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/third_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.third_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 35.5
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/third_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.third_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 42.0
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/third_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 19
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.pure_bo.third_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| Pure BO | 8.25 [6.65, 9.75] | 30.5 [22.5, 34.0] (19/20) | 37.0 [35.5, 42.0] (19/20) |'
+  value: 19
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/third_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.hits60_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 9.9
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.hits60_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 8.25
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.hits60_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 11.7
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.first_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 6.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 3.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 9.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.third_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 24.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/third_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.third_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 15.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/third_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.third_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 33.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/third_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 20
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.labloop_full.third_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| **LabLoop (full)** | **9.90 [8.25, 11.70]** | **6.5 [3.5, 9.5] (20/20)** | **24.0 [15.0, 33.5] (20/20)** |'
+  value: 20
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/third_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.hits60_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 9.15
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.hits60_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 7.15
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.hits60_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 11.15
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.first_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 11.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 7.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/first_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 17.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/first_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.third_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 24.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/third_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.third_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 18.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/third_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.third_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 33.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/third_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 19
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_arena.third_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - arena | 9.15 [7.15, 11.15] | 11.5 [7.0, 17.0] (19/20) | 24.0 [18.0, 33.0] (18/20) |'
+  value: 18
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − arena/third_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.hits60_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 9.6
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.hits60_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 7.95
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.hits60_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 11.4
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.first_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 6.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 3.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/first_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 9.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/first_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.third_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 21.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/third_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.third_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 15.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/third_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.third_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 30.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/third_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 20
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_negative_memory.third_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - negative memory | 9.60 [7.95, 11.40] | 6.5 [3.5, 9.5] (20/20) | 21.0 [15.0, 30.0] (20/20) |'
+  value: 20
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − negative memory/third_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.hits60_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 10.45
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.hits60_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 8.8
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.hits60_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 12.1
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.first_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 16.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 9.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/first_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 20.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/first_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.third_med
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 28.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/third_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.third_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 25.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/third_hit_median_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.third_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 33.0
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/third_hit_median_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 20
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.bench.labloop_minus_literature_prior.third_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| LabLoop - literature prior | 10.45 [8.80, 12.10] | 16.5 [9.5, 20.5] (20/20) | 28.5 [25.0, 33.0] (20/20) |'
+  value: 20
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop − literature prior/third_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.paired_bo.hits
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: 1.65
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.hits_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: 0.05
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.hits_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: 3.2
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.more
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: 12
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/worlds_labloop_more_hits
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.equal
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: 5
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/worlds_equal
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.fewer
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: 3
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/worlds_labloop_fewer_hits
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.t1_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: -24.0
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_first_hit_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.t1_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: -13.5
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_first_hit_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.t3_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: -21.5
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_third_hit_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.t3_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs pure BO: **+1.65 hits [+0.05, +3.20]** (more hits in 12 worlds, equal in 5, fewer in 3); first hit 23 units earlier [-24.0, -13.5]; third hit 14.5 earlier [-21.5, -8.5].'
+  value: -8.5
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_third_hit_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_bo.t1
+  doc: docs/RESULTS_LABLOOP.md
+  text: first hit 23 units earlier
+  value: 23.0
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: -1
+- id: results.paired_bo.t3
+  doc: docs/RESULTS_LABLOOP.md
+  text: third hit 14.5 earlier
+  value: 14.5
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_third_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: -1
+- id: results.paired_ofat.hits
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs OFAT: +7.05 hits [+5.40, +8.80], better in 20/20 worlds.'
+  value: 7.05
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Grad-student OFAT/d_hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_ofat.lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs OFAT: +7.05 hits [+5.40, +8.80], better in 20/20 worlds.'
+  value: 5.4
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Grad-student OFAT/d_hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_ofat.hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs OFAT: +7.05 hits [+5.40, +8.80], better in 20/20 worlds.'
+  value: 8.8
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Grad-student OFAT/d_hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.paired_ofat.worlds
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- vs OFAT: +7.05 hits [+5.40, +8.80], better in 20/20 worlds.'
+  value: 20
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Grad-student OFAT/worlds_labloop_more_hits
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.judge.films
+  doc: docs/RESULTS_LABLOOP.md
+  text: Over 579 distinct measured films
+  value: 579
+  source: runs/ll_calibrate.json
+  key: judge/measured_films
+  tol: 0
+  branch: w2/labloop-results
+- id: results.judge.hits
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 198
+  source: runs/ll_calibrate.json
+  key: judge/true_hits_among_measured
+  tol: 0
+  branch: w2/labloop-results
+- id: results.judge.confirmed
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 119
+  source: runs/ll_calibrate.json
+  key: judge/confirmed
+  tol: 0
+  branch: w2/labloop-results
+- id: results.judge.tp
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 114
+  source: runs/ll_calibrate.json
+  key: judge/TP
+  tol: 0
+  branch: w2/labloop-results
+- id: results.judge.fp
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 5
+  source: runs/ll_calibrate.json
+  key: judge/FP
+  tol: 0
+  branch: w2/labloop-results
+- id: results.judge.fn
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 84
+  source: runs/ll_calibrate.json
+  key: judge/FN
+  tol: 0
+  branch: w2/labloop-results
+- id: results.judge.tn
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 376
+  source: runs/ll_calibrate.json
+  key: judge/TN
+  tol: 0
+  branch: w2/labloop-results
+- id: results.judge.precision
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.958
+  source: runs/ll_calibrate.json
+  key: judge/precision
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.judge.prec_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.905
+  source: runs/ll_calibrate.json
+  key: judge/precision_wilson95/0
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.judge.prec_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.982
+  source: runs/ll_calibrate.json
+  key: judge/precision_wilson95/1
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.judge.recall
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.576
+  source: runs/ll_calibrate.json
+  key: judge/recall
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.judge.rec_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.506
+  source: runs/ll_calibrate.json
+  key: judge/recall_wilson95/0
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.judge.rec_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.643
+  source: runs/ll_calibrate.json
+  key: judge/recall_wilson95/1
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.judge.acc
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.846
+  source: runs/ll_calibrate.json
+  key: judge/accuracy
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.judge.acc_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.815
+  source: runs/ll_calibrate.json
+  key: judge/accuracy_wilson95/0
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.judge.acc_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Over 579 distinct measured films (198 true hits): confirmed 119, TP 114, FP 5, FN 84, TN 376. Precision 0.958 (Wilson 95% [0.905, 0.982]); recall 0.576 [0.506, 0.643]; accuracy 0.846 [0.815, 0.873].'
+  value: 0.873
+  source: runs/ll_calibrate.json
+  key: judge/accuracy_wilson95/1
+  tol: 0.0005
+  branch: w2/labloop-results
+- id: results.arena.n_hyp
+  doc: docs/RESULTS_LABLOOP.md
+  text: 218 hypotheses over 20 runs
+  value: 218
+  source: runs/ll_calibrate.json
+  key: arena/n_hypotheses
+  tol: 0
+  branch: w2/labloop-results
+- id: results.arena.pooled_rho
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Spearman between final Elo and the true share of each hypothesis region that meets spec: pooled rho = 0.34 (p = 2.6e-7, treat as optimistic because hypotheses repeat across runs); per-run mean rho = 0.39 with bootstrap 95% CI [0.28, 0.50] over the 20 runs.'
+  value: 0.34
+  source: runs/ll_calibrate.json
+  key: arena/pooled_spearman
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.arena.pooled_p
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Spearman between final Elo and the true share of each hypothesis region that meets spec: pooled rho = 0.34 (p = 2.6e-7, treat as optimistic because hypotheses repeat across runs); per-run mean rho = 0.39 with bootstrap 95% CI [0.28, 0.50] over the 20 runs.'
+  value: 2.6e-07
+  source: runs/ll_calibrate.json
+  key: arena/pooled_p_value
+  tol: 5.0e-08
+  branch: w2/labloop-results
+- id: results.arena.per_run
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Spearman between final Elo and the true share of each hypothesis region that meets spec: pooled rho = 0.34 (p = 2.6e-7, treat as optimistic because hypotheses repeat across runs); per-run mean rho = 0.39 with bootstrap 95% CI [0.28, 0.50] over the 20 runs.'
+  value: 0.39
+  source: runs/ll_calibrate.json
+  key: arena/per_run_spearman_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.arena.per_run_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Spearman between final Elo and the true share of each hypothesis region that meets spec: pooled rho = 0.34 (p = 2.6e-7, treat as optimistic because hypotheses repeat across runs); per-run mean rho = 0.39 with bootstrap 95% CI [0.28, 0.50] over the 20 runs.'
+  value: 0.28
+  source: runs/ll_calibrate.json
+  key: arena/per_run_spearman_bootstrap95/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.arena.per_run_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Spearman between final Elo and the true share of each hypothesis region that meets spec: pooled rho = 0.34 (p = 2.6e-7, treat as optimistic because hypotheses repeat across runs); per-run mean rho = 0.39 with bootstrap 95% CI [0.28, 0.50] over the 20 runs.'
+  value: 0.5
+  source: runs/ll_calibrate.json
+  key: arena/per_run_spearman_bootstrap95/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.arena.random_rho
+  doc: docs/RESULTS_LABLOOP.md
+  text: A random ordering of the same hypotheses gives rho = -0.01 (95% range [-0.14, +0.13]
+  value: -0.01
+  source: runs/ll_calibrate.json
+  key: arena/random_order_spearman_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.arena.zero_share
+  doc: docs/RESULTS_LABLOOP.md
+  text: 33% of regions have true share zero
+  value: 33
+  source: runs/ll_calibrate.json
+  key: arena/share_zero_fraction
+  tol: 0.5
+  scale: 100
+  branch: w2/labloop-results
+- id: results.misspec.w0_on.hits_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | on | 12.95 [10.80, 14.95] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 12.95
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w0_on.hits_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | on | 12.95 [10.80, 14.95] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 10.8
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w0_on.hits_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | on | 12.95 [10.80, 14.95] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 14.95
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w0_on.first_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | on | 12.95 [10.80, 14.95] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 2.15
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w0_on.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | on | 12.95 [10.80, 14.95] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 2.0
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/first_hit_mean_ci/0
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w0_on.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | on | 12.95 [10.80, 14.95] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 2.45
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/first_hit_mean_ci/1
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w0_on.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | on | 12.95 [10.80, 14.95] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 20
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.w0_off.hits_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | off | 15.55 [12.60, 18.40] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 15.55
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=off/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w0_off.hits_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | off | 15.55 [12.60, 18.40] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 12.6
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=off/hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w0_off.hits_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | off | 15.55 [12.60, 18.40] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 18.4
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=off/hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w0_off.first_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | off | 15.55 [12.60, 18.40] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 2.15
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=off/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w0_off.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | off | 15.55 [12.60, 18.40] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 2.0
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=off/first_hit_mean_ci/0
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w0_off.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | off | 15.55 [12.60, 18.40] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 2.45
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=off/first_hit_mean_ci/1
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w0_off.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 0% | off | 15.55 [12.60, 18.40] | 2.1 [2.0, 2.5] (20/20) |'
+  value: 20
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=off/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.w50_on.hits_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | on | 12.10 [10.10, 14.10] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 12.1
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w50_on.hits_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | on | 12.10 [10.10, 14.10] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 10.1
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w50_on.hits_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | on | 12.10 [10.10, 14.10] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 14.1
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w50_on.first_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | on | 12.10 [10.10, 14.10] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 4.05
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w50_on.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | on | 12.10 [10.10, 14.10] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 2.7
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/first_hit_mean_ci/0
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w50_on.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | on | 12.10 [10.10, 14.10] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 5.75
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/first_hit_mean_ci/1
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w50_on.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | on | 12.10 [10.10, 14.10] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 20
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.w50_off.hits_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | off | 13.45 [11.10, 15.80] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 13.45
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=off/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w50_off.hits_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | off | 13.45 [11.10, 15.80] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 11.1
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=off/hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w50_off.hits_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | off | 13.45 [11.10, 15.80] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 15.8
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=off/hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w50_off.first_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | off | 13.45 [11.10, 15.80] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 4.05
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=off/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w50_off.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | off | 13.45 [11.10, 15.80] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 2.7
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=off/first_hit_mean_ci/0
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w50_off.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | off | 13.45 [11.10, 15.80] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 5.75
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=off/first_hit_mean_ci/1
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w50_off.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 50% | off | 13.45 [11.10, 15.80] | 4.0 [2.7, 5.8] (20/20) |'
+  value: 20
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=off/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.w100_on.hits_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | on | 9.90 [8.25, 11.70] | 10.9 [6.3, 16.2] (20/20) |'
+  value: 9.9
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w100_on.hits_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | on | 9.90 [8.25, 11.70] | 10.9 [6.3, 16.2] (20/20) |'
+  value: 8.25
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w100_on.hits_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | on | 9.90 [8.25, 11.70] | 10.9 [6.3, 16.2] (20/20) |'
+  value: 11.7
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w100_on.first_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | on | 9.90 [8.25, 11.70] | 10.9 [6.3, 16.2] (20/20) |'
+  value: 10.9
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w100_on.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | on | 9.90 [8.25, 11.70] | 10.9 [6.3, 16.2] (20/20) |'
+  value: 6.35
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/first_hit_mean_ci/0
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w100_on.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | on | 9.90 [8.25, 11.70] | 10.9 [6.3, 16.2] (20/20) |'
+  value: 16.25
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/first_hit_mean_ci/1
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w100_on.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | on | 9.90 [8.25, 11.70] | 10.9 [6.3, 16.2] (20/20) |'
+  value: 20
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.w100_off.hits_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | off | 8.75 [6.70, 10.85] | 13.3 [6.9, 21.4] (19/20) |'
+  value: 8.75
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=off/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w100_off.hits_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | off | 8.75 [6.70, 10.85] | 13.3 [6.9, 21.4] (19/20) |'
+  value: 6.7
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=off/hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w100_off.hits_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | off | 8.75 [6.70, 10.85] | 13.3 [6.9, 21.4] (19/20) |'
+  value: 10.85
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=off/hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.w100_off.first_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | off | 8.75 [6.70, 10.85] | 13.3 [6.9, 21.4] (19/20) |'
+  value: 13.35
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=off/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w100_off.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | off | 8.75 [6.70, 10.85] | 13.3 [6.9, 21.4] (19/20) |'
+  value: 6.9
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=off/first_hit_mean_ci/0
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w100_off.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | off | 8.75 [6.70, 10.85] | 13.3 [6.9, 21.4] (19/20) |'
+  value: 21.35
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=off/first_hit_mean_ci/1
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.w100_off.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 100% | off | 8.75 [6.70, 10.85] | 13.3 [6.9, 21.4] (19/20) |'
+  value: 19
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=off/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.no.hits_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| no prior | n/a | 10.45 [8.80, 12.10] | 16.1 [11.8, 20.9] (20/20) |'
+  value: 10.45
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.no.hits_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| no prior | n/a | 10.45 [8.80, 12.10] | 16.1 [11.8, 20.9] (20/20) |'
+  value: 8.8
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.no.hits_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| no prior | n/a | 10.45 [8.80, 12.10] | 16.1 [11.8, 20.9] (20/20) |'
+  value: 12.1
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.no.first_mean
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| no prior | n/a | 10.45 [8.80, 12.10] | 16.1 [11.8, 20.9] (20/20) |'
+  value: 16.1
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.no.first_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| no prior | n/a | 10.45 [8.80, 12.10] | 16.1 [11.8, 20.9] (20/20) |'
+  value: 11.75
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/first_hit_mean_ci/0
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.no.first_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| no prior | n/a | 10.45 [8.80, 12.10] | 16.1 [11.8, 20.9] (20/20) |'
+  value: 20.85
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/first_hit_mean_ci/1
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.no.first_reached
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| no prior | n/a | 10.45 [8.80, 12.10] | 16.1 [11.8, 20.9] (20/20) |'
+  value: 20
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/first_hit_reached
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.paired_w100.d
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: 1.15
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/d_hits60_on_minus_off
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w100.lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: 0.15
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w100.hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: 2.4
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w50.d
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: -1.35
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=50%/d_hits60_on_minus_off
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w50.lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: -2.05
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=50%/ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w50.hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: -0.7
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=50%/ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w0.d
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: -2.6
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=0%/d_hits60_on_minus_off
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w0.lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: -3.55
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=0%/ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w0.hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: -1.65
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=0%/ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.misspec.paired_w100.worlds_better
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: 10
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/worlds_on_better
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.paired_w100.worlds_equal
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: 6
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/worlds_equal
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.misspec.paired_w100.worlds_worse
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'Paired, revision on minus off: hits **+1.15 [+0.15, +2.40]** when the prior is fully wrong (better in 10 worlds, equal 6, worse 4); **-1.35 [-2.05, -0.70]** at 50%; **-2.60 [-3.55, -1.65]** at 0%.'
+  value: 4
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/worlds_on_worse
+  tol: 0.0
+  branch: w2/labloop-results
+- id: readme.labloop.bench.full_mean
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 9.9
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.full_lo
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 8.25
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.full_hi
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 11.7
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.bo_mean
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 8.25
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.bo_lo
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 6.65
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.bo_hi
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 9.75
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/hits60_mean_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.first_full
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 6.5
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.first_bo
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 30.5
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.reached_full
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 20
+  source: runs/ll_benchmark.json
+  key: strategies/LabLoop (full)/first_hit_reached
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.reached_bo
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 19
+  source: runs/ll_benchmark.json
+  key: strategies/Pure BO (no literature)/first_hit_reached
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.paired_gap
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 1.65
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.paired_lo
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 0.05
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.bench.paired_hi
+  doc: README.md
+  text: '- **Benchmark rerun** (worlds 1000-1019, 20 seeds, 60 units): LabLoop 9.90 hits [95% CI 8.25, 11.70] vs pure BO 8.25 [6.65, 9.75]; paired gap +1.65 [+0.05, +3.20] (marginal). Median first hit 6.5 vs 30.5 units, 20/20 vs 19/20 runs reaching it.'
+  value: 3.2
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/Pure BO (no literature)/d_hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.judge.n
+  doc: README.md
+  text: '- **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64]'
+  value: 119
+  source: runs/ll_calibrate.json
+  key: judge/confirmed
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.judge.prec
+  doc: README.md
+  text: '- **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64]'
+  value: 0.96
+  source: runs/ll_calibrate.json
+  key: judge/precision
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.judge.prec_lo
+  doc: README.md
+  text: '- **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64]'
+  value: 0.91
+  source: runs/ll_calibrate.json
+  key: judge/precision_wilson95/0
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.judge.prec_hi
+  doc: README.md
+  text: '- **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64]'
+  value: 0.98
+  source: runs/ll_calibrate.json
+  key: judge/precision_wilson95/1
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.judge.rec
+  doc: README.md
+  text: '- **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64]'
+  value: 0.58
+  source: runs/ll_calibrate.json
+  key: judge/recall
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.judge.rec_lo
+  doc: README.md
+  text: '- **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64]'
+  value: 0.51
+  source: runs/ll_calibrate.json
+  key: judge/recall_wilson95/0
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.judge.rec_hi
+  doc: README.md
+  text: '- **Judge vs hidden truth:** 119 confirmations, precision 0.96 [0.91, 0.98], recall 0.58 [0.51, 0.64]'
+  value: 0.64
+  source: runs/ll_calibrate.json
+  key: judge/recall_wilson95/1
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.arena.mean
+  doc: README.md
+  text: per-run mean 0.39 [0.28, 0.50]; random ordering about 0 (218 hypotheses, 20 runs
+  value: 0.39
+  source: runs/ll_calibrate.json
+  key: arena/per_run_spearman_mean
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.arena.lo
+  doc: README.md
+  text: per-run mean 0.39 [0.28, 0.50]; random ordering about 0 (218 hypotheses, 20 runs
+  value: 0.28
+  source: runs/ll_calibrate.json
+  key: arena/per_run_spearman_bootstrap95/0
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.arena.hi
+  doc: README.md
+  text: per-run mean 0.39 [0.28, 0.50]; random ordering about 0 (218 hypotheses, 20 runs
+  value: 0.5
+  source: runs/ll_calibrate.json
+  key: arena/per_run_spearman_bootstrap95/1
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.arena.n_hyp
+  doc: README.md
+  text: per-run mean 0.39 [0.28, 0.50]; random ordering about 0 (218 hypotheses, 20 runs
+  value: 218
+  source: runs/ll_calibrate.json
+  key: arena/n_hypotheses
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.arena.n_runs
+  doc: README.md
+  text: per-run mean 0.39 [0.28, 0.50]; random ordering about 0 (218 hypotheses, 20 runs
+  value: 20
+  source: runs/ll_calibrate.json
+  key: arena/n_runs
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: readme.labloop.misspec.d100
+  doc: README.md
+  text: belief revision adds +1.15 hits [+0.15, +2.40] when the prior is fully wrong, but costs hits when the prior is right (-2.60 [-3.55, -1.65])
+  value: 1.15
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/d_hits60_on_minus_off
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.misspec.lo100
+  doc: README.md
+  text: belief revision adds +1.15 hits [+0.15, +2.40] when the prior is fully wrong, but costs hits when the prior is right (-2.60 [-3.55, -1.65])
+  value: 0.15
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.misspec.hi100
+  doc: README.md
+  text: belief revision adds +1.15 hits [+0.15, +2.40] when the prior is fully wrong, but costs hits when the prior is right (-2.60 [-3.55, -1.65])
+  value: 2.4
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.misspec.d0
+  doc: README.md
+  text: belief revision adds +1.15 hits [+0.15, +2.40] when the prior is fully wrong, but costs hits when the prior is right (-2.60 [-3.55, -1.65])
+  value: -2.6
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=0%/d_hits60_on_minus_off
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.misspec.lo0
+  doc: README.md
+  text: belief revision adds +1.15 hits [+0.15, +2.40] when the prior is fully wrong, but costs hits when the prior is right (-2.60 [-3.55, -1.65])
+  value: -3.55
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=0%/ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.misspec.hi0
+  doc: README.md
+  text: belief revision adds +1.15 hits [+0.15, +2.40] when the prior is fully wrong, but costs hits when the prior is right (-2.60 [-3.55, -1.65])
+  value: -1.65
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=0%/ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: readme.labloop.space
+  doc: README.md
+  text: 2,772 compositions
+  value: 2772
+  source: runs/benchmark.json
+  key: space_size
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.golden.w2000.hits20
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2000 | 4.6 | 9.8 | 14.6 | 1.7 | 8.8 | 2.2 | 6.2 |'
+  value: 4.6
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@20/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2000.hits40
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2000 | 4.6 | 9.8 | 14.6 | 1.7 | 8.8 | 2.2 | 6.2 |'
+  value: 9.8
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@40/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2000.hits60
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2000 | 4.6 | 9.8 | 14.6 | 1.7 | 8.8 | 2.2 | 6.2 |'
+  value: 14.6
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hits@60/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2000.first
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2000 | 4.6 | 9.8 | 14.6 | 1.7 | 8.8 | 2.2 | 6.2 |'
+  value: 1.7
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/first_hit_units/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2000.replicated
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2000 | 4.6 | 9.8 | 14.6 | 1.7 | 8.8 | 2.2 | 6.2 |'
+  value: 8.8
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/discoveries_replicated/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2000.refuted
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2000 | 4.6 | 9.8 | 14.6 | 1.7 | 8.8 | 2.2 | 6.2 |'
+  value: 2.2
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/hypotheses_refuted/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2000.adapt
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2000 | 4.6 | 9.8 | 14.6 | 1.7 | 8.8 | 2.2 | 6.2 |'
+  value: 6.2
+  source: runs/ll_compare.json
+  key: baseline/2000/summary/adapt_events/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2001.hits20
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2001 | 3.0 | 7.0 | 7.8 | 6.4 | 5.2 | 1.6 | 11.6 |'
+  value: 3.0
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/hits@20/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2001.hits40
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2001 | 3.0 | 7.0 | 7.8 | 6.4 | 5.2 | 1.6 | 11.6 |'
+  value: 7.0
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/hits@40/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2001.hits60
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2001 | 3.0 | 7.0 | 7.8 | 6.4 | 5.2 | 1.6 | 11.6 |'
+  value: 7.8
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/hits@60/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2001.first
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2001 | 3.0 | 7.0 | 7.8 | 6.4 | 5.2 | 1.6 | 11.6 |'
+  value: 6.4
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/first_hit_units/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2001.replicated
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2001 | 3.0 | 7.0 | 7.8 | 6.4 | 5.2 | 1.6 | 11.6 |'
+  value: 5.2
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/discoveries_replicated/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2001.refuted
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2001 | 3.0 | 7.0 | 7.8 | 6.4 | 5.2 | 1.6 | 11.6 |'
+  value: 1.6
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/hypotheses_refuted/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2001.adapt
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2001 | 3.0 | 7.0 | 7.8 | 6.4 | 5.2 | 1.6 | 11.6 |'
+  value: 11.6
+  source: runs/ll_compare.json
+  key: baseline/2001/summary/adapt_events/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2002.hits20
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2002 | 3.4 | 8.4 | 15.4 | 6.4 | 10.6 | 2.0 | 8.0 |'
+  value: 3.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@20/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2002.hits40
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2002 | 3.4 | 8.4 | 15.4 | 6.4 | 10.6 | 2.0 | 8.0 |'
+  value: 8.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@40/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2002.hits60
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2002 | 3.4 | 8.4 | 15.4 | 6.4 | 10.6 | 2.0 | 8.0 |'
+  value: 15.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hits@60/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2002.first
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2002 | 3.4 | 8.4 | 15.4 | 6.4 | 10.6 | 2.0 | 8.0 |'
+  value: 6.4
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/first_hit_units/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2002.replicated
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2002 | 3.4 | 8.4 | 15.4 | 6.4 | 10.6 | 2.0 | 8.0 |'
+  value: 10.6
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/discoveries_replicated/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2002.refuted
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2002 | 3.4 | 8.4 | 15.4 | 6.4 | 10.6 | 2.0 | 8.0 |'
+  value: 2.0
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/hypotheses_refuted/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.golden.w2002.adapt
+  doc: docs/RESULTS_LABLOOP.md
+  text: '| 2002 | 3.4 | 8.4 | 15.4 | 6.4 | 10.6 | 2.0 | 8.0 |'
+  value: 8.0
+  source: runs/ll_compare.json
+  key: baseline/2002/summary/adapt_events/mean
+  tol: 0.05
+  branch: w2/labloop-results
+- id: results.ablate.arena.d
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- Ablations: removing the arena costs +0.75 hits [-0.75, +2.15] (not resolved) but delays the first hit by 5 units [-9, -3].'
+  value: 0.75
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − arena/d_hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.arena.lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- Ablations: removing the arena costs +0.75 hits [-0.75, +2.15] (not resolved) but delays the first hit by 5 units [-9, -3].'
+  value: -0.75
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − arena/d_hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.arena.hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- Ablations: removing the arena costs +0.75 hits [-0.75, +2.15] (not resolved) but delays the first hit by 5 units [-9, -3].'
+  value: 2.15
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − arena/d_hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.arena.t1
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- Ablations: removing the arena costs +0.75 hits [-0.75, +2.15] (not resolved) but delays the first hit by 5 units [-9, -3].'
+  value: 5
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − arena/d_first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: -1
+- id: results.ablate.arena.t1lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- Ablations: removing the arena costs +0.75 hits [-0.75, +2.15] (not resolved) but delays the first hit by 5 units [-9, -3].'
+  value: -9
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − arena/d_first_hit_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.arena.t1hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: '- Ablations: removing the arena costs +0.75 hits [-0.75, +2.15] (not resolved) but delays the first hit by 5 units [-9, -3].'
+  value: -3
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − arena/d_first_hit_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.negmem.d
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing negative memory changes hits by +0.30 [+0.10, +0.55] (5 worlds better, 15 equal, none worse)
+  value: 0.3
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − negative memory/d_hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.negmem.lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing negative memory changes hits by +0.30 [+0.10, +0.55] (5 worlds better, 15 equal, none worse)
+  value: 0.1
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − negative memory/d_hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.negmem.hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing negative memory changes hits by +0.30 [+0.10, +0.55] (5 worlds better, 15 equal, none worse)
+  value: 0.55
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − negative memory/d_hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.negmem.better
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing negative memory changes hits by +0.30 [+0.10, +0.55] (5 worlds better, 15 equal, none worse)
+  value: 5
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − negative memory/worlds_labloop_more_hits
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.negmem.equal
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing negative memory changes hits by +0.30 [+0.10, +0.55] (5 worlds better, 15 equal, none worse)
+  value: 15
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − negative memory/worlds_equal
+  tol: 0.005
+  branch: w2/labloop-results
+- id: results.ablate.negmem.worse
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing negative memory changes hits by +0.30 [+0.10, +0.55] (5 worlds better, 15 equal, none worse)
+  value: 0
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − negative memory/worlds_labloop_fewer_hits
+  tol: 0.005
+  branch: w2/labloop-results
+  text_number: false
+- id: results.ablate.litprior.d
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing the literature prior gives -0.55 hits [-2.00, +0.70] (it does not reduce hits) but delays the first hit by 9 units [-15.0, -1.5].
+  value: -0.55
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − literature prior/d_hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: 1
+- id: results.ablate.litprior.lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing the literature prior gives -0.55 hits [-2.00, +0.70] (it does not reduce hits) but delays the first hit by 9 units [-15.0, -1.5].
+  value: -2.0
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − literature prior/d_hits60_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: 1
+- id: results.ablate.litprior.hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing the literature prior gives -0.55 hits [-2.00, +0.70] (it does not reduce hits) but delays the first hit by 9 units [-15.0, -1.5].
+  value: 0.7
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − literature prior/d_hits60_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: 1
+- id: results.ablate.litprior.t1
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing the literature prior gives -0.55 hits [-2.00, +0.70] (it does not reduce hits) but delays the first hit by 9 units [-15.0, -1.5].
+  value: 9
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − literature prior/d_first_hit_median
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: -1
+- id: results.ablate.litprior.t1lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing the literature prior gives -0.55 hits [-2.00, +0.70] (it does not reduce hits) but delays the first hit by 9 units [-15.0, -1.5].
+  value: -15.0
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − literature prior/d_first_hit_ci/0
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: 1
+- id: results.ablate.litprior.t1hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: Removing the literature prior gives -0.55 hits [-2.00, +0.70] (it does not reduce hits) but delays the first hit by 9 units [-15.0, -1.5].
+  value: -1.5
+  source: runs/ll_benchmark.json
+  key: paired_vs_labloop_full/LabLoop − literature prior/d_first_hit_ci/1
+  tol: 0.005
+  branch: w2/labloop-results
+  scale: 1
+- id: results.judge.conf_high_true
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 110
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/High/true_hits
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.judge.conf_high_n
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 115
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/High/n_confirmed
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.judge.conf_high_p
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 0.957
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/High/precision
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.judge.conf_high_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 0.902
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/High/wilson95/0
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.judge.conf_high_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 0.981
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/High/wilson95/1
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.judge.conf_med_true
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 4
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/Medium/true_hits
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.judge.conf_med_n
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 4
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/Medium/n_confirmed
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.judge.conf_med_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 0.51
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/Medium/wilson95/0
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.judge.conf_med_hi
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'By judge confidence: High 110/115 true (0.957 [0.902, 0.981]); Medium 4/4 (Wilson [0.51, 1.0]'
+  value: 1.0
+  source: runs/ll_calibrate.json
+  key: judge/reliability_by_confidence/Medium/wilson95/1
+  tol: 0.0051
+  branch: w2/labloop-results
+- id: results.misspec.first_fully_wrong_d
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'First hit when fully wrong: -2.5 units [-6.4, 0.0].'
+  value: -2.5
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/d_first_hit_on_minus_off_mean
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.first_fully_wrong_lo
+  doc: docs/RESULTS_LABLOOP.md
+  text: 'First hit when fully wrong: -2.5 units [-6.4, 0.0].'
+  value: -6.4
+  source: runs/ll_misspec.json
+  key: paired_revision_on_vs_off/wrong=100%/d_first_ci/0
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.verify.readme_match
+  doc: docs/RESULTS_LABLOOP.md
+  text: all 8 rows (first-hit and third-hit medians, hits by 60, share of hits found) reproduce exactly
+  value: 8
+  source: runs/ll_benchmark.json
+  key: readme_check/#len
+  tol: 0.0
+  branch: w2/labloop-results
+- id: results.verify.bo_hits
+  doc: docs/RESULTS_LABLOOP.md
+  text: the headline gap over pure BO (9.9 vs 8.2)
+  value: 8.2
+  source: runs/benchmark_unseen.json
+  key: strategies/Pure BO (no literature)/mean/60
+  tol: 0.051
+  branch: w2/labloop-results
+- id: readme.e1.outcome.d
+  doc: README.md
+  text: The LLM+BO arm still beat the best baseline (BO) by +1.25 hits at 60 experiments (CI [+0.20, +2.30]; 11 wins, 3 ties, 6 losses over 20 seeds)
+  value: 1.25
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/mean_diff
+  tol: 0.005
+- id: readme.e1.outcome.lo
+  doc: README.md
+  text: The LLM+BO arm still beat the best baseline (BO) by +1.25 hits at 60 experiments (CI [+0.20, +2.30]; 11 wins, 3 ties, 6 losses over 20 seeds)
+  value: 0.2
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/boot95/0
+  tol: 0.005
+- id: readme.e1.outcome.hi
+  doc: README.md
+  text: The LLM+BO arm still beat the best baseline (BO) by +1.25 hits at 60 experiments (CI [+0.20, +2.30]; 11 wins, 3 ties, 6 losses over 20 seeds)
+  value: 2.3
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/boot95/1
+  tol: 0.005
+- id: readme.e1.outcome.w
+  doc: README.md
+  text: The LLM+BO arm still beat the best baseline (BO) by +1.25 hits at 60 experiments (CI [+0.20, +2.30]; 11 wins, 3 ties, 6 losses over 20 seeds)
+  value: 11
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/wins
+  tol: 0.005
+- id: readme.e1.outcome.t
+  doc: README.md
+  text: The LLM+BO arm still beat the best baseline (BO) by +1.25 hits at 60 experiments (CI [+0.20, +2.30]; 11 wins, 3 ties, 6 losses over 20 seeds)
+  value: 3
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/ties
+  tol: 0.005
+- id: readme.e1.outcome.l
+  doc: README.md
+  text: The LLM+BO arm still beat the best baseline (BO) by +1.25 hits at 60 experiments (CI [+0.20, +2.30]; 11 wins, 3 ties, 6 losses over 20 seeds)
+  value: 6
+  source: results/e1_counterfactual.json
+  key: cfnamed_vs_bo/losses
+  tol: 0.005
+- id: readme.e1.outcome_blind.blind
+  doc: README.md
+  text: 8.75 hits vs BO 6.85 (+1.90, CI [+0.90, +2.95])
+  value: 8.75
+  source: results/e1_counterfactual.json
+  key: arms/blind/mean_hits60
+  tol: 0.005
+- id: readme.e1.outcome_blind.bo
+  doc: README.md
+  text: 8.75 hits vs BO 6.85 (+1.90, CI [+0.90, +2.95])
+  value: 6.85
+  source: results/e1_counterfactual.json
+  key: arms/bo/mean_hits60
+  tol: 0.005
+- id: readme.e1.outcome_blind.d
+  doc: README.md
+  text: 8.75 hits vs BO 6.85 (+1.90, CI [+0.90, +2.95])
+  value: 1.9
+  source: results/e1_counterfactual.json
+  key: blind_vs_bo/mean_diff
+  tol: 0.005
+- id: readme.e1.outcome_blind.lo
+  doc: README.md
+  text: 8.75 hits vs BO 6.85 (+1.90, CI [+0.90, +2.95])
+  value: 0.9
+  source: results/e1_counterfactual.json
+  key: blind_vs_bo/boot95/0
+  tol: 0.005
+- id: readme.e1.outcome_blind.hi
+  doc: README.md
+  text: 8.75 hits vs BO 6.85 (+1.90, CI [+0.90, +2.95])
+  value: 2.95
+  source: results/e1_counterfactual.json
+  key: blind_vs_bo/boot95/1
+  tol: 0.005
+- id: readme.approval.hold_s_2
+  doc: README.md
+  text: the call was held 22.2 s
+  value: 22.2
+  source: runs/t011-repl30/APPROVAL_EVIDENCE.md
+  tol: 0.05
+  pattern: 'Measured hold: ([\d.]+) s'
+- id: readme.approval.hold_s_3
+  doc: README.md
+  text: Evidence for the 22.2 s hold
+  value: 22.2
+  source: runs/t011-repl30/APPROVAL_EVIDENCE.md
+  tol: 0.05
+  pattern: 'Measured hold: ([\d.]+) s'
+- id: readme.approval.hold_s_4
+  doc: README.md
+  text: held 22.2 s until a human clicked Approve (runs/t011-repl30)
+  value: 22.2
+  source: runs/t011-repl30/APPROVAL_EVIDENCE.md
+  tol: 0.05
+  pattern: 'Measured hold: ([\d.]+) s'
+- id: readme.approval.repl_s
+  doc: README.md
+  text: (the browser's resolve arrived first, 1.6 s)
+  value: 1.6
+  source: runs/t011-repl/APPROVAL_EVIDENCE.md
+  tol: 0.05
+  pattern: \(~([\d.]+) s\)
+- id: readme.arena.n_5
+  doc: README.md
+  text: n = 5, one seed
+  value: 5
+  source: results/arena_calibration.json
+  key: n_hypotheses
+  tol: 0.0
+- id: readme.limits.named_n
+  doc: README.md
+  text: Named arms n=5; blind arm n=20
+  value: 5
+  source: runs/t009/summary.json
+  key: named/llm_bo/hits60/#len
+  tol: 0.0
+- id: readme.limits.blind_n
+  doc: README.md
+  text: Named arms n=5; blind arm n=20
+  value: 20
+  source: runs/t009/blind20_summary.json
+  key: llm_blind/#len
+  tol: 0.0
+- id: results.misspec.slow.f0
+  doc: docs/RESULTS_LABLOOP.md
+  text: Wrong priors slow the first hit (2.1 -> 4.0 -> 10.9 units) and cost hits (12.95 -> 12.10 -> 9.90).
+  value: 2.15
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.slow.f50
+  doc: docs/RESULTS_LABLOOP.md
+  text: Wrong priors slow the first hit (2.1 -> 4.0 -> 10.9 units) and cost hits (12.95 -> 12.10 -> 9.90).
+  value: 4.05
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.slow.f100
+  doc: docs/RESULTS_LABLOOP.md
+  text: Wrong priors slow the first hit (2.1 -> 4.0 -> 10.9 units) and cost hits (12.95 -> 12.10 -> 9.90).
+  value: 10.9
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.slow.h0
+  doc: docs/RESULTS_LABLOOP.md
+  text: Wrong priors slow the first hit (2.1 -> 4.0 -> 10.9 units) and cost hits (12.95 -> 12.10 -> 9.90).
+  value: 12.95
+  source: runs/ll_misspec.json
+  key: arms/wrong=0%,revision=on/hits60_mean
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.slow.h50
+  doc: docs/RESULTS_LABLOOP.md
+  text: Wrong priors slow the first hit (2.1 -> 4.0 -> 10.9 units) and cost hits (12.95 -> 12.10 -> 9.90).
+  value: 12.1
+  source: runs/ll_misspec.json
+  key: arms/wrong=50%,revision=on/hits60_mean
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.slow.h100
+  doc: docs/RESULTS_LABLOOP.md
+  text: Wrong priors slow the first hit (2.1 -> 4.0 -> 10.9 units) and cost hits (12.95 -> 12.10 -> 9.90).
+  value: 9.9
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/hits60_mean
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.noprior.f_wrong
+  doc: docs/RESULTS_LABLOOP.md
+  text: still beats no prior on first-hit time (10.9 vs 16.1, intervals overlap) but not on hits (9.90 vs 10.45)
+  value: 10.9
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.noprior.f_none
+  doc: docs/RESULTS_LABLOOP.md
+  text: still beats no prior on first-hit time (10.9 vs 16.1, intervals overlap) but not on hits (9.90 vs 10.45)
+  value: 16.1
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/first_hit_mean_censored61
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.noprior.h_wrong
+  doc: docs/RESULTS_LABLOOP.md
+  text: still beats no prior on first-hit time (10.9 vs 16.1, intervals overlap) but not on hits (9.90 vs 10.45)
+  value: 9.9
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/hits60_mean
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.noprior.h_none
+  doc: docs/RESULTS_LABLOOP.md
+  text: still beats no prior on first-hit time (10.9 vs 16.1, intervals overlap) but not on hits (9.90 vs 10.45)
+  value: 10.45
+  source: runs/ll_misspec.json
+  key: arms/no prior (use_prior=False)/hits60_mean
+  tol: 0.051
+  branch: w2/labloop-results
+- id: results.misspec.reproduces_bench
+  doc: docs/RESULTS_LABLOOP.md
+  text: f = 1, revision on reproduces the benchmark LabLoop row exactly (9.90 hits)
+  value: 9.9
+  source: runs/ll_misspec.json
+  key: arms/wrong=100%,revision=on/hits60_mean
+  tol: 0.005
+  branch: w2/labloop-results
+unsourced:
+- id: readme.tests.count
+  doc: README.md
+  text: 40 offline tests pass from a fresh clone
+  reason: A test count, not stored in any committed result file; verify with pytest --collect-only.
+- id: readme.probe.cluster
+  doc: README.md
+  text: 15/20 probe rows cluster near 2400 MPa
+  reason: Derived from runs/t009/probe.json predictions (P2) but no committed script or field computes it.
+- id: readme.e1.five_seed_swap
+  doc: README.md
+  text: the swap lowered hits by about 1.4 and the prior ranking changed noticeably (Spearman 0.77, top-20 overlap about 9 of 20)
+  reason: Spearman 0.77 and top-20 overlap need the cached named priors; no committed result file holds them.
+- id: readme.headline.random500
+  doc: README.md
+  text: random n=500 seeds
+  reason: runs/t009/summary.json holds random500 means but not the seed count 500.
+- id: readme.policy.budget_deny
+  doc: README.md
+  text: 3rd reveal denied at budget 2
+  reason: runs/policy_demo/ holds a transcript and logs, not a numeric field.
+- id: readme.t011.adapt
+  doc: README.md
+  text: H1, H2 refuted -> new H3 -> next experiment changed
+  reason: Qualitative, from runs/t011 record.jsonl text; no number to compare.
+- id: readme.pool.hits
+  doc: README.md
+  text: 15 hits
+  reason: Hit count at threshold 2000 MPa is derived from data/steel_strength.json.gz; no committed script or field holds it.
+- id: readme.judge.cases
+  doc: README.md
+  text: Brier 0.060 (low=0.25, medium=0.5, high=0.85)
+  reason: The numeric Brier is sourced; the mapping low/medium/high to 0.25/0.5/0.85 is a code constant in asd/judge.py.
+- id: readme.arena.within25_mean
+  doc: README.md
+  text: the mean inside a predicted range counts as zero error
+  reason: Method statement, not a number.
+- id: demo.rec_ids
+  doc: docs/DEMO_SCRIPT.md
+  text: 0.475 vs 0.2125 and 0.21 (rec-0016)
+  reason: Candidate-test scores sit in runs/e2-live/record.jsonl free text; not extracted by key path.
+- id: labloop.readme.never_tuned
+  doc: docs/LABLOOP_README.md
+  text: 20 hidden worlds the system was never tuned on
+  reason: Authors' statement; cannot be checked from the repo (also noted in docs/RESULTS_LABLOOP.md).
