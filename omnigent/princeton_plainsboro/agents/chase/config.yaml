@@ -5,6 +5,7 @@ description: >-
 
 executor:
   type: omnigent
+  model: claude-sonnet-5-5
   config:
     harness: claude-sdk
 

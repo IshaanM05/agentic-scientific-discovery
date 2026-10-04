@@ -24,6 +24,7 @@ description: >-
 
 executor:
   type: omnigent
+  model: claude-sonnet-5-5
   config:
     harness: claude-sdk
     smart_routing_harness: auto
@@ -58,7 +59,7 @@ prompt: |
   - Every factual claim cites a run_id or an evidence ID (arXiv/OpenAlex). Label your own
     hypotheses as agent-generated. Report the credible interval and needs_human flag.
 
-async: true
+async: false
 cancellable: true
 
 guardrails:

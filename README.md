@@ -92,16 +92,46 @@ The same agent classes and the *same policy functions* also run in a local runti
 the local runtime because it is deterministic, free and reproducible (7,000+ investigations). The Omnigent bundle adds
 LLM reasoning, live collaboration and approvals on top of the identical tools.
 
+### Live Omnigent run (verified)
+
+The bundle was run end to end with `omnigent run`, using all six agents on **Claude Sonnet 5.5** via the
+`claude-sdk` harness, on the curated case T-0167. The transcript, ledger, whiteboard and knowledge graph are in
+[results/omnigent_run/](results/omnigent_run/).
+
+* **The loop ran entirely through Omnigent.** House opened the case. Foreman checked data trust, and Cameron
+  verified 9 arXiv sources and ran OpenAlex searches. Then came 5 rounds of Cuddy plan → Chase test → Foreman
+  assessment, with Foreman's counter-experiments (odd/even and density re-detrending) dispatched to Chase. Cuddy
+  stopped the loop, House issued the verdict and Wilson recorded the lesson: 32 ledger events in all.
+* **The verdict was correct:** *likely false positive: stellar variability*, P(H4) = 0.942, 90% CI 0.86–0.98, using 5
+  tests and 8.0 cost units. House set `needs_human = true` itself, because it judged the final periodogram evidence
+  weak and wanted the 4-unit centroid test that the budget no longer allowed.
+* **The LLM House found three real tool defects, which are now fixed:**
+  * `issue_verdict` dropped its dissent; it now has a `dissent` argument that forces `needs_human`.
+  * `record_lesson` could not store notes; it now takes `notes`.
+  * Re-running a test that doesn't depend on detrending replicated identical output, so `rerun_vetting_test` now
+    refuses those.
+* **One of House's objections was wrong.** It claimed the periodogram doesn't mask transits, but `t_periodogram`
+  excludes in-transit points.
+
 ```bash
-# Omnigent route (open source). Configure a model provider first: `omnigent setup`
-pip install -e ".[omnigent,real]"          # same environment as omnigent
-omnigent run omnigent/princeton_plainsboro
-> Diagnose T-0167. Show me Cuddy's test comparison each round.
+# Omnigent route (open source), from the repo root, in the same environment as omnigent
+pip install -e ".[omnigent,real]"
+python scripts/patch_omnigent_windows.py   # Windows only, see below
+set ANTHROPIC_API_KEY=...                  # or `omnigent setup` for Databricks or another provider
+omnigent run omnigent/princeton_plainsboro -p "Diagnose target T-0167 using the full discovery loop."
 ```
 
-Managed route: open `<workspace-url>/omnigent` → New session → Sandbox, upload the repo, `pip install -e .`, then
-run the bundle. The bundle's executors use `claude-sdk` with no pinned model, so they resolve whichever provider you
-configured (a Databricks workspace, Anthropic key, gateway, ...).
+**Windows notes (Omnigent 0.16).**
+* Local Python `@tool` functions fail with `pass_fds not supported on Windows`.
+  `scripts/patch_omnigent_windows.py` switches them to Omnigent's own stdout protocol. It is idempotent and
+  reverts with `--revert`.
+* The `claude-sdk` harness needs `claude.exe`. The Windows x64 wheel `claude-agent-sdk==0.2.159` bundles it, but
+  0.2.163 has no Windows wheel.
+* Set `PYTHONUTF8=1` so the host tunnel doesn't crash on non-ASCII console output.
+
+Managed route: open `<workspace-url>/omnigent` → New session → Sandbox, upload the repo and run `pip install -e .`,
+then run the bundle. Every agent pins `model: claude-sonnet-5-5` in its `executor`; change it to a model your
+provider serves.
 
 ## Quick start
 
@@ -181,13 +211,14 @@ specs and the calibrated likelihood tables.
    overconfidence is visible.
 3. **Coarse real labels.** "Not transit-like" KOIs merge H4 and H5. One Kepler quarter per target; one-quarter
    centroids are much weaker than DR25 difference imaging.
-4. **B0 (single LLM agent) is implemented but not run.** `plainsboro/llm.py:single_agent_diagnose` uses the same
-   tools and budget, but the available OpenAI key had no credit. LLM persona voicing in the UI is optional for the
-   same reason. No B0 numbers are claimed.
-5. **The Omnigent bundle is validated but has not been run in a live LLM session.** It passes Omnigent's parser
-   and validator, its policies execute through Omnigent's resolver, and its tool layer was exercised end to end by a
-   scripted session (`plainsboro/omnigent_tools.py`). A live `omnigent run` needs model credentials, which were not
-   available while building. Run it on the Databricks managed route before the demo.
+4. **B0 (single LLM agent) was run on only 40 targets.** Claude Sonnet 5.5 used the same tools, budget and cached
+   outcomes on the first 40 blind targets ([results/benchmark/b0_llm.jsonl](results/benchmark/b0_llm.jsonl)). On
+   those same 40 targets, B0 reached accuracy 0.85 at mean cost 7.83 with Brier 0.281. The House team reached 0.95
+   at cost 6.30, the planner alone 0.90 at 5.42, and the checklist 0.90 at 6.70. B0 used 216k input and 32k output
+   tokens. With n = 40 the CIs are wide, so treat this as indicative.
+5. **Only one live Omnigent case has been run.** It was T-0167, run once. Benchmark numbers come from the
+   deterministic local runtime, which uses the same agents, tools and policies. LLM-driven Omnigent runs will vary
+   from run to run, and their accuracy across many targets has not been measured.
 6. Wall-clock: the team's deliberation adds ~70 ms per target over the bare planner in the local runtime; with
    LLM-driven Omnigent agents, per-target latency is dominated by model calls.
 

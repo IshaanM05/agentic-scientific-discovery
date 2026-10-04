@@ -38,5 +38,35 @@
   "resolved": true,
   "title": "The Transiting Exoplanet Survey Satellite",
   "source": "arxiv-api"
+ },
+ "arxiv:1803.04526": {
+  "resolved": true,
+  "title": "Kepler Data Validation I -- Architecture, Diagnostic Tests, and Data Products for Vetting Transiting Planet Candidates",
+  "source": "arxiv-api"
+ },
+ "arxiv:1101.5630": {
+  "resolved": true,
+  "title": "On the Low False Positive Probabilities of Kepler Planet Candidates",
+  "source": "arxiv-api"
+ },
+ "arxiv:1301.0842": {
+  "resolved": true,
+  "title": "The false positive rate of Kepler and the occurrence of planets",
+  "source": "arxiv-api"
+ },
+ "arxiv:1311.1170": {
+  "resolved": true,
+  "title": "Characterizing Distant Worlds with Asterodensity Profiling",
+  "source": "arxiv-api"
+ },
+ "arxiv:2002.00691": {
+  "resolved": true,
+  "title": "Vetting of 384 TESS Objects of Interest with TRICERATOPS and Statistical Validation of 12 Planet Candidates",
+  "source": "arxiv-api"
+ },
+ "arxiv:1006.2815": {
+  "resolved": true,
+  "title": "Kepler Eclipsing Binary Stars. I. Catalog and Principal Characterization of 1879 Eclipsing Binaries in the First Data Release",
+  "source": "arxiv-api"
  }
 }

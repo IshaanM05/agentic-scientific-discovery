@@ -11,3 +11,4 @@ pytest>=8
 lightkurve>=2.4      # real Kepler light curves (MAST)
 omnigent>=0.16       # Omnigent runtime + spec validator
 openai>=1.40         # optional LLM voices + single-LLM baseline B0
+anthropic>=0.40      # same, Anthropic provider (preferred when ANTHROPIC_API_KEY is set)

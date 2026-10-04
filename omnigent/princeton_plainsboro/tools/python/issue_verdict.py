@@ -11,7 +11,7 @@ if str(_REPO) not in sys.path:
 
 
 @tool
-def issue_verdict(target_id: str, run_ids: list[str], evidence_ids: list[str] | None = None, label_text: str = "", needs_human: bool = False) -> dict:
+def issue_verdict(target_id: str, run_ids: list[str], evidence_ids: list[str] | None = None, label_text: str = "", needs_human: bool = False, dissent: list[str] | None = None) -> dict:
     """
     Issue the final verdict. The label is forced to the posterior's top class; strong claims are blocked by policy.
 
@@ -20,8 +20,9 @@ def issue_verdict(target_id: str, run_ids: list[str], evidence_ids: list[str] | 
     :param evidence_ids: Evidence IDs (EV-...) cited.
     :param label_text: Your wording (replaced if inconsistent).
     :param needs_human: Escalate to a human even if confident.
+    :param dissent: Objections to put on the official record (also forces needs_human).
     :returns: JSON-serializable handoff payload.
     """
     from plainsboro import omnigent_tools
 
-    return omnigent_tools.issue_verdict(target_id, run_ids, evidence_ids, label_text, needs_human)
+    return omnigent_tools.issue_verdict(target_id, run_ids, evidence_ids, label_text, needs_human, dissent)

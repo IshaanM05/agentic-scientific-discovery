@@ -160,6 +160,10 @@ def run_vetting_test(target_id: str, test_id: str, window_factor: float = 3.0, c
 
 
 def rerun_vetting_test(target_id: str, test_id: str, window_factor: float = 5.0, cost_units: float = 0.0) -> dict:
+    """Detrending-sensitivity control. Only meaningful for tests that depend on detrending."""
+    if test_id in REGISTRY and not REGISTRY[test_id].detrend_sensitive:
+        return {"error": f"{test_id} does not depend on detrending, so a rerun would replicate identical output. "
+                         "Corroborate with an independent test from plan_next_tests instead."}
     return run_vetting_test(target_id, test_id, window_factor, cost_units)
 
 
@@ -258,7 +262,7 @@ def resolve_citation(arxiv_id: str) -> dict:
 # ---------------------------------------------------------------- verdict, follow-up, memory
 
 def issue_verdict(target_id: str, run_ids: list[str] | None = None, evidence_ids: list[str] | None = None,
-                  label_text: str = "", needs_human: bool = False) -> dict:
+                  label_text: str = "", needs_human: bool = False, dissent: list[str] | None = None) -> dict:
     """House's verdict. The label is forced to the posterior's top class (no override without approval).
 
     House must cite the run_ids it relies on (provenance_required); unknown IDs are rejected.
@@ -277,7 +281,9 @@ def issue_verdict(target_id: str, run_ids: list[str] | None = None, evidence_ids
         v = c["house"].verdict(wb, interval, c["cfg"]["stopping"]["posterior_threshold"],
                                [t["run_id"] for t in wb_runs],
                                sorted({e for t in wb_runs for e in t.get("evidence_ids", [])}), wb.open_critiques)
-        v.needs_human = v.needs_human or bool(needs_human)
+        v.needs_human = v.needs_human or bool(needs_human) or bool(dissent)
+        from .schemas import Dissent
+        v.dissent += [Dissent(agent="house", objection=d) for d in (dissent or [])]
         wb.status = "closed"
         _save(wb)
     out = v.model_dump()
@@ -293,7 +299,7 @@ def propose_followup(target_id: str, kind: str, justification: str) -> dict:
                                                   "telescope time itself (no_external_writes)."}
 
 
-def record_lesson(target_id: str) -> dict:
+def record_lesson(target_id: str, notes: list[str] | None = None) -> dict:
     c = _ctx()
     wb = _load(target_id)
     from .schemas import Verdict
@@ -303,6 +309,10 @@ def record_lesson(target_id: str) -> dict:
                 top_posterior=post[label], interval=(0, 1), evidence_ids=[], run_ids=[],
                 tests_used=wb.budget["used"], cost_used=wb.budget["cost_units_used"])
     ll = c["wilson"].record_case(wb, v)
+    if notes:
+        ll.lesson += " Agent notes: " + " | ".join(notes)
+        ll.stats["agent_notes"] = list(notes)
+        _log("wilson", "record_lesson_notes", target_id, outputs={"notes": notes})
     return ll.model_dump()
 
 
