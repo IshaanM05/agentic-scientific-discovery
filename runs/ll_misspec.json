@@ -1,0 +1,505 @@
+{
+ "worlds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019
+ ],
+ "budget": 60.0,
+ "arms": {
+  "wrong=0%,revision=on": {
+   "hits60_mean": 12.95,
+   "hits60_ci": [
+    10.8,
+    14.95
+   ],
+   "first_hit_median": 2.0,
+   "first_hit_mean_censored61": 2.15,
+   "first_hit_mean_ci": [
+    2.0,
+    2.45
+   ],
+   "first_hit_reached": 20,
+   "third_hit_reached": 20
+  },
+  "wrong=0%,revision=off": {
+   "hits60_mean": 15.55,
+   "hits60_ci": [
+    12.6,
+    18.4
+   ],
+   "first_hit_median": 2.0,
+   "first_hit_mean_censored61": 2.15,
+   "first_hit_mean_ci": [
+    2.0,
+    2.45
+   ],
+   "first_hit_reached": 20,
+   "third_hit_reached": 20
+  },
+  "wrong=50%,revision=on": {
+   "hits60_mean": 12.1,
+   "hits60_ci": [
+    10.1,
+    14.1
+   ],
+   "first_hit_median": 2.0,
+   "first_hit_mean_censored61": 4.05,
+   "first_hit_mean_ci": [
+    2.7,
+    5.75
+   ],
+   "first_hit_reached": 20,
+   "third_hit_reached": 20
+  },
+  "wrong=50%,revision=off": {
+   "hits60_mean": 13.45,
+   "hits60_ci": [
+    11.1,
+    15.8
+   ],
+   "first_hit_median": 2.0,
+   "first_hit_mean_censored61": 4.05,
+   "first_hit_mean_ci": [
+    2.7,
+    5.75
+   ],
+   "first_hit_reached": 20,
+   "third_hit_reached": 20
+  },
+  "wrong=100%,revision=on": {
+   "hits60_mean": 9.9,
+   "hits60_ci": [
+    8.25,
+    11.7
+   ],
+   "first_hit_median": 6.5,
+   "first_hit_mean_censored61": 10.9,
+   "first_hit_mean_ci": [
+    6.35,
+    16.25
+   ],
+   "first_hit_reached": 20,
+   "third_hit_reached": 20
+  },
+  "wrong=100%,revision=off": {
+   "hits60_mean": 8.75,
+   "hits60_ci": [
+    6.7,
+    10.85
+   ],
+   "first_hit_median": 6.5,
+   "first_hit_mean_censored61": 13.35,
+   "first_hit_mean_ci": [
+    6.9,
+    21.35
+   ],
+   "first_hit_reached": 19,
+   "third_hit_reached": 18
+  },
+  "no prior (use_prior=False)": {
+   "hits60_mean": 10.45,
+   "hits60_ci": [
+    8.8,
+    12.1
+   ],
+   "first_hit_median": 16.5,
+   "first_hit_mean_censored61": 16.1,
+   "first_hit_mean_ci": [
+    11.75,
+    20.85
+   ],
+   "first_hit_reached": 20,
+   "third_hit_reached": 20
+  }
+ },
+ "paired_revision_on_vs_off": {
+  "wrong=0%": {
+   "d_hits60_on_minus_off": -2.6,
+   "ci": [
+    -3.55,
+    -1.65
+   ],
+   "d_first_hit_on_minus_off_mean": 0.0,
+   "d_first_ci": [
+    0.0,
+    0.0
+   ],
+   "worlds_on_better": 0,
+   "worlds_equal": 6,
+   "worlds_on_worse": 14
+  },
+  "wrong=50%": {
+   "d_hits60_on_minus_off": -1.35,
+   "ci": [
+    -2.05,
+    -0.7
+   ],
+   "d_first_hit_on_minus_off_mean": 0.0,
+   "d_first_ci": [
+    0.0,
+    0.0
+   ],
+   "worlds_on_better": 1,
+   "worlds_equal": 7,
+   "worlds_on_worse": 12
+  },
+  "wrong=100%": {
+   "d_hits60_on_minus_off": 1.15,
+   "ci": [
+    0.15,
+    2.4
+   ],
+   "d_first_hit_on_minus_off_mean": -2.45,
+   "d_first_ci": [
+    -6.4,
+    0.0
+   ],
+   "worlds_on_better": 10,
+   "worlds_equal": 6,
+   "worlds_on_worse": 4
+  }
+ },
+ "raw": {
+  "wrong=0%,revision=on": {
+   "raw_hits60": [
+    12.0,
+    6.0,
+    15.0,
+    17.0,
+    7.0,
+    9.0,
+    18.0,
+    19.0,
+    6.0,
+    12.0,
+    18.0,
+    9.0,
+    13.0,
+    7.0,
+    18.0,
+    6.0,
+    15.0,
+    18.0,
+    17.0,
+    17.0
+   ],
+   "raw_t_first": [
+    2,
+    5,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  "wrong=0%,revision=off": {
+   "raw_hits60": [
+    15.0,
+    6.0,
+    17.0,
+    21.0,
+    8.0,
+    9.0,
+    22.0,
+    24.0,
+    6.0,
+    13.0,
+    24.0,
+    9.0,
+    19.0,
+    7.0,
+    22.0,
+    6.0,
+    19.0,
+    20.0,
+    23.0,
+    21.0
+   ],
+   "raw_t_first": [
+    2,
+    5,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  "wrong=50%,revision=on": {
+   "raw_hits60": [
+    8.0,
+    6.0,
+    14.0,
+    17.0,
+    7.0,
+    8.0,
+    16.0,
+    19.0,
+    6.0,
+    12.0,
+    18.0,
+    9.0,
+    12.0,
+    6.0,
+    15.0,
+    6.0,
+    13.0,
+    16.0,
+    16.0,
+    18.0
+   ],
+   "raw_t_first": [
+    12,
+    3,
+    9,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    9,
+    2,
+    11,
+    2,
+    2,
+    2,
+    9,
+    2
+   ]
+  },
+  "wrong=50%,revision=off": {
+   "raw_hits60": [
+    10.0,
+    6.0,
+    16.0,
+    17.0,
+    8.0,
+    7.0,
+    18.0,
+    21.0,
+    6.0,
+    12.0,
+    20.0,
+    9.0,
+    18.0,
+    7.0,
+    15.0,
+    6.0,
+    16.0,
+    18.0,
+    19.0,
+    20.0
+   ],
+   "raw_t_first": [
+    12,
+    3,
+    9,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    9,
+    2,
+    11,
+    2,
+    2,
+    2,
+    9,
+    2
+   ]
+  },
+  "wrong=100%,revision=on": {
+   "raw_hits60": [
+    7.0,
+    6.0,
+    6.0,
+    13.0,
+    7.0,
+    6.0,
+    15.0,
+    18.0,
+    6.0,
+    9.0,
+    17.0,
+    9.0,
+    10.0,
+    7.0,
+    10.0,
+    6.0,
+    12.0,
+    13.0,
+    6.0,
+    15.0
+   ],
+   "raw_t_first": [
+    37,
+    7,
+    37,
+    6,
+    2,
+    6,
+    2,
+    6,
+    2,
+    10,
+    4,
+    9,
+    27,
+    7,
+    29,
+    3,
+    2,
+    7,
+    12,
+    3
+   ]
+  },
+  "wrong=100%,revision=off": {
+   "raw_hits60": [
+    2.0,
+    6.0,
+    5.0,
+    14.0,
+    5.0,
+    5.0,
+    16.0,
+    17.0,
+    6.0,
+    9.0,
+    13.0,
+    9.0,
+    0.0,
+    7.0,
+    8.0,
+    6.0,
+    14.0,
+    12.0,
+    5.0,
+    16.0
+   ],
+   "raw_t_first": [
+    50.0,
+    7.0,
+    37.0,
+    6.0,
+    2.0,
+    6.0,
+    2.0,
+    6.0,
+    2.0,
+    12.0,
+    4.0,
+    9.0,
+    61.0,
+    7.0,
+    29.0,
+    3.0,
+    2.0,
+    7.0,
+    12.0,
+    3.0
+   ]
+  },
+  "no prior (use_prior=False)": {
+   "raw_hits60": [
+    8.0,
+    6.0,
+    11.0,
+    12.0,
+    4.0,
+    6.0,
+    13.0,
+    15.0,
+    6.0,
+    10.0,
+    13.0,
+    7.0,
+    16.0,
+    7.0,
+    13.0,
+    6.0,
+    12.0,
+    13.0,
+    15.0,
+    16.0
+   ],
+   "raw_t_first": [
+    6,
+    16,
+    4,
+    15,
+    46,
+    23,
+    10,
+    18,
+    22,
+    22,
+    17,
+    32,
+    2,
+    24,
+    11,
+    4,
+    19,
+    9,
+    18,
+    4
+   ]
+  }
+ },
+ "method": "prior_f = (1-f)*truth + f*textbook, monkeypatched inside the script; relax_prior no-op for revision off; labloop/* unedited",
+ "caveat": "Team-designed simulator; synthetic worlds; mechanism test only. Blend definition of 'x% wrong' is ours."
+}
