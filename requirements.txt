@@ -1,8 +1,9 @@
 jsonschema
-pytest
+pytest>=8
 pyyaml
 omnigent==0.16.0
 streamlit
-numpy
-scipy
+numpy>=1.26
+scipy>=1.11
 matplotlib
+scikit-learn>=1.4
