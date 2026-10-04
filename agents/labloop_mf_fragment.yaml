@@ -1,0 +1,25 @@
+# FRAGMENT for the lead to merge into agents/labloop_planner.yaml (not a runnable agent on its own).
+# Adds the multi-fidelity choice: cheap screen (0.2 units) versus synthesis (1 to 1.5 units), one shared budget.
+
+# 1. planner tools (add under the planner's `tools:`)
+tools:
+  ll_mf_start: {type: function, callable: asd.labloop_mf_tools.ll_mf_start, description: "Start a multi-fidelity LabLoop run (world, seed, budget); screens and syntheses share one budget"}
+  ll_mf_plan: {type: function, callable: asd.labloop_mf_tools.ll_mf_plan, description: "Rank next actions by expected information gain per unit cost; each option lists screen versus synthesis with scores"}
+  ll_screen: {type: function, callable: asd.labloop_mf_tools.ll_screen, description: "Cheap noisy screen (0.2 units): bandgap estimate and coarse stability proxy; one per film"}
+  ll_run_mf: {type: function, callable: asd.labloop_mf_tools.ll_run_mf, description: "Run actions [{candidate_id, fidelity: auto|screen|synth}]; synthesis is safety-reviewed; over-budget actions are DENIED and not charged"}
+
+# 2. planner prompt addition (append to the planner's ORDER, replacing a plain ll_design -> ll_run step)
+prompt_addition: |
+  MULTI-FIDELITY STEP. Before spending, call ll_mf_plan. It returns options, each with both fidelities:
+  eig_screen_nats, eig_synth_nats, score_per_cost and the alternative. This satisfies "design at least two
+  tests and pick by expected learning and cost": write one line naming the screen option, the synthesis
+  option, and why the chosen one has the higher score per cost. Then call ll_run_mf with those actions
+  (fidelity auto lets the tool apply the same rule). A screen is a noisy estimate (bandgap sd 0.06 eV,
+  stability proxy sd 0.35 dex), never a result: only a synthesis can confirm a hit. After screens, write
+  "ADAPT: <which films the screen promoted or demoted>" and call ll_mf_plan again before synthesising.
+  Never put candidate ids in prompts to other agents. Report the measured hits and units spent.
+
+# 3. policies (reuse as they are; the budget is enforced inside the tools too)
+# - experiment_budget / cost_budget: count ll_run_mf and ll_screen calls only as the lead sees fit; the tools
+#   themselves DENY any action that would pass the shared budget and charge nothing for it.
+# - human_approval (ASK): the tool returns requires_human_approval for synthesis of a film failing safety review.
