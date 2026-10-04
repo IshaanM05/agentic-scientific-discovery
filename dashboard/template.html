@@ -192,6 +192,11 @@ footer{margin-top:40px;font-size:12.5px;color:var(--ink-3);border-top:1px solid 
   .hint{display:none}
   .atlas-head{flex-direction:column;gap:4px}
 }
+.headline{margin:10px 0 0;padding:10px 14px;border:1px solid var(--line,#ccc);border-radius:8px;font-size:13px;line-height:1.5}
+.headline b{font-weight:600}
+.llm{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:8px 0}
+.llm div{border:1px solid var(--line,#ccc);border-radius:8px;padding:6px 10px;font-size:12px}
+.llm b{display:block;font-size:18px}
 </style>
 </head>
 <body>
@@ -201,6 +206,8 @@ footer{margin-top:40px;font-size:12.5px;color:var(--ink-3);border-top:1px solid 
     <p class="goal" id="goal"></p>
     <div class="backend" id="backend"></div>
   </header>
+
+  <p class="headline" id="headline"><b>Omnigent-orchestrated agent team, two test beds.</b> Steel strength (public Matbench data): with all element names hidden, an LLM-prior search found 8.75 hits in 60 experiments vs 6.40 (one-factor-at-a-time) and 6.85 (Bayesian optimisation) over 20 seeds, paired 95% CI vs BO [+0.90, +2.95]. A memorisation probe is flagged, so we do <b>not</b> claim that LLM knowledge accelerates discovery. This page replays LabLoop, the second test bed: a simulated perovskite lab designed by the team (a benchmark, not evidence about real devices). Its figures below are produced by the rule-based scientist; the Omnigent runs have their own tab.</p>
 
   <div class="transport" role="toolbar" aria-label="Replay controls">
     <button class="tbtn" id="prev" aria-label="Previous round">‹</button>
@@ -255,6 +262,7 @@ footer{margin-top:40px;font-size:12.5px;color:var(--ink-3);border-top:1px solid 
       <button class="tab" role="tab" aria-selected="false" aria-controls="p-time" data-pane="p-time">Lab timeline</button>
       <button class="tab" role="tab" aria-selected="false" aria-controls="p-lit" data-pane="p-lit">Literature</button>
       <button class="tab" role="tab" aria-selected="false" aria-controls="p-arch" data-pane="p-arch">How it works</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-ll" data-pane="p-ll">Omnigent runs</button>
     </div>
     <div class="pane" id="p-hyp" role="tabpanel">
       <p class="sub">Every hypothesis states a measurable prediction and the result that would kill it. Open ones are ranked by pairwise Elo matches judged on goal relevance, information value and novelty; hypotheses whose region cannot meet spec are parked.</p>
@@ -292,6 +300,10 @@ footer{margin-top:40px;font-size:12.5px;color:var(--ink-3);border-top:1px solid 
       <svg class="arch" id="arch" viewBox="0 0 1120 350" role="img" aria-label="Agent architecture"></svg>
       <p class="note">The language model proposes and critiques; a Gaussian-process acquisition function decides which films earn a slot; the Judge decides what counts as known; the notebook keeps every result, including failures. Swap the lab adapter for a robot API and nothing else changes.</p>
     </div>
+    <div class="pane" id="p-ll" role="tabpanel" hidden>
+      <p class="sub">Live Omnigent runs on LabLoop worlds, replayed from committed <code>runs/ll-*</code> records. Simulated lab; synthetic worlds; small n.</p>
+      <div id="llbody"></div>
+    </div>
   </section>
   <footer id="foot"></footer>
 </div>
@@ -301,6 +313,7 @@ footer{margin-top:40px;font-size:12.5px;color:var(--ink-3);border-top:1px solid 
 <script id="trace" type="application/json">__TRACE__</script>
 <script id="bench" type="application/json">__BENCH__</script>
 <script id="space" type="application/json">__SPACE__</script>
+<script id="llruns" type="application/json">__LLRUNS__</script>
 <script>
 (() => {
 const T = JSON.parse(document.getElementById('trace').textContent);
@@ -614,6 +627,16 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') { e.preventDefault(); $('prev').click(); }
   if (e.key === ' ' && !e.target.closest('button')) { e.preventDefault(); $('play').click(); }
 });
+
+(function llRuns() {
+  const R = JSON.parse(document.getElementById('llruns').textContent || '[]');
+  const el = document.getElementById('llbody');
+  const e = x => String(x ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+  if (!R.length) { el.innerHTML = '<p class="note">No Omnigent LabLoop runs are committed yet. They are produced locally with live model access and added as <code>runs/ll-*</code>; rebuild this page with <code>python scripts/build_dashboard.py</code> to include them.</p>'; return; }
+  el.innerHTML = R.map(r => `<h3>${e(r.run)} <small>world ${e(r.world)}, seed ${e(r.seed)}, budget ${e(r.budget)}</small></h3>
+    <div class="llm"><div><b>${e(r.units_used)}</b>units used</div><div><b>${e(r.hits)}</b>hits in ${e(r.n_experiments)} films</div><div><b>${r.first_hit_units ?? 'none'}</b>units to first hit</div><div><b>${e(r.discoveries_replicated)}</b>replicated discoveries</div><div><b>${e(r.hypotheses_refuted)}</b>refutations</div><div><b>${r.adapt_events.length}</b>ADAPT events</div></div>
+    <div class="scroll"><table class="h"><tr><th>record</th><th>kind</th><th>detail</th></tr>${r.timeline.map(t => `<tr><td>${e(t.record_id)}</td><td>${e(t.kind)}</td><td>${e(JSON.stringify(Object.fromEntries(Object.entries(t).filter(([k]) => !['record_id', 'kind'].includes(k)))).slice(0, 240))}</td></tr>`).join('')}</table></div>`).join('');
+})();
 const tabs = [...document.querySelectorAll('.tab')];
 tabs.forEach(t => t.onclick = () => {
   tabs.forEach(o => o.setAttribute('aria-selected', o === t));

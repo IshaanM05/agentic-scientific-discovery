@@ -6,12 +6,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import streamlit as st  # noqa: E402
 import data as D  # noqa: E402
+import ll_summary as LL  # noqa: E402
 
 st.set_page_config(page_title="Agentic discovery replay", layout="wide")
 st.title("Agentic scientific discovery: offline replay")
 st.caption("Read-only replay of committed runs/* and results/*. Content marked AGENT-GENERATED was "
            "produced by LLM agents and is not verified science.")
-tabs = st.tabs(["Run timeline", "Policies", "Hypothesis arena", "Judge", "Results"])
+tabs = st.tabs(["Run timeline", "Policies", "Hypothesis arena", "Judge", "Results", "LabLoop (Omnigent)"])
 AG = "AGENT-GENERATED"
 
 with tabs[0]:
@@ -123,3 +124,27 @@ with tabs[4]:
     st.caption("README, verbatim:")
     st.info(D.readme_section("Result"))
     st.info(D.readme_section("Limitations"))
+
+with tabs[5]:
+    st.caption("Second test bed: a SIMULATED perovskite lab designed by the team (synthetic worlds, a benchmark, "
+               "not evidence about real devices). Offline replay of runs/ll-* produced by live Omnigent runs.")
+    llruns = LL.list_ll_runs()
+    if not llruns:
+        st.info("No runs/ll-* committed yet. Live Omnigent LabLoop runs are produced locally; "
+                "this tab fills in once their records are committed.")
+    else:
+        sel = st.selectbox("LabLoop run", llruns)
+        S = LL.summarize(sel)
+        c = st.columns(5)
+        c[0].metric("World / seed", f"{S['world']} / {S['seed']}")
+        c[1].metric("Units used", f"{S['units_used']} / {S['budget']}")
+        c[2].metric("Hits", S["hits"])
+        c[3].metric("Units to first hit", S["first_hit_units"] if S["first_hit_units"] is not None else "none")
+        c[4].metric("Replicated discoveries", S["discoveries_replicated"])
+        st.write(f"{S['hypotheses_refuted']} hypothesis verdicts refuted; {len(S['adapt_events'])} ADAPT events "
+                 "(a refutation or prior relaxation followed by a changed PI decision).")
+        if S["curve"]:
+            st.line_chart({"hits": [h for _, h in S["curve"]]}, x_label="experiment #", y_label="cumulative hits")
+        for e in S["timeline"]:
+            with st.expander(f"{e.get('record_id')} | {e.get('kind')}"):
+                st.json(e)
