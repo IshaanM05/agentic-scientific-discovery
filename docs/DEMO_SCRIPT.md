@@ -20,3 +20,6 @@ Screen: Omnigent web UI session tree + terminal + `runs/e2-live/SUMMARY.md` (+ d
 - "faster" / "acceleration" (the rule is not met); "hard gate" for approval without the qualifier: it is hard only in interactive runs; -p runs decline automatically; anything from runs/live2's first pick (tainted by a prompt example).
 - That the e2-live planner adapted its choices, hit the target, ran the critic's test, or reached the approval step; it did none of these.
 - Judge/arena numbers are NOT skill evidence (judge near-arithmetic; arena p=0.21).
+
+## Optional LabLoop beat (only after runs/ll-w2000.. are committed and docs/index.html is rebuilt)
+Screen: live demo URL, "Omnigent runs" tab. Say only what the tab shows: world, seed, units used, hits, units to first hit, replicated discoveries, refutations, ADAPT events, for the named run. Then: "LabLoop is a simulated lab we designed, with synthetic worlds no LLM can have memorised; it is a benchmark, not evidence about real devices." Do not quote benchmark numbers until W2's rerun confirms them.

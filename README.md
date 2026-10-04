@@ -147,6 +147,9 @@ Parallel sub-agents: Omnigent documents that several `sys_session_send` calls in
 ## Judge
 A Haiku 4.5 judge scores each analysis conclusion with a 3-check rubric (supported by the ledger value, citations present, labelled agent-generated) and a low/medium/high confidence (`asd/judge.py`, `scripts/judge_runs.py`, verdicts in `runs/<run>/judge.jsonl`). Calibrated against measured outcomes on a public benchmark, not expert review: n=12 conclusions (runs t011, live1, live2), accuracy 1.00, Brier 0.060 (low=0.25, medium=0.5, high=0.85), bins low 0, medium 2, high 10 (`results/judge_calibration.json`). Caveats: n is tiny; the judge is shown the ledger value, so the outcome check is close to arithmetic and the result says little about scientific judgement; no low-confidence verdicts, so the reliability table is not informative; the benchmark may be memorised by LLMs.
 
+## Live demo
+`docs/index.html` is a self-contained, offline page (steel headline, LabLoop replay, an "Omnigent runs" tab fed by committed `runs/ll-*`). `vercel.json` serves `docs/` as static files with no build; the human deploy steps are in `docs/DEPLOY.md`. Live URL: _to be added after deploy_. Local: open `docs/index.html`, or `streamlit run dashboard/app.py` (adds a "LabLoop (Omnigent)" tab). Rebuild after new runs: `python scripts/build_dashboard.py`. LabLoop is a simulated lab designed by the team: a benchmark, not evidence about real devices.
+
 ## Dashboard
 Offline replay of committed runs and results (no LLM or network calls): `streamlit run dashboard/app.py`
 
