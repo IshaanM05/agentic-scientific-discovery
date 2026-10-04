@@ -129,3 +129,8 @@ Verdict: APPROVE (2 minor notes).
 - Recomputed from runs/ll_benchmark.json: median first hit 6.5 vs 30.5; hits 9.90 vs 8.25, paired +1.65 [0.05, 3.20]; neg-memory +0.30 [0.10, 0.55]. All match.
 - Caveats honest (team simulator, rule-based baseline, means vs medians, Omnigent unmeasured). No hidden truth beyond aggregates; no secrets. 47 tests pass.
 - CHANGE: all 7 commits have author "Claude <noreply@anthropic.com>" (AI identity in history). Rewrite author to a team member before merge, or squash-merge with a human author.
+## 2026-10-04 Review: w4/labloop-multifidelity (778f498) -> APPROVE
+- 7 new files, 0 modified (agents/labloop_planner.yaml untouched). Clean merge.
+- Recomputed from runs/ll_mf_benchmark.json (20 worlds x 10 seeds): 13.40 vs 12.57 hits@60, paired +0.83, bootstrap CI [0.32, 1.40] (doc 1.41, rounding), 12/20 worlds better, first hit 12.96 vs 15.76 = 2.80 earlier. Matches.
+- RESULTS_MULTIFIDELITY.md: +3.92 vs labloop appears in the table only and is labeled confounded in Reading; headline claim is mf vs sf_eig. OK.
+- No truth fields in result JSON (hits/first/counts only); no secrets in new files. Tests: 57 passed.
