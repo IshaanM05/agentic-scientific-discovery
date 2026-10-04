@@ -199,4 +199,7 @@ Systems we built on or compare to (details in `knowledge/papers/`):
 - Language-guided priors and AWCD: doi:10.1021/acs.jcim.6c00976 (2026). An LLM turns expert prose into a BO prior mean; AWCD switches the prior off when data contradict it; basis of our trust meter. Authors and title not recorded in our notes (incomplete).
 - Matbench steels dataset: figshare doi 10.6084/m9.figshare.7250453 (312 steels, MIT license per the figshare API; upstream Citrine dataset citrination.com/datasets/153092, whose license is unverified); the Matbench benchmark paper is not cited here (incomplete).
 - Omnigent: Databricks, github.com/omnigent-ai/omnigent (Apache 2.0, alpha), PyPI `omnigent` 0.16.0, docs omnigent.ai.
+- Olympus: Häse, Aldeghi, Hickman et al., "Olympus: a benchmarking framework for noisy optimization and experiment planning", Machine Learning: Science and Technology (2021), doi:10.1088/2632-2153/abedc8.
+- Atlas: Hickman, Sim, Pablo-García et al., "Atlas: a brain for self-driving laboratories", Digital Discovery (2025), doi:10.1039/D4DD00115J.
+- Rainbow: Xu, Moran, Ghorai et al., "Autonomous multi-robot synthesis and optimization of metal halide perovskite nanocrystals", Nature Communications (2025), doi:10.1038/s41467-025-63209-4.
 - OpenAlex: used for a shallow title check of hypothesis novelty (arena). Citation incomplete (no reference in our notes).

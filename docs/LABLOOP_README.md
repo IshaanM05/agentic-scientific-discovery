@@ -50,7 +50,7 @@ runs, so the demo can never fail on stage.
 
 ## Results
 
-Same lab, same 60-unit budget (one film costs 1–1.5 units), medians over 20 seeds.
+Same lab, same 60-unit budget (one film costs 1–1.5 units), over 20 seeds. First-hit and third-hit columns are medians; "Hits by 60" and "Share of hits found" are means (correction made during integration).
 
 **On 20 hidden worlds the system was never tuned on** (each draws new physics:
 which element protects Sn, bowing strength, penalties, end-member offsets; 6–35 hits each):
@@ -70,8 +70,7 @@ On the demo landscape: first hit after 7 units vs 26.5 for BO alone, 56 for
 one-factor-at-a-time and ~336 expected for random screening; 91% of hits found.
 
 Honest notes: the unseen-worlds table is the number to quote, because the demo
-landscape is the one the system was developed on. Negative-result memory makes no
-measurable difference here because failed films are rare near the optimum. The
+landscape is the one the system was developed on. Negative-result memory gives a small measured gain on the unseen worlds: +0.30 hits by 60 units, paired 95% CI [+0.10, +0.55] (re-measured during integration, `runs/ll_benchmark.json`; an earlier version of this README said it made no measurable difference). The
 literature prior roughly halves time to first hit but slightly biases late search,
 which is why the PI relaxes it when the lab contradicts it.
 
