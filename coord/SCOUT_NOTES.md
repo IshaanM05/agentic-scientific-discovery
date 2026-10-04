@@ -110,3 +110,8 @@ Scout spend this cycle est ~$1.2.
 - OK: LICENSE is MIT; diagram names exist in planner.yaml/asd/tools.py/policies.py; Responsible use has no overclaim; references match knowledge/papers, incomplete ones marked; E1/E2 wording consistent (no acceleration claim, weak swap, e2-live gaps); checklist statuses truthful (human items pending-human).
 - EDIT 1: README line 5 "37 offline tests" -> "40 offline tests".
 - EDIT 2: README diagram box POL is titled "asd/policies.py" but cost_budget is an Omnigent builtin (omnigent.policies.builtins.cost); relabel it "cost_budget (omnigent builtin)" or retitle the subgraph "Policies: planner.yaml". Optional: add call_cap.
+
+## 2026-10-04 Review: w1/labloop-tools -> integration/labloop: APPROVE
+- Files: only asd/labloop_tools.py, agents/labloop_planner.yaml, tests/test_labloop_tools.py, RUNBOOK append in docs/LABLOOP_INTEGRATION.md.
+- No hidden truth in return paths (measured values of tested compositions only). Nine ll_* tools, ll_state.json per run dir, set_world in Ctx._build every call, no urllib/Anthropic call (stub LLM).
+- Commits clean (no trailer/AI mention). No secrets. Tests: 60 passed, 0 skipped.
