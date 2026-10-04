@@ -124,3 +124,8 @@ Verdict: APPROVE (2 minor notes).
 - Tests on w3 head: 49 passed.
 - Note 1: both commits have author "Claude <noreply@anthropic.com>" (no co-author trailer). Rewrite author before the public merge if the no-AI-mention rule covers author identity.
 - Note 2: README/DEPLOY live URL is a placeholder until deploy.
+## 2026-10-04 Review w2/labloop-results (6d56adb): CHANGES (one item)
+- Ownership OK (only scripts/ll_*, docs/RESULTS_LABLOOP.md, runs/ll_*.json, docs/ll_headline.png; README gets only the two new sections).
+- Recomputed from runs/ll_benchmark.json: median first hit 6.5 vs 30.5; hits 9.90 vs 8.25, paired +1.65 [0.05, 3.20]; neg-memory +0.30 [0.10, 0.55]. All match.
+- Caveats honest (team simulator, rule-based baseline, means vs medians, Omnigent unmeasured). No hidden truth beyond aggregates; no secrets. 47 tests pass.
+- CHANGE: all 7 commits have author "Claude <noreply@anthropic.com>" (AI identity in history). Rewrite author to a team member before merge, or squash-merge with a human author.
